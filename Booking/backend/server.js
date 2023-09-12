@@ -2,13 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+
 dotenv.config();
 const server = express();
 
 server.get("/", (req, res) => {
   res.send("Booking Page");
 });
-
+// console.log(process.env.PORT);
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
@@ -20,3 +21,5 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+  
