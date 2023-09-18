@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const hotelSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     rooms: {
       type: [roomSchema],
       required: true,
@@ -24,6 +28,10 @@ const hotelSchema = mongoose.Schema(
     },
     reviews: {
       type: [reviewSchema],
+      required: false,
+    },
+    description: {
+      type: String,
       required: false,
     },
   },

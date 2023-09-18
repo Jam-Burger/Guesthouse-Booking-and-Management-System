@@ -9,7 +9,7 @@ const server = express();
 server.get("/", (req, res) => {
   res.send("Booking Page");
 });
-// console.log(process.env.PORT);
+
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
