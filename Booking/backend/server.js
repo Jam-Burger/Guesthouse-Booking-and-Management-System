@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { Hotel, User, Room, Review } from "./models/index.model.js";
+import bcrypt from "bcrypt";
+const saltRounds =10;
 
 dotenv.config();
 const server = express();
@@ -55,9 +57,12 @@ server.get("/users", (req, res) => {
 
   server.post("/users", (req, res) => {
     const data = req.body;
+    const plainPassword = data.password;
     console.log(data);
-    const user = new User(data);
-    user
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+      bcrypt.hash(plainPassword, salt, function(err, hash) {
+        const user = new User({...data, password:hash});
+        user
       .save()
       .then((val) => {
         res.send({ msg: "success", data: val });
@@ -65,6 +70,10 @@ server.get("/users", (req, res) => {
       .catch((e) => {
         res.status(400).send({ msg: "failure", error: e });
       });
+      });
+  });
+    
+    
   });
 
   server.post("/rooms", (req, res) => {
@@ -84,6 +93,7 @@ server.get("/users", (req, res) => {
   server.post("/reviews", (req, res) => {
     const data = req.body;
     console.log(data);
+    
     const review = new Review(data);
     review
       .save()
