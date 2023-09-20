@@ -1,10 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { User } from "./models/user.model.js";
+import { Hotel, User, Room, Review } from "./models/index.model.js";
 
 dotenv.config();
 const server = express();
+
+server.use(express.json());
 
 mongoose
   .connect(process.env.DATABASE_URL)
@@ -36,11 +38,60 @@ server.get("/users", (req, res) => {
   } else {
     res.send("user with id : " + id);
   }
-  // if (req.query.id!==undefined) {
-  //   res.send("user with id : " + id);
-  // } else if(req.query.name!==undefined){
-  //   res.send("user with name : " + name);
-  // }else {
-  //   res.send("All users");
-  // }
+
+  server.post("/hotels", (req, res) => {
+    const data = req.body;
+    console.log(data);
+    const hotel = new Hotel(data);
+    hotel
+      .save()
+      .then((val) => {
+        res.send({ msg: "success", data: val });
+      })
+      .catch((e) => {
+        res.status(400).send({ msg: "failure", error: e });
+      });
+  });
+
+  server.post("/users", (req, res) => {
+    const data = req.body;
+    console.log(data);
+    const user = new User(data);
+    user
+      .save()
+      .then((val) => {
+        res.send({ msg: "success", data: val });
+      })
+      .catch((e) => {
+        res.status(400).send({ msg: "failure", error: e });
+      });
+  });
+
+  server.post("/rooms", (req, res) => {
+    const data = req.body;
+    console.log(data);
+    const room = new Room(data);
+    room
+      .save()
+      .then((val) => {
+        res.send({ msg: "success", data: val });
+      })
+      .catch((e) => {
+        res.status(400).send({ msg: "failure", error: e });
+      });
+  });
+
+  server.post("/reviews", (req, res) => {
+    const data = req.body;
+    console.log(data);
+    const review = new Review(data);
+    review
+      .save()
+      .then((val) => {
+        res.send({ msg: "success", data: val });
+      })
+      .catch((e) => {
+        res.status(400).send({ msg: "failure", error: e });
+      });
+  });
 });

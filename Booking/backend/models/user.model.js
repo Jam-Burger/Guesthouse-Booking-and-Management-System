@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import encrypt from "mongoose-encryption";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -32,10 +31,6 @@ export const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-});
-userSchema.plugin(encrypt, {
-  secret: process.env.ENCRYPT_KEY,
-  encryptedFields: ["password"],
 });
 
 export default userSchema;

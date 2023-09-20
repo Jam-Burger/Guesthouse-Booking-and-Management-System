@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import userSchema from "./user.model";
+import userSchema from "./user.model.js";
 
-export const reviewSchema = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema({
   user: {
     type: userSchema,
     required: true,
