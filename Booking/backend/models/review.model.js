@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import userSchema from "./User"
+import userSchema from "./user.model";
 
-const reviewSchema = new mongoose.Schema({
+export const reviewSchema = new mongoose.Schema({
   user: {
     type: userSchema,
     required: true,
@@ -13,8 +13,8 @@ const reviewSchema = new mongoose.Schema({
   description: {
     type: String,
     required: false,
-  }
+  },
 });
 
 export default reviewSchema;
-export const Review = new mongoose.model("Review",reviewSchema);
+export const Review = new mongoose.model("Review", reviewSchema);

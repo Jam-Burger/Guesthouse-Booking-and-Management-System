@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import roomSchema from "./Room"
-import reviewSchema from "./Review"
+import roomSchema from "./room.model";
+import reviewSchema from "./review.model";
 
 
-const hotelSchema = new mongoose.Schema(
+export const hotelSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -42,5 +42,4 @@ const hotelSchema = new mongoose.Schema(
     timestamps: false,
   }
 );
-export default hotelSchema;
 export const Hotel = new mongoose.model("Hotel", hotelSchema);

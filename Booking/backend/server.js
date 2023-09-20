@@ -1,10 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-// import { User
-//  } from "./models/User.js";
+import { User } from "./models/user.model.js";
+
 dotenv.config();
 const server = express();
+
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
@@ -16,7 +17,6 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-
 
 server.get("/", (req, res) => {
   res.send("Booking Page");
@@ -44,5 +44,3 @@ server.get("/users", (req, res) => {
   //   res.send("All users");
   // }
 });
-
-

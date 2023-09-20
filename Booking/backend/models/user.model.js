@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import encrypt from "mongoose-encryption";
+import dotenv from "dotenv";
+dotenv.config();
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -29,9 +31,12 @@ const userSchema = new mongoose.Schema({
   profilePic: {
     type: String,
     required: false,
-  }
+  },
 });
-userSchema.plugin(encrypt, { encryptKey: process.env.ENCRYPT_KEY, encryptedFields: ["password"] });
+userSchema.plugin(encrypt, {
+  secret: process.env.ENCRYPT_KEY,
+  encryptedFields: ["password"],
+});
 
 export default userSchema;
-export const User = new mongoose.model("User",userSchema);
+export const User = new mongoose.model("User", userSchema);
