@@ -2,22 +2,48 @@ import express from "express";
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
-const router= express.Router();
+const router = express.Router();
 const saltRounds = 10;
 
-router.get("/", (req, res) => {
-  const id = req.query.id;
-  const name = req.query.name;
-  if (Object.keys(req.query).length === 0) {
-    User.find({})
-      .then((foundUsers) => {
-        res.send(foundUsers);
-      })
-      .catch((err) => {
-        res.status(400).send("error occured: " + err);
+// find(query, queryProjection)
+
+router.get("/", async (req, res) => {
+  try {
+    const data = await User.find({});
+    res.json({
+      msg: "success",
+      data: data,
+    });
+  } catch (e) {
+    res.status(400).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  const findObj = { _id: id };
+
+  try {
+    const data = await User.find(findObj);
+    if (data.length == 0) {
+      res.status(404).json({
+        msg: "failure",
+        error: "data not found",
       });
-  } else {
-    res.send("user with id : " + id);
+    } else {
+      res.json({
+        msg: "success",
+        data: data,
+      });
+    }
+  } catch (e) {
+    res.status(400).json({
+      msg: "failure",
+      error: e,
+    });
   }
 });
 

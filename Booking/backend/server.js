@@ -4,17 +4,23 @@ import dotenv from "dotenv";
 import usersRoute from "./routes/users.route.js";
 import hotelsRoute from "./routes/hotels.route.js";
 import roomsRoute from "./routes/rooms.route.js";
-import reviewsRoute from "./routes/reviews.route.js";
-
+import cors from "cors";
 
 dotenv.config();
 const server = express();
 
 server.use(express.json());
-server.use('/users', usersRoute);
-server.use('/hotels', hotelsRoute);
-server.use('/rooms', roomsRoute);
-server.use('/reviews', reviewsRoute);
+server.use("/users", usersRoute);
+server.use("/hotels", hotelsRoute);
+server.use("/rooms", roomsRoute);
+
+server.use(
+  cors({
+    origin: `http://localhost:${process.env.PORT}`,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 server.get("/", (req, res) => {
   res.send("Booking Page");
@@ -31,4 +37,3 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-
