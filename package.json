@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "mongoose-encryption": "^2.1.2"
+  }
+}
