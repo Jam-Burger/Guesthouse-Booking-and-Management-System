@@ -9,18 +9,18 @@ import cors from "cors";
 dotenv.config();
 const server = express();
 
+server.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+
 server.use(express.json());
 server.use("/users", usersRoute);
 server.use("/hotels", hotelsRoute);
 server.use("/rooms", roomsRoute);
 
-server.use(
-  cors({
-    origin: `http://localhost:${process.env.PORT}`,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
 
 server.get("/", (req, res) => {
   res.send("Booking Page");

@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import HotelCard from "../components/HotelCard";
+import axios from "axios";
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
-}
+  const [data, setData] = useState("loading...");
 
-export default HomePage
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/hotels")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((e) => {
+        console.log("error occured : " + e);
+      });
+  });
+
+  return (
+    <>
+      <Navbar />
+      <div className="container">
+        {data.msg === "success" &&
+          data.data.map((item, id) => {
+            return <HotelCard data={item} key={id}/>;
+          })}
+      </div>
+    </>
+  );
+};
+
+export default HomePage;

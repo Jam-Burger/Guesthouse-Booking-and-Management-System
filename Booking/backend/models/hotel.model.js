@@ -1,6 +1,24 @@
 import mongoose from "mongoose";
-import roomSchema from "./room.model.js";
-import reviewSchema from "./review.model.js";
+
+const reviewSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Room",
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  stars: {
+    type: Number,
+    required: true,
+  },
+});
 
 const hotelSchema = new mongoose.Schema(
   {
@@ -8,10 +26,13 @@ const hotelSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    rooms: {
-      type: [roomSchema],
-      required: true,
-    },
+    rooms: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Room",
+        required: true,
+      },
+    ],
     pictures: {
       type: [String],
       required: false,
@@ -22,10 +43,6 @@ const hotelSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
-    },
-    rating: {
-      type: Number,
       required: true,
     },
     reviews: {
