@@ -1,7 +1,7 @@
 import express from "express";
 import { Hotel } from "../models/hotel.model.js";
 
-const router= express.Router();
+const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
@@ -55,6 +55,39 @@ router.post("/", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.get("/reviews/:id", async (req, res) => {
+  try {
+    const data = await Hotel.find({ _id: req.params.id }).select("reviews");
+    res.json({
+      msg: "success",
+      data: data,
+    });
+  } catch (e) {
+    res.status(400).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.put("/reviews/:id/", async (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+
+  try {
+    await Hotel.updateOne({ _id: id }, { $push: { reviews: data } });
+    res.status(201).json({
+      msg: "success",
+      data: data,
+    });
+  } catch (e) {
+    res.status(400).json({
       msg: "failure",
       error: e,
     });
