@@ -18,7 +18,20 @@ server.use(
 
 server.use(express.json());
 server.get("/", (req, res) => {
-  res.send("Booking Page");
+  switch (mongoose.connection.readyState) {
+    case 0:
+      res.send("Disconnected with database");
+    case 1:
+      res.send("Connected with database");
+    case 2:
+      res.send("Connecting to database");
+    case 3:
+      res.send("Disconnecting to database");
+    case 99:
+      res.send("Unititialized database");
+    default:
+      res.send("Unknown error!");
+  }
 });
 
 server.use("/users", usersRoute);
