@@ -17,22 +17,20 @@ server.use(
 );
 
 server.use(express.json());
+server.get("/", (req, res) => {
+  res.send("Booking Page");
+});
+
+server.use("/users", usersRoute);
+server.use("/hotels", hotelsRoute);
+server.use("/rooms", roomsRoute);
 
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
     console.log("successfully connected mongoDB!");
-    server.get("/", (req, res) => {
-      res.send("Booking Page");
-    });
-    server.use("/users", usersRoute);
-    server.use("/hotels", hotelsRoute);
-    server.use("/rooms", roomsRoute);
   })
   .catch((error) => {
-    server.get("/", (req, res) => {
-      res.status(404).send("Can not connect to database");
-    });
     console.log(error);
   });
 
