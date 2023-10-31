@@ -5,10 +5,9 @@ import axios from "axios";
 
 const HomePage = () => {
   const [data, setData] = useState("loading...");
-
   useEffect(() => {
     axios
-      .get("http://localhost:4000/hotels")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/hotels`)
       .then((res) => {
         setData(res.data);
       })
@@ -21,10 +20,6 @@ const HomePage = () => {
     <>
       <Navbar />
       <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
-        {data.msg === "success" &&
-          data.data.map((item, id) => {
-            return <HotelCard data={item} key={id} />;
-          })}
         {data.msg === "success" &&
           data.data.map((item, id) => {
             return <HotelCard data={item} key={id} />;
