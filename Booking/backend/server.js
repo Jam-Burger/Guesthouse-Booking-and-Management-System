@@ -17,23 +17,36 @@ server.use(
 );
 
 server.use(express.json());
+server.get("/", (req, res) => {
+  switch (mongoose.connection.readyState) {
+    case 0:
+      res.send("Disconnected with database");
+    case 1:
+      res.send("Connected with database");
+    case 2:
+      res.send("Connecting to database");
+    case 3:
+      res.send("Disconnecting to database");
+    case 99:
+      res.send("Unititialized database");
+    default:
+      res.send("Unknown error!");
+  }
+});
+
 server.use("/users", usersRoute);
 server.use("/hotels", hotelsRoute);
 server.use("/rooms", roomsRoute);
-
-
-server.get("/", (req, res) => {
-  res.send("Booking Page");
-});
 
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
     console.log("successfully connected mongoDB!");
-    server.listen(process.env.PORT, () => {
-      console.log(`Server running on http://localhost:${process.env.PORT}`);
-    });
   })
   .catch((error) => {
     console.log(error);
   });
+
+server.listen(process.env.PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`);
+});
