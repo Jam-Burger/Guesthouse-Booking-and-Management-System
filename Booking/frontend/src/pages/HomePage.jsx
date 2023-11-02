@@ -19,11 +19,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <div className="container">
         {data.msg === "success" &&
           data.data.map((item, id) => {
-            return <HotelCard data={item} key={id}/>;
+            return <HotelCard data={item} key={id} />;
           })}
       </div>
     </>

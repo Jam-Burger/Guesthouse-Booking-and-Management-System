@@ -1,0 +1,23 @@
+.navbar{
+background-color: #001C30;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding:10px;
+/* position:fixed; */
+}
+
+.navbar_right_side{
+    display: flex;
+    flex-direction: row;
+    color:rgb(31, 83, 205);
+    text-decoration: none;
+}
+
+.profile{
+    border: solid black 1px;
+    border-radius: 50%;
+    background-color: white;
+    padding:10px;
+}

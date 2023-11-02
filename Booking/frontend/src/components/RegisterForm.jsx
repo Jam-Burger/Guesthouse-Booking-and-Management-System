@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm() {
+  const navigate= useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
@@ -15,10 +17,9 @@ function RegisterForm() {
       profilePic: e.target.profilePic.value,
     };
 
-    console.log("user saved", user);
     try {
       await axios.post("http://localhost:4000/users", user);
-      console.log("user saved", user);
+      navigate("/",{state:{isLoggedIn : true}});
     } catch (e) {
       console.log(e);
     }
@@ -30,13 +31,13 @@ function RegisterForm() {
         <label className="form-label" htmlFor="firstName">
           Your First Name
         </label>
-        <input type="text" name="firstName" className="form-control " />
+        <input type="text" name="firstName" id="firstName" className="form-control required" />
       </div>
       <div className="form-outline mb-3">
         <label className="form-label" htmlFor="lastName">
           Your Last Name
         </label>
-        <input type="text" name="lastName" className="form-control " />
+        <input type="text" name="lastName" id="lastName" className="form-control " />
       </div>
       <div className="form-outline mb-3">
         <label className="form-label" htmlFor="contactNo">
@@ -46,6 +47,7 @@ function RegisterForm() {
           className="form-control"
           type="number"
           name="contactNo"
+          id="contactNo"
           maxLength={10}
           minLength={10}
           min={1e10}
@@ -54,24 +56,24 @@ function RegisterForm() {
       </div>
 
       <div className="form-outline mb-3">
-        <label className="form-label" htmlForfor="emailId">
+        <label className="form-label" htmlFor="emailId">
           Your Email
         </label>
-        <input type="email" name="emailId" className="form-control" />
+        <input type="email" name="emailId" id="emailId" className="form-control" required/>
       </div>
 
       <div className="form-outline mb-3">
-        <label className="form-label" htmlForfor="password">
+        <label className="form-label" htmlFor="password">
           Password
         </label>
-        <input type="password" name="password" className="form-control" />
+        <input type="password" name="password" id="password" className="form-control" required/>
       </div>
 
       <div className="form-outline mb-3">
         <label className="form-label" htmlFor="gender">
           Gender
         </label>
-        <select name="gender" className="form-control" required>
+        <select name="gender" id="gender" className="form-control" required>
           <option value="">Please select one…</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -86,6 +88,7 @@ function RegisterForm() {
           className="form-control"
           type="number"
           name="age"
+          id="age"
           min="3"
           max="100"
           required
@@ -99,6 +102,7 @@ function RegisterForm() {
           className="form-control"
           type="file"
           name="profilePic"
+          id="profilePic"
           accept="image/*"
         />
       </div>

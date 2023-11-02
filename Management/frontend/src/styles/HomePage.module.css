@@ -1,0 +1,6 @@
+.tagline{
+    position:absolute;
+    top:50%;
+    left:20%;
+    z-index: 1;
+}

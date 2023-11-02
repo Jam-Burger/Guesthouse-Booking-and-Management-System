@@ -1,11 +1,18 @@
 import express from "express";
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 const router = express.Router();
 const saltRounds = 10;
 
 // find(query, queryProjection)
+async function comparePassword(plaintextPassword, hash) {
+  const result = await bcrypt.compare(plaintextPassword, hash);
+  console.log(typeof result);
+  console.log(result);
+  return result;
+}
 
 router.get("/", async (req, res) => {
   try {
@@ -59,6 +66,33 @@ router.post("/", async (req, res) => {
       msg: "success",
       data: user,
     });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const data = req.body;
+    const plainPassword = data.password;
+    const emailId = data.emailId;
+    User.findOne({ emailId: emailId })
+      .then(async (user) => {
+        if (!user) {
+          res.json({ msg: "No such Email found" });
+        } else if (!(await comparePassword(plainPassword, user.password))) {
+          res.json({ msg: "Wrong Password, Try again." });
+        } else {
+          res.json({ msg: "Hooray! You have successfully logged in", user: user, redirect:true});
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } catch (e) {
     console.log(e);
     res.status(500).json({
