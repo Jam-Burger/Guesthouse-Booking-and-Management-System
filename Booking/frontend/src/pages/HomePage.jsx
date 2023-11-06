@@ -19,8 +19,8 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar/>
-      <div className="container">
+      <Navbar />
+      <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
         {data.msg === "success" &&
           data.data.map((item, id) => {
             return <HotelCard data={item} key={id} />;
