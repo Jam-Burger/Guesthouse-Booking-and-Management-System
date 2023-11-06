@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const roomSchema = new mongoose.Schema({
+  roomNo: {
+    type: String,
+    required: true,
+  },
   type: {
     type: String,
     required: true,
