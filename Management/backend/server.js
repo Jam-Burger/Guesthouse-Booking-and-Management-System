@@ -1,9 +1,23 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
+import staffRoute from "./routes/staff.route.js";
+import itemsRoute from "./routes/items.route.js";
 
 dotenv.config();
 const server = express();
+
+server.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+
+server.use(express.json());
+server.use("/staff", staffRoute);
+server.use("/items", itemsRoute);
 
 server.get("/", (req, res) => {
   res.send("Management Page");
