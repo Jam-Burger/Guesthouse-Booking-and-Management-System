@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+//here users are staff or admin and not the guests
+const staffSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -8,12 +9,12 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String,
     required: false,
-  },
+  },  
   gender: {
     type: String,
     required: true,
   },
-  type: {
+  role: {
     type: String,
     required: true,
   },
@@ -37,7 +38,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  shift: {
+    type: String,
+    required: true,
+  },
+  salary: {
+    type: Number,
+    required: true,
+  },
 });
 
-export default userSchema;
-export const User = new mongoose.model("User", userSchema);
+export default staffSchema;
+export const Staff = new mongoose.model("Staff", staffSchema);

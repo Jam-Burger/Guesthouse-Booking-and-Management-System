@@ -17,14 +17,20 @@ const guestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
 });
 
-const reservationSchema = new mongoose.Schema({
-  arrivalDate: {
+const bookingSchema = new mongoose.Schema({
+
+  hotelName: {
+    type:String,
+    required:true,
+  },
+  checkInDate: {
     type: Date,
     required: true,
   },
-  departureDate: {
+  checkOutDate: {
     type: Date,
     required: true,
   },
@@ -39,5 +45,5 @@ const reservationSchema = new mongoose.Schema({
   
 });
 
-export default reservationSchema;
-export const Room = new mongoose.model("Reservation", reservationSchema);
+export default bookingSchema;
+export const Booking = new mongoose.model("Booking", bookingSchema);
