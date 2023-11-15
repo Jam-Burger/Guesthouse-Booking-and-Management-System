@@ -20,7 +20,7 @@ const StaffManagementPage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("http://localhost:5000/staff/");
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/staff/");
         if (response.data.data) {
           let tempData = response.data.data;
           const updatedData = tempData.map((person) => {
@@ -34,7 +34,7 @@ const StaffManagementPage = () => {
       }
     }
     fetchData();
-  }, [data]);
+  }, []);
 
   return (
     <div>

@@ -14,7 +14,6 @@ const content = [
   ];
 
 const ReservationPage = () => {
-
   return (
     <div>
       <Navbar2 />
