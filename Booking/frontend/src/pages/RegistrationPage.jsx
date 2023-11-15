@@ -1,6 +1,6 @@
 import RegisterForm from "../components/RegisterForm";
 import Navbar from "../components/Navbar";
-const RegisterationPage = () => {
+const RegistrationPage = () => {
   return (
     <section
       className="vh-110 bg-image"
@@ -30,4 +30,4 @@ const RegisterationPage = () => {
   );
 };
 
-export default RegisterationPage;
+export default RegistrationPage;
