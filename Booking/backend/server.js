@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import usersRoute from "./routes/users.route.js";
 import hotelsRoute from "./routes/hotels.route.js";
 import roomsRoute from "./routes/rooms.route.js";
+import bookingsRoute from "./routes/bookings.route.js";
 import cors from "cors";
 
 dotenv.config();
@@ -11,42 +12,30 @@ const server = express();
 
 server.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: ['http://localhost:3001','http://localhost:3000'],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
 server.use(express.json());
-server.get("/", (req, res) => {
-  switch (mongoose.connection.readyState) {
-    case 0:
-      res.send("Disconnected with database");
-    case 1:
-      res.send("Connected with database");
-    case 2:
-      res.send("Connecting to database");
-    case 3:
-      res.send("Disconnecting to database");
-    case 99:
-      res.send("Unititialized database");
-    default:
-      res.send("Unknown error!");
-  }
-});
-
 server.use("/users", usersRoute);
 server.use("/hotels", hotelsRoute);
 server.use("/rooms", roomsRoute);
+server.use("/bookings", bookingsRoute);
+
+
+server.get("/", (req, res) => {
+  res.send("Booking Page");
+});
 
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
     console.log("successfully connected mongoDB!");
+    server.listen(process.env.PORT, () => {
+      console.log(`Server running on http://localhost:${process.env.PORT}`);
+    });
   })
   .catch((error) => {
     console.log(error);
   });
-
-server.listen(process.env.PORT, () => {
-  console.log(`Server running on http://localhost:${process.env.PORT}`);
-});

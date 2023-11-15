@@ -15,17 +15,19 @@ const Sidebar = () => {
       <div>
         <div
           style={{
-            position:"absolute",
+            position: "absolute",
             display: "flex",
             height: "100vh",
             overflow: "scroll initial",
-            zIndex:"1"
+            left: "0px",
+            top: "0px",
+            zIndex: "1",
           }}
         >
           <CDBSidebar textColor="#fff" backgroundColor="#333">
             <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
               <a
-                href="/"
+                href="/home"
                 className="text-decoration-none"
                 style={{ color: "inherit" }}
               >
@@ -35,46 +37,40 @@ const Sidebar = () => {
 
             <CDBSidebarContent className="sidebar-content">
               <CDBSidebarMenu>
-                <NavLink exact to="/" activeClassName="activeClicked">
-                  <CDBSidebarMenuItem icon="columns">
-                    Dashboard
+                <NavLink to="/reservation" activeclassname="activeClicked">
+                  <CDBSidebarMenuItem icon="calendar">
+                    Reservation
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/tables" activeClassName="activeClicked">
-                  <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
-                </NavLink>
-                <NavLink exact to="/profile" activeClassName="activeClicked">
-                  <CDBSidebarMenuItem icon="user">
-                    Profile page
+                <NavLink to="/inventory" activeclassname="activeClicked">
+                  <CDBSidebarMenuItem icon="warehouse">
+                    Inventory
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/analytics" activeClassName="activeClicked">
-                  <CDBSidebarMenuItem icon="chart-line">
-                    Analytics
+                <NavLink to="/booking" activeclassname="activeClicked">
+                  <CDBSidebarMenuItem icon="history">
+                    Booking History
                   </CDBSidebarMenuItem>
                 </NavLink>
-
-                <NavLink
-                  exact
-                  to="/hero404"
-                  target="_blank"
-                  activeClassName="activeClicked"
-                >
-                  <CDBSidebarMenuItem icon="exclamation-circle">
-                    404 page
+                <NavLink to="/staff" activeclassname="activeClicked">
+                  <CDBSidebarMenuItem icon="user-cog">
+                    Staff Management
                   </CDBSidebarMenuItem>
                 </NavLink>
               </CDBSidebarMenu>
             </CDBSidebarContent>
 
             <CDBSidebarFooter style={{ textAlign: "center" }}>
-              <div
-                style={{
-                  padding: "20px 5px",
-                }}
-              >
-                Sidebar Footer
-              </div>
+              <CDBSidebarMenu>
+                <NavLink to="/profile">
+                  <CDBSidebarMenuItem
+                    icon="user"
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  >
+                    Profile
+                  </CDBSidebarMenuItem>
+                </NavLink>
+              </CDBSidebarMenu>
             </CDBSidebarFooter>
           </CDBSidebar>
         </div>

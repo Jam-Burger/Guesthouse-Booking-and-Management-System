@@ -5,9 +5,10 @@ import axios from "axios";
 
 const HomePage = () => {
   const [data, setData] = useState("loading...");
+
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/hotels`)
+      .get("http://localhost:4000/hotels")
       .then((res) => {
         setData(res.data);
       })

@@ -12,7 +12,7 @@ const HomePage = () => {
             src="/img/background_img.png"
             alt="background"
             width="100%"
-            height="649px"
+            height="659px"
           />
           <div className={`${styles.tagline}`}>
             <h1 style={{color:"white", fontSize:"5rem"}}>Welcome to The HAVEN</h1>

@@ -3,30 +3,27 @@ import React from "react";
 const HotelCard = ({ data }) => {
   const imageLink =
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
-  let ratingText = "unrated";
+  let rating = -1;
   if (data.reviews.length > 0) {
-    let rating = 0;
     data.reviews.forEach((review) => {
       rating += review.stars;
     });
-    rating /= data.reviews.length;
-    ratingText= `${rating.toFixed(1)} (${data.reviews.length} reviews)`;
   }
-
+  rating /= data.reviews.length;
   return (
-    <div className="p-2 col-md-4">
-      <div className="card">
-        <img
-          className="card-img object-fit-cover"
-          style={{ height: "300px" }}
-          src={imageLink}
-          alt={imageLink}
-        />
-        <div className="card-body">
-          <h5 className="card-title">{data.name}</h5>
-          <p className="card-text">
-            Rating: {ratingText}
-          </p>
+    <div className="card">
+      <div className="row no-gutters">
+        <div className="col-sm-5">
+          <img className="card-img" src={imageLink} alt={imageLink} />
+        </div>
+        <div className="col-sm-7">
+          <div className="card-body">
+            <h5 className="card-title">{data.name}</h5>
+            <p className="card-text">{data.description}</p>
+            <p className="card-text">Rating: {rating >= 0 ? rating : "unrated"}</p>
+            <p className="card-text">Address: {data.address}</p>
+            <p className="card-text">Contact: {data.contactNo}</p>
+          </div>
         </div>
       </div>
     </div>
