@@ -7,6 +7,7 @@ const RoomCard = ({ data }) => {
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
 
   data.rating = data.rating === undefined ? 0 : data.rating;
+  console.log(data);
   return (
     <div className="rCard">
       <img src={imageLink} alt="room" className="rPhotu" />

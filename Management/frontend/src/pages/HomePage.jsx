@@ -15,7 +15,7 @@ const HomePage = () => {
             height="659px"
           />
           <div className={`${styles.tagline}`}>
-            <h1 style={{color:"white", fontSize:"5rem"}}>Welcome to The HAVEN</h1>
+            <h1 style={{color:"white", fontSize:"5rem"}}>Welcome to The Haven</h1>
           </div>
         </div>
       </div>

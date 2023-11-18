@@ -21,20 +21,22 @@ function HomePage() {
                             </i>
                         </p>
                         <div className="w-full mr-0 mb-0 ml-0 relative space-y-8">
-                            <form action="/login" method="post">
                                 <div className="flex items-HomePage justify-end mr-14">
+                                <a href="/login">
                                     <button
                                         className="pt-3 pr-5 pb-4 pl-5 mr-5 text-xl font-medium text-center text-black border-black border-solid border-4 rounded-lg transition hover:bg-cyan-500 duration-300 ease"
                                         type="submit">
                                         Login
                                     </button>
+                                    </a>
+                                    <a href="/hotels">
                                     <button
                                         className="pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-cyan-500 rounded-lg transition hover:bg-[#020403] duration-300 ease"
                                         type="submit">
-                                        Let's Get HomePageed!
+                                        Browse some Hotels!
                                     </button>
+                                    </a>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>

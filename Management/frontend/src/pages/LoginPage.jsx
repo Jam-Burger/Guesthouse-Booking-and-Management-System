@@ -111,7 +111,7 @@ const LoginPage = (props) => {
           fontStyle: "italic",
         }}
       >
-        <p>"Making guest happy, makes us happy"</p>
+        <p>Indulge in the Heart of our Heaven,The Haven</p>
       </div>
     </div>
   );
