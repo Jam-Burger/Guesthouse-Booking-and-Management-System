@@ -1,9 +1,28 @@
-import React from 'react'
-
+import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 const BookingPage = () => {
-  return (
-    <div>BookingPage</div>
-  )
-}
+  const { id } = useParams();
+  const [data, setData] = useState();
 
-export default BookingPage
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/rooms/" + id
+        );
+        if (response.data.data) {
+          setData(response.data.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  }, [id]);
+
+  return <div>{data !== 0 && <h3>{data.type}</h3>}</div>;
+};
+
+export default BookingPage;

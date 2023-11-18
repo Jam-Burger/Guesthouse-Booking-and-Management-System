@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RoomCard = ({ data }) => {
+  const navigate = useNavigate();
   const imageLink =
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
 
@@ -24,7 +26,13 @@ const RoomCard = ({ data }) => {
         <div className="rPricing">
           <p className="rPrice">₹{data.bookingPrice}/night</p>
           <p className="rParaPrice">{data.bookingPrice}</p>
-          <button id="bookBtn" className="rBookBtn">
+          <button
+            id="bookBtn"
+            className="rBookBtn"
+            onClick={() => {
+              navigate("/bookings/" + data._id);
+            }}
+          >
             Book Now!
           </button>
         </div>

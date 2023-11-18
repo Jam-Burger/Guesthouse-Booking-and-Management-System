@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RoomCard from "../components/RoomCard";
+import "../styles/HotelList.css";
+
 import axios from "axios";
 
 const RoomsListPage = (props) => {
@@ -32,7 +34,7 @@ const RoomsListPage = (props) => {
   });
 
   return (
-    <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
+    <div style={{ width: "70%" }}>
       {data.map((item, id) => {
         // console.log(item);
         return <RoomCard data={item} key={id} />;

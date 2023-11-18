@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import HotelCard from "../components/HotelCard";
-import "../styles/HotelList.css";
 import axios from "axios";
 
 const HotelsListPage = () => {
@@ -21,7 +20,7 @@ const HotelsListPage = () => {
   return (
     <>
       <Navbar />
-      <div style={{ width: "70%" }}>
+      <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
         {data.msg === "success" &&
           data.data.map((item, id) => {
             return <HotelCard data={item} key={id} />;
