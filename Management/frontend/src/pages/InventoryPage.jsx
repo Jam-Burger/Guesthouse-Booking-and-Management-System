@@ -19,7 +19,7 @@ const InventoryPage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("http://localhost:5000/items/");
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/items/");
         if (response.data.data) {
           let tempData = response.data.data;
           setData(tempData);
@@ -29,7 +29,7 @@ const InventoryPage = () => {
       }
     }
     fetchData();
-  }, [data]);
+  }, []);
 
   return (
     <div>

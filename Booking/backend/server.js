@@ -12,7 +12,7 @@ const server = express();
 
 server.use(
   cors({
-    origin: ['http://localhost:3001','http://localhost:3000'],
+    origin: [process.env.FRONTEND_URL, process.env.MANAGEMENT_FRONTEND_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );

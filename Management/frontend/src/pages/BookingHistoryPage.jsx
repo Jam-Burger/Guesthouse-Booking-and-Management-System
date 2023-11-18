@@ -20,9 +20,12 @@ const BookingHistoryPage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("http://localhost:4000/bookings", {
-          params: query,
-        });
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/bookings",
+          {
+            params: query,
+          }
+        );
         if (response.data.data) {
           let tempData = response.data.data;
 
@@ -38,7 +41,7 @@ const BookingHistoryPage = () => {
       }
     }
     fetchData();
-  }, [data]);
+  }, []);
 
   return (
     <div>

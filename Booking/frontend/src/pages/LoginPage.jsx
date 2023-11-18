@@ -3,10 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-
 const LoginPage = () => {
   const [message, setMessage] = useState("");
-  const navigate   = useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
@@ -15,7 +14,7 @@ const LoginPage = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:4000/users/login",
+        process.env.REACT_APP_BACKEND_URL + "/users/login",
         user
       );
       if (response.data.msg) {
@@ -24,7 +23,9 @@ const LoginPage = () => {
       }
 
       if (response.data.redirect) {
-        navigate("/",{state:{isLoggedIn : true, user: response.data.user}});
+        navigate("/", {
+          state: { isLoggedIn: true, user: response.data.user },
+        });
       }
     } catch (e) {
       console.log(e);
@@ -39,7 +40,7 @@ const LoginPage = () => {
           "url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')",
       }}
     >
-    <Navbar />
+      <Navbar />
       <div className="mask d-flex align-items-center vh-100 gradient-custom-3">
         <div className="container vh-100 my-2">
           <div className="row d-flex justify-content-center align-items-center h-100">

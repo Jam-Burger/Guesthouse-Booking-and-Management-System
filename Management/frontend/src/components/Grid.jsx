@@ -10,9 +10,7 @@ import {
   Sort,
 } from "@syncfusion/ej2-react-grids";
 
-import "../styles/grid.css";
-
-function Grid(props) {
+const Grid= (props) =>{
   registerLicense(process.env.REACT_APP_LICENSE_KEY);
   validateLicense(process.env.REACT_APP_LICENSE_KEY)
   return (

@@ -7,6 +7,7 @@ import StaffManagementPage from "./pages/StaffManagementPage";
 import BookingHistoryPage from "./pages/BookingHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import InventoryPage from "./pages/InventoryPage";
+
 const App = () => (
   <BrowserRouter>
     <Routes>
@@ -17,7 +18,6 @@ const App = () => (
       <Route path="/booking" element={<BookingHistoryPage />}></Route>
       <Route path="/profile" element={<ProfilePage />}></Route>
       <Route path="/inventory" element={<InventoryPage />}></Route>
-
     </Routes>
   </BrowserRouter>
 );

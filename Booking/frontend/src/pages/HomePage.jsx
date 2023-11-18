@@ -8,7 +8,7 @@ const HomePage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/hotels")
+      .get(process.env.REACT_APP_BACKEND_URL + "/hotels")
       .then((res) => {
         setData(res.data);
       })
@@ -20,12 +20,12 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
-      <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
+      <p className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
         {data.msg === "success" &&
           data.data.map((item, id) => {
             return <HotelCard data={item} key={id} />;
           })}
-      </div>
+      </p>
     </>
   );
 };

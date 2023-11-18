@@ -15,7 +15,7 @@ const LoginPage = (props) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/users/",
+        process.env.REACT_APP_BACKEND_URL+"/users/",
         user
       );
       if (response.data.msg) {
