@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     const data = await Room.find(findObj);
-    if (data.length == 0) {
+    if (data.length != 1) {
       res.status(404).json({
         msg: "failure",
         error: "data not found",
@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
     } else {
       res.json({
         msg: "success",
-        data: data,
+        data: data[0],
       });
     }
   } catch (e) {

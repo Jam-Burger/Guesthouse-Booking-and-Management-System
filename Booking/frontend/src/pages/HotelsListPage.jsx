@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import HotelCard from "../components/HotelCard";
+import "../styles/HotelList.css";
 import axios from "axios";
 
-const StartPage = () => {
+const HotelsListPage = () => {
   const [data, setData] = useState("loading...");
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/hotels")
+      .get(process.env.REACT_APP_BACKEND_URL+"/hotels")
       .then((res) => {
         setData(res.data);
       })
@@ -20,7 +21,7 @@ const StartPage = () => {
   return (
     <>
       <Navbar />
-      <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
+      <div style={{ width: "70%" }}>
         {data.msg === "success" &&
           data.data.map((item, id) => {
             return <HotelCard data={item} key={id} />;
@@ -30,4 +31,4 @@ const StartPage = () => {
   );
 };
 
-export default StartPage;
+export default HotelsListPage;

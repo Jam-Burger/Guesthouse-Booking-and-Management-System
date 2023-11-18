@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HotelCard = ({ data }) => {
   const imageLink =
@@ -15,18 +16,20 @@ const HotelCard = ({ data }) => {
 
   return (
     <div className="p-2 col-md-4">
-      <div className="card">
-        <img
-          className="card-img object-fit-cover"
-          style={{ height: "300px" }}
-          src={imageLink}
-          alt={imageLink}
-        />
-        <div className="card-body">
-          <h5 className="card-title">{data.name}</h5>
-          <p className="card-text">Rating: {ratingText}</p>
+      <Link to={"/hotels/" + data._id}>
+        <div className="card">
+          <img
+            className="card-img object-fit-cover"
+            style={{ height: "300px" }}
+            src={imageLink}
+            alt={imageLink}
+          />
+          <div className="card-body">
+            <h5 className="card-title">{data.name}</h5>
+            <p className="card-text">Rating: {ratingText}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
