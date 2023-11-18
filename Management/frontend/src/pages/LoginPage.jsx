@@ -15,7 +15,7 @@ const LoginPage = (props) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/staff/",
+        "http://localhost:5000/login/",
         user
       );
       if (response.data.msg) {
@@ -111,7 +111,7 @@ const LoginPage = (props) => {
           fontStyle: "italic",
         }}
       >
-        <p>"Making guest happy, makes us happy"</p>
+        <p>Indulge in the Heart of our Heaven,The Haven</p>
       </div>
     </div>
   );

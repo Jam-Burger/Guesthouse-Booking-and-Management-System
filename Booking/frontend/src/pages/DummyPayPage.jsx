@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import '../styles/dummyPay.css';
 
-function DummyPayPage(){
+function DummyPayPage(props){
     const [cardNumber, setCardNumber] = useState('');
     const [cardholderName, setCardholderName] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [cvv, setCvv] = useState('');
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
         setCardNumber('');
         setCardholderName('');
@@ -18,7 +18,7 @@ function DummyPayPage(){
 
     return (
         <div className="paymDiv">
-            <h1 className='dumTitle'>Dummy Payment Page</h1>
+            <h1 className='dumTitle'>Net Banking </h1>
             <div className="paymImg">
                 <img src="/img/amazonPayImg.png" alt="Payment Logo" className="paymLogo" />
                 <img src="/img/masterCardImg.png" alt="Master Card" className="paymLogo" />
@@ -74,7 +74,10 @@ function DummyPayPage(){
                     onChange={(evt) => setCvv(evt.target.value)}
                     required
                 />
-                <button type="submit" className='btn btn-success'>Pay Now</button>
+                <div className='d-flex justify-content-between flex-direction-row align-items-center'>
+                <span>Amount : &#8377;4000/- only</span>
+                <button type="submit" className=' d-inline btn btn-success just '>Pay Now</button>
+                </div>
             </form>
         </div>
     );

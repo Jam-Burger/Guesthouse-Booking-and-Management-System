@@ -1,67 +1,26 @@
 import express from "express";
+import passport from "passport";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import staffRoute from "./routes/staff.route.js";
 import itemsRoute from "./routes/items.route.js";
-import passport from "passport";
+import {auth} from './auth.js';
 import expressSession from "express-session";
+import bcrypt from "bcrypt";
+import { Staff } from "./models/staff.model.js";
+const saltRounds = 10;
+
+// find(query, queryProjection)
+async function comparePassword(plaintextPassword, hash) {
+  const result = await bcrypt.compare(plaintextPassword, hash);
+  console.log(typeof result);
+  console.log(result);
+  return result;
+}
 
 dotenv.config();
 const server = express();
-
-// app.use(
-//   expressSession({
-//     secret: process.env.SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       secure: true,
-//       maxAge: 60 * 60 * 1000, // One hour in milliseconds
-//     },
-//   })
-// );
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passport.serializeUser((user, done) => {
-//   done(null, user.id); // Store the user's ID in the cookie
-// });
-
-// passport.deserializeUser((userId, done) => {
-//   // Retrieve the user object from the database using the userId
-//   User.findById(userId, (err, user) => {
-//     if (err) {
-//       return done(err);
-//     }
-//     done(null, user);
-//   });
-// });
-
-// passport.serializeUser((user, done) => {
-//   done(null, user.id); // Store the user's ID in the cookie
-// });
-
-// passport.deserializeUser((userId, done) => {
-//   // Retrieve the user object from the database using the userId
-//   User.findById(userId, (err, user) => {
-//     if (err) {
-//       return done(err);
-//     }
-//     done(null, user);
-//   });
-// });
-
-// app.get(
-//   "/protected-route",
-//   passport.authenticate("local", { failureRedirect: "/login" }),
-//   (req, res) => {
-//     // User is logged in and has access to the protected route
-//     res.send("You are logged in and have access to this protected route.");
-//   }
-// );
-
 server.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -70,7 +29,43 @@ server.use(
 );
 
 server.use(express.json());
-server.use("/staff", staffRoute);
+
+
+
+server.post("/login", async (req, res) => { // /users/login
+  try {
+    const data = req.body;
+    const plainPassword = data.password;
+    const emailId = data.emailId;
+    Staff.findOne({ emailId: emailId })
+      .then(async (staff) => {
+        if (!staff) {
+          res.json({ msg: "No such Email found" });
+        } else if (!(await comparePassword(plainPassword, staff.password))) {
+          res.json({ msg: "Wrong Password, Try again." });
+        } else {
+          res.json({ msg: "Hooray! You have successfully logged in", staff: staff, redirect:true});
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({
+        msg: "failure",
+        error: e,
+      });
+    }
+  });
+  // Initialize Express session middleware
+  server.use(expressSession(auth.sessionOptions));
+  
+// Initialize Passport.js
+server.use(passport.initialize());
+server.use(passport.session());
+
+server.use("/staff", auth.isAuthenticated, auth.isAdmin, staffRoute);
 server.use("/items", itemsRoute);
 
 server.get("/", (req, res) => {
