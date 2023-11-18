@@ -7,15 +7,15 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = (props) => {
   const [message, setMessage] = useState("");
   const navigate   = useNavigate();
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const user = {
-      emailId: e.target.emailId.value,
-      password: e.target.password.value,
+      emailId: event.target.emailId.value,
+      password: event.target.password.value,
     };
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL+"/users/",
+        process.env.REACT_APP_BACKEND_URL+"/staff/",
         user
       );
       if (response.data.msg) {
@@ -61,7 +61,7 @@ const LoginPage = (props) => {
                   style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
                 >
                   <div className="card-body">
-                    <form action="#">
+                    <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <input
                           type="email"
@@ -69,6 +69,7 @@ const LoginPage = (props) => {
                           id="emailId"
                           className="form-control"
                           placeholder="Enter your email"
+                          required
                         />
                         <br />
                       </div>
@@ -79,15 +80,13 @@ const LoginPage = (props) => {
                           id="password"
                           className="form-control"
                           placeholder="Enter your password"
+                          required
                         />
                       </div>
                       <div className="d-flex justify-content-center">
                         <button
                           type="submit"
                           className="btn btn-success btn-block "
-                          onClick={() => {
-                            handleClick();
-                          }}
                         >
                           Login
                         </button>

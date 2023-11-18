@@ -12,7 +12,7 @@ import {
 
 const Grid= (props) =>{
   registerLicense(process.env.REACT_APP_LICENSE_KEY);
-  validateLicense(process.env.REACT_APP_LICENSE_KEY)
+  validateLicense(process.env.REACT_APP_LICENSE_KEY);
   return (
     <div style={{ margin: "2%", marginTop: "3%" }}>
       <div

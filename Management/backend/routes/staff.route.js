@@ -102,4 +102,43 @@ router.post("/", async (req, res) => { // /users/login
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id;
+  const updates = req.body;
+  const findObj = { emailId: id };
+
+  try {
+    const data = await Staff.findOneAndUpdate(findObj, updates);
+    if (data.length == 0) {
+      res.status(404).json({
+        msg: "failure",
+        error: "data not found",
+      });
+    } else {
+      res.json({
+        msg: "success",
+        data: data,
+      });
+    }
+  } catch (e) {
+    res.status(400).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const findObj = { emailId: id };
+  const deletedUser = await Staff.deleteOne(findObj);
+    if (deletedUser.deletedCount === 0) {
+      // Document not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+  
+    // Document deleted successfully
+    return res.status(204).json({ message: 'User deleted successfully' });
+});
+
 export default router;
