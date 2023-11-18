@@ -1,0 +1,46 @@
+.bbody{
+    min-height: fit-content;
+    width: auto;
+}
+
+a:link{
+    text-decoration: underline;
+}
+
+#hyperLink{
+    margin-top: 15px;
+    margin-bottom: -10px;
+}
+/* body{
+    height: 1000px;
+} */
+
+.textBoxes{
+    padding: 10px 0px;
+}
+
+.backImg{
+    height: auto;
+    max-width: 70%;
+    transition-duration: 0.7s;
+    position: relative;
+}
+
+.backImg:hover{
+    background-color: #00ccff;
+}
+
+.imgSrcBack{
+    background-image: url("../../public/img/backImage_2_trans.jpg");
+    /* opacity: 0.7; */
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:cover;
+    position:relative;
+    height:100vh;
+
+}
+
+.but{
+    width: 100%;
+}

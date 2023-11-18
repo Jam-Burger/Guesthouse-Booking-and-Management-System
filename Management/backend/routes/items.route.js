@@ -45,30 +45,30 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    try {
-        const data = req.body;
-        const item = new Item({ ...data});
-        await item.save();
-        res.status(201).json({
-            msg: "success",
-            data: item,
-        });
-    } catch (e) {
-        console.log(e);
-        res.status(500).json({
-            msg: "failure",
-            error: e,
-        });
-    }
+  try {
+    const data = req.body;
+    const item = new Item({ ...data });
+    await item.save();
+    res.status(201).json({
+      msg: "success",
+      data: item,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      msg: "failure",
+      error: e,
+    });
+  }
 });
 
 router.patch("/:id", async (req, res) => {
   const id = req.params.id;
-  const updates = req.body; 
+  const updates = req.body;
   const findObj = { itemId: id };
 
   try {
-    const data = await Item.findOneAndUpdate(findObj,updates);
+    const data = await Item.findOneAndUpdate(findObj, updates);
     if (data.length == 0) {
       res.status(404).json({
         msg: "failure",
@@ -86,5 +86,18 @@ router.patch("/:id", async (req, res) => {
       error: e,
     });
   }
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const findObj = { itemId: id };
+  const deletedUser = await Item.deleteOne(findObj);
+    if (deletedUser.deletedCount === 0) {
+      // Document not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+  
+    // Document deleted successfully
+    return res.status(204).json({ message: 'User deleted successfully' });
 });
 export default router;

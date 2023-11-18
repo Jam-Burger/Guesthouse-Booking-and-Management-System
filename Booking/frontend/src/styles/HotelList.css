@@ -1,0 +1,141 @@
+.rHotel{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    opacity: 1;
+    margin: 3em;
+}
+
+.rCards:hover > .rCard:hover {
+    transform: translateX(2.2em) ;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    z-index: 5;
+}
+
+.rCards:hover > .rCard:not(:hover) {
+    opacity: 0.5;
+}
+
+.rCard{
+    display: flex;
+    padding: 10px;
+    gap: 25px;
+    height: 300px;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+    transition: 0.7s;
+}
+
+.rPhotu{
+    /* background-size: cover; */
+    object-fit: cover;
+    width: 300px;
+    height: 300px;
+    align-self: center;
+    /* transition: 3s; */
+}
+
+
+.rInfo{
+    flex-direction: column;
+    justify-content:space-between;
+    /* align-content: sp; */
+    flex: 2;
+}
+
+.rTitle{
+    font-size: 1.875em;
+    font-weight: bold;
+    color: darkblue;
+}
+
+.rRoomAvail{
+    font-size: 0.9375em;
+    color: whitesmoke;
+    background-color: darkblue  ;
+    padding: 5px 10px ;
+    border-radius: 4px;
+    width: max-content;
+}
+
+.rAditn{
+    font-size: 0.9375em;
+    color: green;
+    font-weight: bold;
+}
+
+.rPara{
+    font-size: 0.9375em;
+    color: black;
+    font-style: italic;
+}
+
+.rDetails{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.rRating{
+    display: flex;
+    justify-content:flex-end;
+    align-content:first baseline;
+    gap: 10px;
+    align-items: center;
+    margin-top: -5px;
+}
+
+#iRateReview{
+    font-weight: 700;
+    font-size: 1.25em;
+}
+
+#iRating{
+    align-self: flex-start;
+    font-weight: 800;
+    background-color: gold;
+    color: black;
+    padding: 6px;
+    font-size: 1.25em;
+}
+
+.rPricing{
+    flex-direction: column;
+    gap: 3px;
+    font-size: 1em;
+    text-align: right;
+    align-content: baseline;
+}
+.rPrice{
+    font-size: 1.625em;
+    font-weight: 1000;
+}
+
+.rParaPrice{
+    font-size: 1em;
+    color: #708090;
+}
+#bookBtn{
+    border:none;
+    font-size: 1em;
+    font-weight: bold;
+    color: whitesmoke;
+    background-color: darkblue  ;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    outline:none;
+    transition: all 0.2s ease;
+    mix-blend-mode: hard-light;
+}
+
+#bookBtn:hover{
+    /* transform: scale(1.05); */
+    background-color: gold;
+    color: black;
+}
