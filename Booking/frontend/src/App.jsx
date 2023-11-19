@@ -5,9 +5,10 @@ import BookingPage from "./pages/BookingPage";
 import ProfilePage from "./pages/ProfilePage";
 import HotelsListPage from "./pages/HotelsListPage";
 import RoomsListPage from "./pages/RoomsListPage";
-import DummyPayPage from "./pages/DummyPayPage";
+import PaymentPage from "./pages/PaymentPage";
 import LoginPage from "./pages/LoginPage";
 import SignUp from "./pages/SignUpPage";
+import BookingConfirmationPage from "./pages/BookingConfirmationPage";
 import PageNotFound from "./pages/PageNotFound";
 
 const App = () => (
@@ -20,7 +21,11 @@ const App = () => (
       <Route path="/profile" element={<ProfilePage />}></Route>
       <Route path="/hotels" element={<HotelsListPage />}></Route>
       <Route path="/hotels/:id" element={<RoomsListPage />}></Route>
-      <Route path="/pay" element={<DummyPayPage />}></Route>
+      <Route path="/payment" element={<PaymentPage />}></Route>
+      <Route
+        path="/bookingConfirmation"
+        element={<BookingConfirmationPage />}
+      ></Route>
       <Route path="*" element={<PageNotFound />}></Route>
     </Routes>
   </BrowserRouter>

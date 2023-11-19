@@ -1,12 +1,13 @@
 import express from "express";
 import { Booking } from "../models/booking.model.js";
+import { Room } from "../models/room.model.js";
 
 const router = express.Router();
 const BreakError = {};
 
 const checkCollision = function (item, data) {
-  const date1 = (new Date (data.checkInDate)).getTime();
-  const date2 = (new Date (data.checkOutDate)).getTime();
+  const date1 = (new Date(data.checkInDate)).getTime();
+  const date2 = (new Date(data.checkOutDate)).getTime();
   if (date1 > item.checkInDate.getTime() && date1 < item.checkOutDate.getTime()) return true;
   if (date2 > item.checkInDate.getTime() && date2 < item.checkOutDate.getTime()) return true;
   return false;
@@ -56,29 +57,26 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const data = req.body;
-    const hotelName = data.hotelName;
-    const findObj = { hotelName: hotelName, roomNo: data.roomNo };
-    const storedData = await Booking.find(findObj);
+    const bookingData = req.body;
+    const previousBookings = await Booking.find({ roomNo: bookingData.roomNo });
     let isCollision = false;
-    try {
-      storedData.forEach((item) => {
-        if (checkCollision(item, data)) {
-          console.log("Error, Rooms are not available on your specified date");
-          isCollision=true;
-          throw BreakError;
-        }
-      });
-    } catch (err) {
-      if (err !== BreakError) throw err;
-    }
-    if (isCollision){
-      res.json({msg : "No Rooms are available"});
+
+    previousBookings.forEach((item) => {
+      if (checkCollision(item, bookingData)) {
+        console.log("Error, Rooms are not available on your specified date");
+        isCollision = true;
+      }
+    });
+    if (isCollision) {
+      res.json({ msg: "No Rooms are available" });
       return;
     }
 
-    const newBooking = new Booking({ ...data });
+    const newBooking = new Booking({ ...bookingData });
+
     await newBooking.save();
+    await Room.findOneAndUpdate({ roomNo: bookingData.roomNo }, { status: "BOOKED" });
+
     res.status(201).json({
       msg: "success",
       data: newBooking,
