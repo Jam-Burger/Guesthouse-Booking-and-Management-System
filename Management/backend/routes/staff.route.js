@@ -1,8 +1,6 @@
 import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
-import {auth} from '../auth.js';
 
 const router = express.Router();
 const saltRounds = 10;
@@ -16,7 +14,6 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 router.get("/",async (req, res) => {
-  console.log(auth.isAuthenticated);
   const session = req.session; // Retrieve the session from the request object
 
   if (session && session.user) {

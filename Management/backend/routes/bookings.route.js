@@ -1,6 +1,5 @@
 import express from "express";
 import { Booking } from "../models/booking.model.js";
-import mongoose from "mongoose";
 
 const router = express.Router();
 const BreakError = {};
@@ -35,8 +34,8 @@ router.get("/:id", async (req, res) => {
   const findObj = { _id: id };
 
   try {
-    const data = await Booking.find(findObj);
-    if (data.length == 0) {
+    const data = await Booking.findOne(findObj);
+    if (!data) {
       res.status(404).json({
         msg: "failure",
         error: "data not found",

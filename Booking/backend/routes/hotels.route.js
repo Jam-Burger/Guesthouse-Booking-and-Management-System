@@ -23,8 +23,8 @@ router.get("/:id", async (req, res) => {
   const findObj = { _id: id };
 
   try {
-    const data = await Hotel.find(findObj);
-    if (data.length != 1) {
+    const data = await Hotel.findOne(findObj);
+    if (!data) {
       res.status(404).json({
         msg: "failure",
         error: "data not found",
@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
     } else {
       res.json({
         msg: "success",
-        data: data[0],
+        data: data,
       });
     }
   } catch (e) {

@@ -11,7 +11,6 @@ import {
   Toolbar,
 } from "@syncfusion/ej2-react-grids";
 import { registerLicense, validateLicense } from "@syncfusion/ej2-base";
-import "../styles/grid.css";
 
 
 // const buttons = document.querySelectorAll(".e-toolbar-item");
