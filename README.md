@@ -12,7 +12,7 @@
 | 7 | Ayush Mangroliya | 202101161 |
 | 8 | Suyash Bhagat | 202101101 |
 | 9 | Kirtan Mevada | 202101012 |
-| 10 | Meet Patel | 202101055|
+| 10 | Meet Patel | 202101045|
 
 
 ## Table of Contents
