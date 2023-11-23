@@ -15,8 +15,8 @@ const LoginPage = (props) => {
     };
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL+"/staff/",
-        user
+        process.env.REACT_APP_BACKEND_URL+"/staff",
+        user, 
       );
       if (response.data.msg) {
         setMessage(response.data.msg);
@@ -83,7 +83,7 @@ const LoginPage = (props) => {
                           required
                         />
                       </div>
-                      <div className="d-flex justify-content-center">
+                      <div className="d-flex flex-column justify-content-center">
                         <button
                           type="submit"
                           className="btn btn-success btn-block "

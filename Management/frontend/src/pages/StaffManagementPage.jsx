@@ -126,10 +126,14 @@ const handleChange = async (args) => {
 
 const StaffManagementPage = () => {
   const [data, setData] = useState({});
+  const [message, setMessage] = useState("");
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/staff/");
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/staff/"
+        );
+
         if (response.data.data) {
           let tempData = response.data.data;
           const updatedData = tempData.map((person) => {
@@ -137,8 +141,10 @@ const StaffManagementPage = () => {
             return person;
           });
           setData(updatedData);
+          setMessage("");
         }
       } catch (e) {
+        setMessage("Unauthorized Access");
         console.log(e);
       }
     }
@@ -150,14 +156,20 @@ const StaffManagementPage = () => {
       <Navbar2 />
       <Sidebar />
       <div style={{ marginLeft: "80px" }}>
-        <DataGrid
-          page="EMPLOYEES"
-          content={content}
-          data={data}
-          function={(args) => {
-            handleChange(args);
-          }}
-        />
+        {message === "" ? (
+          <DataGrid
+            page="EMPLOYEES"
+            content={content}
+            data={data}
+            function={(args) => {
+              handleChange(args);
+            }}
+          />
+        ) : (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <h1>{message}</h1>
+          </div>
+        )}
       </div>
     </div>
   );
