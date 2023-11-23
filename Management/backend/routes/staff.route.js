@@ -2,7 +2,6 @@ import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-// import cookieParser from "cookie-parser";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -10,29 +9,16 @@ const saltRounds = 10;
 // find(query, queryProjection)
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
-  console.log(typeof result);
-  console.log(result);
   return result;
 }
 
-// router.get("/", async (req,res)=>{
-//     axios.get('http//localhost:5000/staff/check')
-//   .then(response => {
-//     // res.json(response.data);
-//     res.send("hello");
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
-// })
-
 router.get("/", async (req, res) => {
-  const { staffToken } = req.cookies;
+  const { currentUserToken } = req.cookies;
   console.log("req.cookies : ", req.cookies);
   try {
-    const decoded = jwt.verify(staffToken, process.env.JWT_SECRET);
+    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
     // console.log(decoded);
-    if (decoded.staffToken.role === "admin") {
+    if (decoded.currentUser.role === "admin") {
       // console.log("admin verified")
       const data = await Staff.find({ role: { $ne: "admin" } });
       res.json({
@@ -49,7 +35,6 @@ router.get("/", async (req, res) => {
     res.status(400).json({
       success: false,
       error: e,
-      message: "No. Invalid Request",
     });
   }
 });
@@ -85,8 +70,8 @@ router.post("/signup", async (req, res) => {
     const plainPassword = data.password;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    const newStaff = new Staff({ ...data, password: hashedPassword });
-    await newStaff.save();
+    const staff = new Staff({ ...data, password: hashedPassword });
+    await staff.save();
     res.status(201).json({
       msg: "success",
       data: Staff,
@@ -100,8 +85,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  // /users/login
+router.post("/login", async (req, res) => {
   try {
     const data = req.body;
     const plainPassword = data.password;
@@ -113,10 +97,10 @@ router.post("/", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          const token = jwt.sign({ staffToken: staff }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });
-          res.cookie("staffToken", token, {
+          res.cookie("currentUserToken", token, {
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });

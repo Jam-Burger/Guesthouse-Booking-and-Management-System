@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = (props) => {
+const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -14,7 +14,7 @@ const LoginPage = (props) => {
     };
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL + "/staff",
+        process.env.REACT_APP_BACKEND_URL + "/staff/login",
         user,
         { withCredentials: true }
       );

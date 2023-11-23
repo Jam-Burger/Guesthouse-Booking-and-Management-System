@@ -7,25 +7,20 @@ import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
 import cookieParser from "cookie-parser";
-import session from "express-session";
 
 dotenv.config();
 const server = express();
+
 server.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.BOOKING_FRONTEND_URL],
-    credentials:true,
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 
 server.use(express.json());
 server.use(cookieParser());
-
-if (server.get('env') === 'production') {
-  server.set('trust proxy', 1) // trust first proxy
-  session.cookie.secure = true // serve secure cookies
-}
 
 server.use("/staff", staffRoute);
 server.use("/items", itemsRoute);
@@ -34,6 +29,19 @@ server.use("/bookings", bookingsRoute);
 
 server.get("/", (req, res) => {
   res.send("Management Page");
+});
+
+server.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("currentUserToken");
+    res.json({
+      success: true,
+      message: "logged out successfully",
+    });
+  }
+  catch (e) {
+    res.status(400).json({ success: false, error: e });
+  }
 });
 
 mongoose
