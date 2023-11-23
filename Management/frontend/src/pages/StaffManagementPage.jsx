@@ -86,7 +86,7 @@ const handleChange = async (args) => {
     }
     try {
       const response = await axios.patch(
-        `http://localhost:5000/staff/${args.primaryKeyValue[1]}`,
+        `${process.env.REACT_APP_BACKEND_URL}/staff/${args.primaryKeyValue[1]}`,
         newDataToChange
       );
       console.log(response);
@@ -97,7 +97,7 @@ const handleChange = async (args) => {
   if (args.action === "add") {
     try {
       const response = await axios.post(
-        `http://localhost:5000/staff/signup`,
+        `${process.env.REACT_APP_BACKEND_URL}/staff/signup`,
         args.data
       );
       console.log(response);
@@ -114,7 +114,7 @@ const handleChange = async (args) => {
     try {
       console.log(args.data[0].itemId);
       const response = await axios.delete(
-        `http://localhost:5000/staff/${args.data[0].emailId}`
+        `${process.env.REACT_APP_BACKEND_URL}/staff/${args.data[0].emailId}`
       );
       console.log(response);
     } catch (e) {
@@ -131,7 +131,8 @@ const StaffManagementPage = () => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_BACKEND_URL + "/staff/"
+          process.env.REACT_APP_BACKEND_URL + "/staff/",
+          { withCredentials: true }
         );
 
         if (response.data.data) {

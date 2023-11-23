@@ -2,7 +2,6 @@ import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import axios from "axios";
 // import cookieParser from "cookie-parser";
 
 const router = express.Router();
@@ -32,7 +31,7 @@ router.get("/", async (req, res) => {
   console.log("req.cookies : ", req.cookies);
   try {
     const decoded = jwt.verify(staffToken, process.env.JWT_SECRET);
-    console.log(decoded);
+    // console.log(decoded);
     if (decoded.staffToken.role === "admin") {
       // console.log("admin verified")
       const data = await Staff.find({ role: { $ne: "admin" } });
@@ -114,10 +113,11 @@ router.post("/", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          const token = jwt.sign( {staffToken: staff} , process.env.JWT_SECRET, {
+          const token = jwt.sign({ staffToken: staff }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });
-          res.status(200).cookie("staffToken", token, {
+          res.cookie("staffToken", token, {
+            httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });
           res.json({

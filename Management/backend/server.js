@@ -6,8 +6,8 @@ import staffRoute from "./routes/staff.route.js";
 import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 
 dotenv.config();
 const server = express();
@@ -21,11 +21,11 @@ server.use(
 
 server.use(express.json());
 server.use(cookieParser());
-server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+
+if (server.get('env') === 'production') {
+  server.set('trust proxy', 1) // trust first proxy
+  session.cookie.secure = true // serve secure cookies
+}
 
 server.use("/staff", staffRoute);
 server.use("/items", itemsRoute);
@@ -34,35 +34,6 @@ server.use("/bookings", bookingsRoute);
 
 server.get("/", (req, res) => {
   res.send("Management Page");
-});
-
-server.post("/check", (req, res) => {
-  const user = {
-    id: 1,
-    name: "Divyam",
-    password: "op",
-  };
-  const token = jwt.sign({ user }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-
-  res
-    .status(200)
-    .cookie("token", token, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 1000,
-    })
-    .json({ success: true, token });
-});
-
-server.get("/protected", async (req, res) => {
-  const { token } = req.cookies;
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.status(200).json({ message: `Welcome`, decoded });
-  } catch (error) {
-    res.status(401).json({ message: "Unauthorized access" });
-  }
 });
 
 mongoose

@@ -3,10 +3,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const LoginPage = (props) => {
   const [message, setMessage] = useState("");
-  const navigate   = useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const user = {
@@ -15,8 +14,9 @@ const LoginPage = (props) => {
     };
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL+"/staff",
-        user, 
+        process.env.REACT_APP_BACKEND_URL + "/staff",
+        user,
+        { withCredentials: true }
       );
       if (response.data.msg) {
         setMessage(response.data.msg);
@@ -24,7 +24,9 @@ const LoginPage = (props) => {
       }
 
       if (response.data.redirect) {
-        navigate("/home",{state:{isLoggedIn : true, user: response.data.user}});
+        navigate("/home", {
+          state: { isLoggedIn: true, user: response.data.user },
+        });
       }
     } catch (e) {
       console.log(e);
@@ -90,7 +92,10 @@ const LoginPage = (props) => {
                         >
                           Login
                         </button>
-                        <div style={{color : "white"}} className="d-flex justify-content-center">
+                        <div
+                          style={{ color: "white" }}
+                          className="d-flex justify-content-center"
+                        >
                           {message}
                         </div>
                       </div>
