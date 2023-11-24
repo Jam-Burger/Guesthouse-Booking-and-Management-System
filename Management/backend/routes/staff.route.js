@@ -78,6 +78,7 @@ router.post("/signup", async (req, res) => {
     });
     res.cookie("currentUserToken", token, {
       secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
@@ -111,6 +112,7 @@ router.post("/login", async (req, res) => {
           });
           res.cookie("currentUserToken", token, {
             secure: process.env.NODE_ENV !== "development",
+            sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });

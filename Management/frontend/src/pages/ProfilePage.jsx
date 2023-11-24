@@ -8,7 +8,7 @@ const editInfo = () => {};
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-
+  
   const logout = async () => {
     try {
       const response = await axios.get(
@@ -21,6 +21,7 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
+
   return (
     <div>
       <Navbar2 />
