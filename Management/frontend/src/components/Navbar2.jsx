@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import styles from "../styles/Navbar.module.css";
 import { useState, useEffect } from "react";
 
 const Navbar2 = () => {
