@@ -86,7 +86,7 @@ const handleChange = async (args) => {
     }
     try {
       const response = await axios.patch(
-        `http://localhost:5000/staff/${args.primaryKeyValue[1]}`,
+        `${process.env.REACT_APP_BACKEND_URL}/staff/${args.primaryKeyValue[1]}`,
         newDataToChange
       );
       console.log(response);
@@ -97,7 +97,7 @@ const handleChange = async (args) => {
   if (args.action === "add") {
     try {
       const response = await axios.post(
-        `http://localhost:5000/staff/signup`,
+        `${process.env.REACT_APP_BACKEND_URL}/staff/signup`,
         args.data
       );
       console.log(response);
@@ -114,7 +114,7 @@ const handleChange = async (args) => {
     try {
       console.log(args.data[0].itemId);
       const response = await axios.delete(
-        `http://localhost:5000/staff/${args.data[0].emailId}`
+        `${process.env.REACT_APP_BACKEND_URL}/staff/${args.data[0].emailId}`
       );
       console.log(response);
     } catch (e) {
@@ -126,10 +126,15 @@ const handleChange = async (args) => {
 
 const StaffManagementPage = () => {
   const [data, setData] = useState({});
+  const [message, setMessage] = useState("");
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/staff/");
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/staff/",
+          { withCredentials: true }
+        );
+
         if (response.data.data) {
           let tempData = response.data.data;
           const updatedData = tempData.map((person) => {
@@ -137,8 +142,10 @@ const StaffManagementPage = () => {
             return person;
           });
           setData(updatedData);
+          setMessage("");
         }
       } catch (e) {
+        setMessage("Unauthorized Access");
         console.log(e);
       }
     }
@@ -150,14 +157,20 @@ const StaffManagementPage = () => {
       <Navbar2 />
       <Sidebar />
       <div style={{ marginLeft: "80px" }}>
-        <DataGrid
-          page="EMPLOYEES"
-          content={content}
-          data={data}
-          function={(args) => {
-            handleChange(args);
-          }}
-        />
+        {message === "" ? (
+          <DataGrid
+            page="EMPLOYEES"
+            content={content}
+            data={data}
+            function={(args) => {
+              handleChange(args);
+            }}
+          />
+        ) : (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <h1>{message}</h1>
+          </div>
+        )}
       </div>
     </div>
   );

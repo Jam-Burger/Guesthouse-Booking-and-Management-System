@@ -29,21 +29,6 @@ const RoomsListPage = () => {
               tempData.push(roomCategoryData.data.data);
             }
           }
-          tempData.map((roomCategoryData) => {
-            let newData = roomCategoryData;
-            newData.availableRooms = allRoomsData.data.data.filter(
-              (roomData) => {
-                return (
-                  roomData.type === roomCategoryData.type &&
-                  roomData.status === "AVAILABLE"
-                );
-              }
-            );
-            newData.availableRooms = newData.availableRooms.map((item) => {
-              return item.roomNo;
-            });
-            return newData;
-          });
           setData(tempData);
         }
       } catch (e) {
