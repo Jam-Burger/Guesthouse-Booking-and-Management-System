@@ -3,20 +3,20 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-const LoginPage = (props) => {
+const LoginPage = () => {
   const [message, setMessage] = useState("");
-  const navigate   = useNavigate();
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const user = {
-      emailId: e.target.emailId.value,
-      password: e.target.password.value,
+      emailId: event.target.emailId.value,
+      password: event.target.password.value,
     };
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL+"/users/",
-        user
+        process.env.REACT_APP_BACKEND_URL + "/staff/login",
+        user,
+        { withCredentials: true }
       );
       if (response.data.msg) {
         setMessage(response.data.msg);
@@ -24,7 +24,9 @@ const LoginPage = (props) => {
       }
 
       if (response.data.redirect) {
-        navigate("/home",{state:{isLoggedIn : true, user: response.data.user}});
+        navigate("/home", {
+          state: { isLoggedIn: true, user: response.data.user },
+        });
       }
     } catch (e) {
       console.log(e);
@@ -61,7 +63,7 @@ const LoginPage = (props) => {
                   style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
                 >
                   <div className="card-body">
-                    <form action="#">
+                    <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <input
                           type="email"
@@ -69,6 +71,7 @@ const LoginPage = (props) => {
                           id="emailId"
                           className="form-control"
                           placeholder="Enter your email"
+                          required
                         />
                         <br />
                       </div>
@@ -79,19 +82,20 @@ const LoginPage = (props) => {
                           id="password"
                           className="form-control"
                           placeholder="Enter your password"
+                          required
                         />
                       </div>
-                      <div className="d-flex justify-content-center">
+                      <div className="d-flex flex-column justify-content-center">
                         <button
                           type="submit"
                           className="btn btn-success btn-block "
-                          onClick={() => {
-                            handleClick();
-                          }}
                         >
                           Login
                         </button>
-                        <div style={{color : "white"}} className="d-flex justify-content-center">
+                        <div
+                          style={{ color: "white" }}
+                          className="d-flex justify-content-center"
+                        >
                           {message}
                         </div>
                       </div>
@@ -112,7 +116,7 @@ const LoginPage = (props) => {
           fontStyle: "italic",
         }}
       >
-        <p>"Making guest happy, makes us happy"</p>
+        <p>Indulge in the Heart of our Heaven,The Haven</p>
       </div>
     </div>
   );

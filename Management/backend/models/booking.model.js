@@ -17,15 +17,9 @@ const guestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
 });
 
 const bookingSchema = new mongoose.Schema({
-
-  hotelName: {
-    type:String,
-    required:true,
-  },
   checkInDate: {
     type: Date,
     required: true,
@@ -42,7 +36,6 @@ const bookingSchema = new mongoose.Schema({
     type: guestSchema,
     required: true,
   },
-  
 });
 
 export default bookingSchema;

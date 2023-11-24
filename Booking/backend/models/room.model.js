@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Hotel } from "./hotel.model.js";
 
+
 const roomSchema = new mongoose.Schema({
   hotelId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -15,13 +16,13 @@ const roomSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  status: {
-    type: String,
-    required: true,
-  },
   pictures: {
     type: [String],
     required: false,
+  },
+  rating: {
+    type: Number,
+    required: true,
   },
   bookingPrice: {
     type: Number,
