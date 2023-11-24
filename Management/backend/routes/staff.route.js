@@ -1,6 +1,7 @@
 import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -8,44 +9,35 @@ const saltRounds = 10;
 // find(query, queryProjection)
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
-  console.log(typeof result);
-  console.log(result);
   return result;
 }
 
-router.get("/",async (req, res) => {
-  const session = req.session; // Retrieve the session from the request object
-
-  if (session && session.user) {
-    const userId = session.user.emailId; // Extract the user emailId from the session data
-
-    // Query the database to retrieve user information based on the emailId
-    User.findOne(userId, (err, user) => {
-      if (err || !user) {
-        res.status(404).send('User not found');
-        return;
-      }
-
-      // Use the retrieved user object to identify the logged-in user
-      res.send({ user: user });
+router.get("/", async (req, res) => {
+  const { currentUserToken } = req.cookies;
+  console.log("req.cookies : ", req.cookies);
+  try {
+    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    // console.log(decoded);
+    if (decoded.currentUser.role === "admin") {
+      // console.log("admin verified")
+      const data = await Staff.find({ role: { $ne: "admin" } });
+      res.json({
+        success: true,
+        decoded,
+        data: data,
+      });
+    } else {
+      // console.log("admin not verified")
+      res.status(400).send("Unauthorized Access");
+    }
+  } catch (e) {
+    console.log("bad request")
+    res.status(400).json({
+      success: false,
+      error: e,
     });
-  } else {
-    res.status(401).send('Unauthorized access');
   }
 });
-//   try {
-//     const data = await Staff.find({ role: { $ne :"admin"} });
-//     res.json({
-//       msg: "success",
-//       data: data,
-//     });
-//   } catch (e) {
-//     res.status(400).json({
-//       msg: "failure",
-//       error: e,
-//     });
-//   }
-// });
 
 router.get("/:emailId", async (req, res) => {
   const emailId = req.params.emailId;
@@ -78,8 +70,8 @@ router.post("/signup", async (req, res) => {
     const plainPassword = data.password;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    const newStaff = new Staff({ ...data, password: hashedPassword });
-    await newStaff.save();
+    const staff = new Staff({ ...data, password: hashedPassword });
+    await staff.save();
     res.status(201).json({
       msg: "success",
       data: Staff,
@@ -93,7 +85,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => { // /users/login
+router.post("/login", async (req, res) => {
   try {
     const data = req.body;
     const plainPassword = data.password;
@@ -105,7 +97,19 @@ router.post("/", async (req, res) => { // /users/login
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          res.json({ msg: "Hooray! You have successfully logged in", staff: staff, redirect:true});
+          const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+          });
+          res.cookie("currentUserToken", token, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 1000,
+          });
+          res.json({
+            success: true,
+            token,
+            msg: "Hooray! You have successfully logged in",
+            redirect: true
+          });
         }
       })
       .catch((err) => {
@@ -150,13 +154,13 @@ router.delete("/:emailId", async (req, res) => {
   const emailId = req.params.emailId;
   const findObj = { emailId: emailId };
   const deletedUser = await Staff.deleteOne(findObj);
-    if (deletedUser.deletedCount === 0) {
-      // Document not found
-      return res.status(404).json({ error: 'User not found' });
-    }
-  
-    // Document deleted successfully
-    return res.status(204).json({ message: 'User deleted successfully' });
+  if (deletedUser.deletedCount === 0) {
+    // Document not found
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  // Document deleted successfully
+  return res.status(204).json({ message: "User deleted successfully" });
 });
 
 export default router;

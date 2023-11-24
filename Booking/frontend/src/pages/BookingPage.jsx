@@ -18,8 +18,11 @@ const computeAmount = (bp, cid, cod, nor) => {
 
 const BookingPage = () => {
   const { id } = useParams();
-  const [roomsData, setData] = useState([]);
+  const [roomsData, setRoomsData] = useState([]);
   const [roomCategoryData, setRoomCategoryData] = useState({});
+  const [checkInDate, setCheckInDate] = useState(getTodayDate());
+  const [checkOutDate, setCheckOutDate] = useState(getTomorrowDate());
+  const [noOfRooms, setNoOfRooms] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,28 +33,18 @@ const BookingPage = () => {
         );
         setRoomCategoryData(rcd.data.data);
 
-        const allRoomsData = await axios.get(
-          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/"
-        );
-        if (allRoomsData.data.data) {
-          let tempData = allRoomsData.data.data;
-          tempData = tempData.filter((item) => {
-            return (
-              item.status === "AVAILABLE" && item.type === rcd.data.data.type
-            );
-          });
-          setData(tempData);
-        }
+        const availableRoomsData = (await axios.patch(
+          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/available",
+          { type: rcd.data.data.type, checkInDate, checkOutDate }
+        )).data.data;
+        setNoOfRooms(availableRoomsData.length === 0 ? 0 : 1);
+        setRoomsData(availableRoomsData);
       } catch (e) {
         console.log(e);
       }
     }
     fetchData();
-  }, [id]);
-
-  const [checkInDate, setCheckInDate] = useState(getTodayDate());
-  const [checkOutDate, setCheckOutDate] = useState(getTomorrowDate());
-  const [noOfRooms, setNoOfRooms] = useState(Math.max(0, roomsData.length));
+  }, [id, checkInDate, checkOutDate]);
 
   const handleSubmit = (e) => {
     // console.log(checkInDate, checkOutDate, noOfRooms);
@@ -78,7 +71,7 @@ const BookingPage = () => {
     <div className="d-flex flex-column align-items-center justify-content-center pt-3">
       <div style={{ width: "70%" }}>
         <h1>{roomCategoryData.type}</h1>
-        <h3>{roomCategoryData.bookingPrice}/night</h3>
+        <h3>&#8377;{roomCategoryData.bookingPrice}/night</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="checkInDate" className="form-label">
@@ -109,7 +102,6 @@ const BookingPage = () => {
               min={checkInDate}
             />
           </div>
-
           <div className="mb-3">
             <label htmlFor="noOfRo0ms" className="form-label">
               Select number of rooms to book
@@ -117,6 +109,7 @@ const BookingPage = () => {
             <select
               className="form-select"
               aria-label="Default select example"
+              value={noOfRooms}
               onChange={(e) => {
                 setNoOfRooms(e.target.value);
               }}
@@ -132,7 +125,7 @@ const BookingPage = () => {
             </select>
           </div>
           <h3>
-            Payment={" "}
+            Payment= &#8377;
             {computeAmount(
               roomCategoryData.bookingPrice,
               checkInDate,

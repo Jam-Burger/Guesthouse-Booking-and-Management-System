@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
@@ -16,7 +17,8 @@ const LoginPage = () => {
     try {
       const response = await axios.post(
         process.env.REACT_APP_BACKEND_URL + "/users/login",
-        user
+        user,
+        { withCredentials: true }
       );
       if (response.data.msg) {
         setMessage(response.data.msg);
@@ -24,9 +26,7 @@ const LoginPage = () => {
       }
 
       if (response.data.redirect) {
-        navigate("/", {
-          state: { isLoggedIn: true, user: response.data.user },
-        });
+        navigate("/hotels");
       }
     } catch (e) {
       console.log(e);
