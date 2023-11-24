@@ -27,7 +27,7 @@ function SignUp() {
   };
 
   return (
-    <div className="bg-cyan-100 relative">
+    <div className="imgSrcBack2 object-contain relative">
       <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row">
         <div className="flex flex-col items-center w-full pt-5 pr-10 pb-20 pl-10 lg:pt-20 lg:flex-row">
           <div className="w-full bg-cover relative max-w-md lg:max-w-2xl lg:w-7/12">
@@ -185,7 +185,7 @@ function SignUp() {
             </div>
             <svg
               viewBox="0 0 91 91"
-              className="absolute top-0 left-0 z-0 w-32 h-32 -mt-12 -ml-12 text-cyan-400 fill-current"
+              className="absolute top-0 left-0 z-0 w-32 h-32 -mt-12 -ml-12 text-cyan-300 fill-current"
             >
               <g stroke="none" strokeWidth="1" fillRule="evenodd">
                 <g fillRule="nonzero">

@@ -102,7 +102,7 @@ const LoginPage = () => {
             </div>
             <svg
               viewBox="0 0 91 91"
-              className="absolute top-0 left-0 z-0 w-32 h-32 -mt-12 -ml-12 text-cyan-400 fill-current"
+              className="absolute top-0 left-0 z-0 w-32 h-32 -mt-12 -ml-12 text-cyan-300 fill-current"
             >
               <g stroke="none" strokeWidth="1" fillRule="evenodd">
                 <g fillRule="nonzero">

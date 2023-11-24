@@ -4,3 +4,41 @@
     left:20%;
     z-index: 1;
 }
+
+/* .container{
+    /* background-color: #FFFFFF; */
+    /* display: flex;
+    width: 100vw;
+    height: 60vh;
+    position: absolute;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: stretch;
+    overflow-x: hidden; */
+/* } */ 
+
+/* .cards{
+    display: flex;
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    border-radius: 10px;
+    flex-direction: column;
+    /* flex: none; */
+    /* justify-content: center;
+    align-items: center;
+    margin-right: 20px; */
+    /* animation: primary 3s linear infinite; */
+/* } */ 
+
+/* @keyframes primary {
+    from{
+        left: 0%;
+    }
+    to {
+        left: -100%;
+    }
+} */
+
