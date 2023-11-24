@@ -32,10 +32,10 @@ const InventoryPage = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{backgroundImage:'url("/img/backgroundimg.jpeg")',backgroundRepeat:"no-repeat", height:"100vh", backgroundSize:"cover"}}>
       <Navbar2 />
-      <Sidebar />
-      <div style={{ marginLeft: "80px" }}>
+      
+      <div className="mt-0" > 
         <Grid page="INVENTORY" content={content} data={data} />
       </div>
     </div>

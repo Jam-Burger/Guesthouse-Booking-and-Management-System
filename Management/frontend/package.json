@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-property-in-object": "^7.23.3",
     "@syncfusion/ej2": "^23.1.44",
     "@syncfusion/ej2-base": "^23.1.41",
     "@syncfusion/ej2-react-grids": "^23.1.44",

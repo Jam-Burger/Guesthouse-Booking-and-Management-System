@@ -1,6 +1,9 @@
 .tagline{
     position:absolute;
-    top:50%;
-    left:20%;
+    top:20%;
+    left:10%;
     z-index: 1;
+    /* background-color: rgba(0, 0, 0, 0.460); */
+    padding: 3%;
+    border-radius: 30px;
 }

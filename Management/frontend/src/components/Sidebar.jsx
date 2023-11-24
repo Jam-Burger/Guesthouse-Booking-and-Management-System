@@ -1,82 +1,40 @@
-import React from "react";
-import {
-  CDBSidebar,
-  CDBSidebarContent,
-  CDBSidebarFooter,
-  CDBSidebarHeader,
-  CDBSidebarMenu,
-  CDBSidebarMenuItem,
-} from "cdbreact";
-import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { a } from "react-router-dom";
+export default function Sidebar() {
   return (
-    <>
+
+    <div className="mt-3">
       <div>
-        <div
-          style={{
-            position: "absolute",
-            display: "flex",
-            height: "100vh",
-            overflow: "scroll initial",
-            left: "0px",
-            top: "0px",
-            zIndex: "1",
-          }}
-        >
-          <CDBSidebar textColor="#fff" backgroundColor="#333">
-            <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-              <a
-                href="/home"
-                className="text-decoration-none"
-                style={{ color: "inherit" }}
-              >
-                Home
-              </a>
-            </CDBSidebarHeader>
-
-            <CDBSidebarContent className="sidebar-content">
-              <CDBSidebarMenu>
-                <NavLink to="/reservation" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="calendar">
-                    Reservation
-                  </CDBSidebarMenuItem>
-                </NavLink>
-                <NavLink to="/inventory" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="warehouse">
-                    Inventory
-                  </CDBSidebarMenuItem>
-                </NavLink>
-                <NavLink to="/booking" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="history">
-                    Booking History
-                  </CDBSidebarMenuItem>
-                </NavLink>
-                <NavLink to="/staff" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="user-cog">
-                    Staff Management
-                  </CDBSidebarMenuItem>
-                </NavLink>
-              </CDBSidebarMenu>
-            </CDBSidebarContent>
-
-            <CDBSidebarFooter style={{ textAlign: "center" }}>
-              <CDBSidebarMenu>
-                <NavLink to="/profile">
-                  <CDBSidebarMenuItem
-                    icon="user"
-                    style={{ display: "flex", justifyContent: "flex-start" }}
-                  >
-                    Profile
-                  </CDBSidebarMenuItem>
-                </NavLink>
-              </CDBSidebarMenu>
-            </CDBSidebarFooter>
-          </CDBSidebar>
+      <button className="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+      </svg></button>
+      </div>
+      <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div className="offcanvas-header bg-dark text-white">
+          <h5 className="offcanvas-title fs-3" id="offcanvasWithBothOptionsLabel"><a href="/home" className="text-decoration-none text-white">Home</a> </h5>
+          <button type="button" className=" btn btn-dark btn-close"
+           data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body bg-dark ">
+          <ul className="list-unstyled ">
+            <li className="mb-3"><a href="/reservation" className="text-decoration-none text-white fs-4">Reservation</a></li>
+            <li className="mb-3"><a href="/inventory" className="text-decoration-none text-white fs-4">Inventory</a></li>
+            <li className="mb-3"><a href="/booking" className="text-decoration-none text-white fs-4">Booking History</a></li>
+            <li className="mb-3"><a href="/staff" className="text-decoration-none text-white fs-4">Staff Management</a></li>
+          </ul>
+          <div className="fixed-bottom mt-3 p-3">
+            <a href="/profile" className="text-decoration-none text-white fs-4">
+              Profile
+            </a>
+          </div>
         </div>
       </div>
-    </>
-  );
-};
 
-export default Sidebar;
+
+    </div>
+
+  )
+}

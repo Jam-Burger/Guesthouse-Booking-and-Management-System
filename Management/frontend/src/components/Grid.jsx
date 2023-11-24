@@ -14,7 +14,7 @@ const Grid= (props) =>{
   registerLicense(process.env.REACT_APP_LICENSE_KEY);
   validateLicense(process.env.REACT_APP_LICENSE_KEY)
   return (
-    <div style={{ margin: "2%", marginTop: "3%" }}>
+    <div style={{ margin: "2%", paddingTop: ""}}>
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ backgroundColor: "#e7e7e7", height: "70px" }}
@@ -22,6 +22,8 @@ const Grid= (props) =>{
         <h2>{props.page}</h2>
       </div>
       <GridComponent
+      
+        style={{ backgroundColor:"black"}}
         dataSource={props.data}
         allowPaging="true"
         pageSettings={{ pageSize: 10 }}
