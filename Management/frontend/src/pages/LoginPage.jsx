@@ -33,16 +33,16 @@ const LoginPage = (props) => {
   return (
     <div
       style={{        background: "url('img/lg1.jpg') no-repeat center center fixed", backgroundSize: "cover", height: "100vh"      }}>
-      <div className=" d-flex justify-content-center px-2">
+      <div className="container d-flex justify-content-center px-2 ">
         {/********************  CARD************* */}
-        <div className="card" style={{ backgroundColor: "rgba(255,255,255, 0.5)", width: '40rem', marginTop: "6%" }}>
+        <div className="card shadow rounded-4" style={{ backgroundColor: "rgba(255,255,255, 0.5)", width: '30rem', marginTop: "6%" }}>
           <div className="card-body">
-            <div className="d-flex justify-content-center"><img src="img/blogo.png" alt="./Group 2.png" width="200px" height="200px"/></div>
-            <p className="text-center rounded-4 text-dark p-3" style={{}}>
+            <div className="d-flex justify-content-center"><img src="img/blogo.png" alt="./Group 2.png" width="20%" height="20%"/></div>
+            <p className="text-center rounded-4 text-dark px-3">
               <b>Welcome, valued hotel staff! Please enter your credentials to access the secure staff portal.</b>
             </p>
             <form className="card-body d-flex flex-column align-items-center" action="#">
-              <div style={{width: '60%'}}>
+              <div style={{width: '70%'}}>
                 <input
                   type="email"
                   name="emailId"
@@ -52,7 +52,7 @@ const LoginPage = (props) => {
                 />
                 <br />
               </div>
-              <div style={{width: '60%'}}>
+              <div style={{width: '70%'}}>
                 <input
                   type="password"
                   name="password"
@@ -65,7 +65,7 @@ const LoginPage = (props) => {
               <div className="d-flex justify-content-center">
                 <button
                   type="submit"
-                  className="btn btn-dark btn-block "
+                  className="btn btn-primary btn-block  "
                   onClick={() => {
                     handleClick();
                   }}
@@ -78,7 +78,7 @@ const LoginPage = (props) => {
                 
               </div>
               <br />
-              <p className="text-center rounded-4 text-dark p-3" style={{}}>
+              <p className="text-center rounded-4 text-dark px-3">
                 <b>Your dedication ensures the smooth operation of our hotel, and we appreciate your commitment to providing exceptional service.</b>
               </p>
             </form>
