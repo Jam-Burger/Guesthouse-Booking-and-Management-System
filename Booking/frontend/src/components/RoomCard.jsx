@@ -22,19 +22,18 @@ const RoomCard = ({ data }) => {
           <div className="col-md-4">
             <div className="card-body">
               <h5 className="card-title">{data.type}</h5>
-              <p className="card-text">{data.bookingPrice}/night</p>
+              <p className="card-text">&#8377;{data.bookingPrice}/night</p>
               <p className="card-text">
                 <small className="text-muted">capacity: {data.capacity}</small>
               </p>
-              <p>{data.availableRooms.length} rooms available</p>
-              <div
+              <button
                 className="btn btn-primary"
                 onClick={() => {
                   navigate("/bookings/" + data._id);
                 }}
               >
-                Book now!
-              </div>
+                {"Book now!"}
+              </button>
             </div>
           </div>
         </div>

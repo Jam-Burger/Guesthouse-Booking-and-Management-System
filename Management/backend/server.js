@@ -6,55 +6,42 @@ import staffRoute from "./routes/staff.route.js";
 import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const server = express();
+
 server.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.BOOKING_FRONTEND_URL],
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 
 server.use(express.json());
-
-server.post("/login", async (req, res) => { // /users/login
-  try {
-    const data = req.body;
-    const plainPassword = data.password;
-    const emailId = data.emailId;
-    Staff.findOne({ emailId: emailId })
-      .then(async (staff) => {
-        if (!staff) {
-          res.json({ msg: "No such Email found" });
-        } else if (!(await comparePassword(plainPassword, staff.password))) {
-          res.json({ msg: "Wrong Password, Try again." });
-        } else {
-          res.json({ msg: "Hooray! You have successfully logged in", staff: staff, redirect: true });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({
-      msg: "failure",
-      error: e,
-    });
-  }
-});
-// Initialize Express session middleware
-// Initialize Passport.js
+server.use(cookieParser());
 
 server.use("/staff", staffRoute);
 server.use("/items", itemsRoute);
 server.use("/rooms", roomsRoute);
 server.use("/bookings", bookingsRoute);
 
-
 server.get("/", (req, res) => {
   res.send("Management Page");
+});
+
+server.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("currentUserToken");
+    res.json({
+      success: true,
+      message: "logged out successfully",
+    });
+  }
+  catch (e) {
+    res.status(400).json({ success: false, error: e });
+  }
 });
 
 mongoose
