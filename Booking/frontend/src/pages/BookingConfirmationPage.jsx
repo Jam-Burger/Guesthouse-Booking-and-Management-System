@@ -6,4 +6,4 @@ const BookingConfirmationPage = () => {
   )
 }
 
-export default BookingConfirmationPage
+export default BookingConfirmationPage;
