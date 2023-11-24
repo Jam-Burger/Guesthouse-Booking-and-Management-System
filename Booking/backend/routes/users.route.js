@@ -70,6 +70,7 @@ router.patch("/", upload.single('picture'), async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("currentUserToken", token, {
+      secure: process.env.NODE_ENV !== "development",
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
@@ -98,10 +99,10 @@ router.post("/signup", async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("currentUserToken", token, {
+      secure: process.env.NODE_ENV !== "development",
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
-    
     res.status(201).json({
       msg: "success",
       data: user,
@@ -132,6 +133,7 @@ router.post("/login", async (req, res) => {
             expiresIn: "1h",
           });
           res.cookie("currentUserToken", token, {
+            secure: process.env.NODE_ENV !== "development",
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });

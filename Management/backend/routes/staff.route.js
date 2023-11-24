@@ -71,7 +71,16 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const staff = new Staff({ ...data, password: hashedPassword });
+
     await staff.save();
+    const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentUserToken", token, {
+      secure: process.env.NODE_ENV !== "development",
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
     res.status(201).json({
       msg: "success",
       data: Staff,
@@ -101,6 +110,7 @@ router.post("/login", async (req, res) => {
             expiresIn: "1h",
           });
           res.cookie("currentUserToken", token, {
+            secure: process.env.NODE_ENV !== "development",
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });
