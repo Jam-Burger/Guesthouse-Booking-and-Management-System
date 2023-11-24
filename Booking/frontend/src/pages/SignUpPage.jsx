@@ -1,39 +1,33 @@
 import React from "react";
 import "../styles/styles.css";
 import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
-  const [message, setMessage] = useState("");
+function SignUp() {
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      contactNo: e.target.contactNo.value,
       emailId: e.target.emailId.value,
       password: e.target.password.value,
+      gender: e.target.gender.value,
+      age: e.target.age.value,
+      //   profilePic: e.target.profilePic.value,
     };
-    try {
-      const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL + "/users/login",
-        user,
-        { withCredentials: true }
-      );
-      if (response.data.msg) {
-        setMessage(response.data.msg);
-        console.log(response.data.msg);
-      }
 
-      if (response.data.redirect) {
-        navigate("/hotels");
-      }
+    try {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, user);
+      navigate("/home", { state: { isLoggedIn: true } });
     } catch (e) {
       console.log(e);
     }
   };
+
   return (
-    <div className="imgSrcBack relative">
+    <div className="bg-cyan-100 relative">
       <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row">
         <div className="flex flex-col items-center w-full pt-5 pr-10 pb-20 pl-10 lg:pt-20 lg:flex-row">
           <div className="w-full bg-cover relative max-w-md lg:max-w-2xl lg:w-7/12">
@@ -51,6 +45,9 @@ const LoginPage = () => {
             <div className="flex flex-col items-center justify-center pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
               <p className="w-full text-4xl font-medium text-center leading-snug font-serif justify-center">
                 Welcome !!
+              </p>
+              <p className="w-1/2 text-center text-4xl mt-3 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
+                Sign Up
               </p>
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
                 <form onSubmit={handleSubmit}>
@@ -70,34 +67,120 @@ const LoginPage = () => {
                   </div>
                   <div className="relative textBoxes">
                     <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                      Password
+                      First Name
                     </p>
                     <input
-                      name="password"
-                      id="password"
-                      placeholder="Password"
-                      type="password"
+                      type="text"
+                      name="firstName"
+                      id="firstName"
+                      placeholder="First Name"
                       className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
                   </div>
                   <div className="relative textBoxes">
+                    <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
+                      Last Name
+                    </p>
+                    <input
+                      name="lastName"
+                      id="lastName"
+                      placeholder="Last Name"
+                      type="text"
+                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <div className="relative textBoxes">
+                    <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
+                      Age
+                    </p>
+                    <input
+                      type="number"
+                      name="age"
+                      id="age"
+                      min="3"
+                      max="200"
+                      placeholder="Age"
+                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <div className="relative textBoxes">
+                    <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
+                      Password
+                    </p>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Password"
+                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <div className="relative textBoxes">
+                    <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
+                      Contact Number
+                    </p>
+                    <input
+                      name="contactNo"
+                      id="contactNo"
+                      placeholder="Password"
+                      type="text"
+                      minlength="10"
+                      maxlength="10"
+                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <div className="relative textBoxes">
+                    <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
+                      Gender
+                    </p>
+                    <select
+                      name="gender"
+                      id="gender"
+                      className="form-control"
+                      required
+                    >
+                      <option value="">Please select one…</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  {/* <div className="relative textBoxes">
+                    <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
+                      Profile Picture
+                    </p>
+                    <input
+                      type="file"
+                      name="profilePic"
+                      id="profilePic"
+                      accept="image/*"
+                      placeholder="Upload your Profile Pic"
+                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      required
+                    />
+                  </div> */}
+                  <div className="relative textBoxes">
                     <button
                       className="pt-4 pr-5 pb-4 pl-5 but padding-20 text-xl font-medium text-center text-white bg-cyan-500 rounded-lg transition hover:bg-[#020403] duration-300 ease"
                       type="submit"
                     >
-                      Login
+                      Register
                     </button>
                     <p id="hyperLink">
-                      New to Here?{" "}
-                      <a href="./signup">
-                        <b>Sign Up</b>
+                      Already have a Account?{" "}
+                      <a href="/login">
+                        <b>Log In</b>
                       </a>{" "}
-                      a new Account Right Now!
+                      right away!
                     </p>
                   </div>
                 </form>
-                <div className="text-center  mt-3 mb-0">{message}</div>
               </div>
             </div>
             <svg
@@ -287,6 +370,6 @@ const LoginPage = () => {
       </div>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default SignUp;

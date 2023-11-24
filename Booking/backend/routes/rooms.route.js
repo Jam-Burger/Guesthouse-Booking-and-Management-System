@@ -23,8 +23,8 @@ router.get("/:id", async (req, res) => {
   const findObj = { _id: id };
 
   try {
-    const data = await Room.find(findObj);
-    if (data.length == 0) {
+    const data = await Room.findOne(findObj);
+    if (!data) {
       res.status(404).json({
         msg: "failure",
         error: "data not found",
@@ -43,6 +43,30 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/available", async (req, res) => {
+  const id = req.params.id;
+  const findObj = { _id: id };
+
+  try {
+    const data = await Room.findOne(findObj);
+    if (!data) {
+      res.status(404).json({
+        msg: "failure",
+        error: "data not found",
+      });
+    } else {
+      res.json({
+        msg: "success",
+        data: data,
+      });
+    }
+  } catch (e) {
+    res.status(400).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
 router.post("/", async (req, res) => {
   const data = req.body;
   const room = new Room(data);

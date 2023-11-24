@@ -1,34 +1,44 @@
-import React from 'react'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RoomCard = ({ data }) => {
+  const navigate = useNavigate();
   const imageLink =
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
-  let rating = -1;
-  if (data.reviews.length > 0) {
-    data.reviews.forEach((review) => {
-      rating += review.stars;
-    });
-  }
-  rating /= data.reviews.length;
+
+  data.rating = data.rating === undefined ? 0 : data.rating;
+  // console.log(data);
   return (
-    <div className="card">
-      <div className="row no-gutters">
-        <div className="col-sm-3">
-          <img className="card-img" src={imageLink} alt={imageLink} />
-        </div>
-        <div className="col">
-          <div className="card-body">
-            <h5 className="card-title">{data.name}</h5>
-            <p className="card-text">{data.description}</p>
-            <p className="card-text">
-              Rating: {rating >= 0 ? rating : "unrated"}
-            </p>
-            <p className="card-text">Address: {data.address}</p>
-            <p className="card-text">Contact: {data.contactNo}</p>
+    <>
+      <div className="card" style={{ width: "70%" }}>
+        <div className="row g-0">
+          <div className="col-md-6" style={{ width: "25rem" }}>
+            <img
+              src={imageLink}
+              className="card-img object-fit-cover rounded-start"
+              alt="..."
+            />
+          </div>
+          <div className="col-md-4">
+            <div className="card-body">
+              <h5 className="card-title">{data.type}</h5>
+              <p className="card-text">&#8377;{data.bookingPrice}/night</p>
+              <p className="card-text">
+                <small className="text-muted">capacity: {data.capacity}</small>
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  navigate("/bookings/" + data._id);
+                }}
+              >
+                {"Book now!"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

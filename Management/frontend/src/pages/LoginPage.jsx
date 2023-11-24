@@ -3,20 +3,20 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-const LoginPage = (props) => {
+const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const handleClick = async (e) => {
     e.preventDefault();
     const user = {
-      emailId: e.target.emailId.value,
-      password: e.target.password.value,
+      emailId: event.target.emailId.value,
+      password: event.target.password.value,
     };
     try {
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL + "/users/",
-        user
+        process.env.REACT_APP_BACKEND_URL + "/staff/login",
+        user,
+        { withCredentials: true }
       );
       if (response.data.msg) {
         setMessage(response.data.msg);
@@ -24,7 +24,9 @@ const LoginPage = (props) => {
       }
 
       if (response.data.redirect) {
-        navigate("/home", { state: { isLoggedIn: true, user: response.data.user } });
+        navigate("/home", {
+          state: { isLoggedIn: true, user: response.data.user },
+        });
       }
     } catch (e) {
       console.log(e);
@@ -41,7 +43,7 @@ const LoginPage = (props) => {
             <p className="text-center rounded-4 text-dark px-3">
               <b>Welcome, valued hotel staff! Please enter your credentials to access the secure staff portal.</b>
             </p>
-            <form className="card-body d-flex flex-column align-items-center" action="#">
+            <form className="card-body d-flex flex-column align-items-center">
               <div style={{width: '70%'}}>
                 <input
                   type="email"

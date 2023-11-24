@@ -1,7 +1,9 @@
 import express from "express";
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import multer from "multer";
+import uploadFile from "../utills/file-uploader.js"
 
 const router = express.Router();
 const saltRounds = 10;
@@ -9,8 +11,6 @@ const saltRounds = 10;
 // find(query, queryProjection)
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
-  console.log(typeof result);
-  console.log(result);
   return result;
 }
 
@@ -54,13 +54,51 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+const upload = multer();
+router.patch("/", upload.single('picture'), async (req, res) => {
+  try {
+    let updates = JSON.parse(req.body.profileData);
+    if (req.file) {
+      const { webContentLink } = await uploadFile(req.file);
+      console.log(webContentLink);
+      updates = { ...updates, profilePic: webContentLink };
+    }
+    const findObj = { _id: updates._id };
+    let data = await User.findOneAndUpdate(findObj, updates);
+
+    if (!data) {
+      res.status(404).json({
+        msg: "failure",
+        error: "data not found",
+      });
+    } else {
+      const token = jwt.sign({ currentUser: data }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      res.cookie("currentUserToken", token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+      });
+      res.json({ msg: "success", data });
+      console.log("data updated successfully");
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.post("/signup", async (req, res) => {
   try {
     const data = req.body;
     const plainPassword = data.password;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const user = new User({ ...data, password: hashedPassword });
+    console.log(plainPassword);
     await user.save();
     res.status(201).json({
       msg: "success",
@@ -80,6 +118,7 @@ router.post("/login", async (req, res) => {
     const data = req.body;
     const plainPassword = data.password;
     const emailId = data.emailId;
+
     User.findOne({ emailId: emailId })
       .then(async (user) => {
         if (!user) {
@@ -87,7 +126,19 @@ router.post("/login", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, user.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          res.json({ msg: "Hooray! You have successfully logged in", user: user, redirect:true});
+          const token = jwt.sign({ currentUser: user }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+          });
+          res.cookie("currentUserToken", token, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 1000,
+          });
+          res.json({
+            success: true,
+            token,
+            msg: "Hooray! You have successfully logged in",
+            redirect: true
+          });
         }
       })
       .catch((err) => {

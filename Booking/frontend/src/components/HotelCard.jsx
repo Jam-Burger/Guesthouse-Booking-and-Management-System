@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const HotelCard = ({ data }) => {
+  const navigate = useNavigate();
+
   const imageLink =
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
   let ratingText = "unrated";
@@ -15,7 +18,13 @@ const HotelCard = ({ data }) => {
 
   return (
     <div className="p-2 col-md-4">
-      <div className="card">
+      <div
+        className="card"
+        onClick={() => {
+          navigate("/hotels/" + data._id);
+        }
+}
+      >
         <img
           className="card-img object-fit-cover"
           style={{ height: "300px" }}

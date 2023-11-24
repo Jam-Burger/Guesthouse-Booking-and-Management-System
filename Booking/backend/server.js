@@ -4,28 +4,56 @@ import dotenv from "dotenv";
 import usersRoute from "./routes/users.route.js";
 import hotelsRoute from "./routes/hotels.route.js";
 import roomsRoute from "./routes/rooms.route.js";
-import bookingsRoute from "./routes/bookings.route.js";
+import cookieParser from "cookie-parser";
 import cors from "cors";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 const server = express();
 
 server.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.MANAGEMENT_FRONTEND_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  }),
 );
 
 server.use(express.json());
+server.use(cookieParser());
+
 server.use("/users", usersRoute);
 server.use("/hotels", hotelsRoute);
 server.use("/rooms", roomsRoute);
-server.use("/bookings", bookingsRoute);
-
 
 server.get("/", (req, res) => {
   res.send("Booking Page");
+});
+
+server.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("currentUserToken");
+    res.json({
+      success: true,
+      message: "logged out successfully",
+    });
+  }
+  catch (e) {
+    res.status(400).json({ success: false, error: e });
+  }
+});
+
+server.get("/me", (req, res) => {
+  const { currentUserToken } = req.cookies;
+  try {
+    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    res.json({ success: true, data: decoded.currentUser });
+  } catch (e) {
+    res.status(400).json({
+      success: false,
+      error: e,
+    });
+  }
 });
 
 mongoose
