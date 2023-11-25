@@ -8,8 +8,30 @@ import {
   CDBSidebarMenuItem,
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 const Sidebar = () => {
+  const [role, setRole] = useState("");
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/me",
+          { withCredentials: true }
+        );
+        // console.log(response.data);
+        if (response.data.data) {
+          setRole(response.data.data.role);
+        } else {
+          console.log(response.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <div>
@@ -27,7 +49,7 @@ const Sidebar = () => {
           <CDBSidebar toggled textColor="#fff" backgroundColor="#333">
             <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
               <a
-                href="/home"
+                href="/"
                 className="text-decoration-none"
                 style={{ color: "inherit" }}
               >
@@ -37,26 +59,36 @@ const Sidebar = () => {
 
             <CDBSidebarContent className="sidebar-content">
               <CDBSidebarMenu>
-                <NavLink to="/reservation" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="calendar">
-                    Reservation
-                  </CDBSidebarMenuItem>
-                </NavLink>
+                {(role === "admin" || role === "Receptionist") ? 
+                  <>
+                    <NavLink to="/reservation" activeclassname="activeClicked">
+                      <CDBSidebarMenuItem icon="calendar">
+                        Reservation
+                      </CDBSidebarMenuItem>
+                    </NavLink>
+                    <NavLink to="/booking" activeclassname="activeClicked">
+                      <CDBSidebarMenuItem icon="history">
+                        Booking History
+                      </CDBSidebarMenuItem>
+                    </NavLink>
+                  </> : <span></span>
+                }
+                {(role === "admin" || role === "Inventory-Manager") ? 
+                  
                 <NavLink to="/inventory" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="warehouse">
-                    Inventory
-                  </CDBSidebarMenuItem>
-                </NavLink>
-                <NavLink to="/booking" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="history">
-                    Booking History
-                  </CDBSidebarMenuItem>
-                </NavLink>
-                <NavLink to="/staff" activeclassname="activeClicked">
-                  <CDBSidebarMenuItem icon="user-cog">
-                    Staff Management
-                  </CDBSidebarMenuItem>
-                </NavLink>
+                    <CDBSidebarMenuItem icon="warehouse">
+                      Inventory
+                    </CDBSidebarMenuItem>
+                  </NavLink> : <span></span>
+
+                }
+                {role === "admin" ? 
+                  <NavLink to="/staff" activeclassname="activeClicked">
+                    <CDBSidebarMenuItem icon="user-cog">
+                      Staff Management
+                    </CDBSidebarMenuItem>
+                  </NavLink> : <span></span>
+                }
               </CDBSidebarMenu>
             </CDBSidebarContent>
 
