@@ -24,9 +24,7 @@ const LoginPage = () => {
       }
 
       if (response.data.redirect) {
-        navigate("/home", {
-          state: { isLoggedIn: true, user: response.data.user },
-        });
+        navigate("/");
       }
     } catch (e) {
       console.log(e);

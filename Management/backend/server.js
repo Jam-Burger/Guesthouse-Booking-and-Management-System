@@ -7,6 +7,7 @@ import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
 import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 const server = express();
@@ -41,6 +42,19 @@ server.get("/logout", (req, res) => {
   }
   catch (e) {
     res.status(400).json({ success: false, error: e });
+  }
+});
+
+server.get("/me", (req, res) => {
+  const { currentUserToken } = req.cookies;
+  try {
+    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    res.json({ success: true, data: decoded.currentUser });
+  } catch (e) {
+    res.status(400).json({
+      success: false,
+      error: e,
+    });
   }
 });
 
