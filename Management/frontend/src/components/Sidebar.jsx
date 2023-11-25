@@ -24,7 +24,7 @@ const Sidebar = () => {
             zIndex: "1",
           }}
         >
-          <CDBSidebar textColor="#fff" backgroundColor="#333">
+          <CDBSidebar toggled textColor="#fff" backgroundColor="#333">
             <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
               <a
                 href="/home"

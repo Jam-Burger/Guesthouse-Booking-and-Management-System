@@ -2,6 +2,8 @@ import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import multer from "multer";
+import uploadFile from "../utills/file-uploader.js"
 
 const router = express.Router();
 const saltRounds = 10;
@@ -66,7 +68,17 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const staff = new Staff({ ...data, password: hashedPassword });
+
     await staff.save();
+    const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentUserToken", token, {
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
     res.status(201).json({
       msg: "success",
       data: Staff,
@@ -96,6 +108,8 @@ router.post("/login", async (req, res) => {
             expiresIn: "1h",
           });
           res.cookie("currentUserToken", token, {
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });
@@ -119,26 +133,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.patch("/:emailId", async (req, res) => {
-  const emailId = req.params.emailId;
-  const updates = req.body;
-  const findObj = { emailId: emailId };
-
+const upload = multer();
+router.patch("/", upload.single('picture'), async (req, res) => {
   try {
-    const data = await Staff.findOneAndUpdate(findObj, updates);
-    if (data.length == 0) {
-      res.status(404).json({
-        msg: "failure",
-        error: "data not found",
-      });
-    } else {
-      res.json({
-        msg: "success",
-        data: data,
-      });
+    let updatedData = JSON.parse(req.body.profileData);
+    if (req.file) {
+      const { webContentLink } = await uploadFile(req.file);
+      console.log(webContentLink);
+      updatedData = { ...updatedData, profilePic: webContentLink };
     }
+    const findObj = { _id: updatedData._id };
+    await Staff.findOneAndUpdate(findObj, updatedData);
+
+    const token = jwt.sign({ currentUser: updatedData }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentUserToken", token, {
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
+    res.json({ msg: "success", data: updatedData });
+    console.log("data updated successfully");
   } catch (e) {
-    res.status(400).json({
+    console.log(e);
+    res.status(500).json({
       msg: "failure",
       error: e,
     });

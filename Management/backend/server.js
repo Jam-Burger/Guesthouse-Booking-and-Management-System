@@ -61,6 +61,19 @@ server.get("/logout", (req, res) => {
   }
 });
 
+server.get("/me", (req, res) => {
+  const { currentUserToken } = req.cookies;
+  try {
+    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    res.json({ success: true, data: decoded.currentUser });
+  } catch (e) {
+    res.status(400).json({
+      success: false,
+      error: e,
+    });
+  }
+});
+
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
