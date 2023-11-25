@@ -252,6 +252,15 @@ const ProfilePage = () => {
                       </div>
                       <hr />
                       <div className="row">
+                        <div className="col-sm-3">
+                          <h6 className="mb-0">Shift</h6>
+                        </div>
+                        <div className="col-sm-9 text-secondary">
+                          {data && data.shift}
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="row">
                         <div className="col-sm-12 d-flex justify-content-center">
                           <button
                             className="btn mx-2 btn-info"

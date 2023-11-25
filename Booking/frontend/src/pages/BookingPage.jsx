@@ -6,11 +6,16 @@ import { useNavigate } from "react-router-dom";
 
 const getTodayDate = () => {
   const date = new Date();
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  return (
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  );
 };
+
 const getTomorrowDate = () => {
   const date = new Date(Date.now() + 24 * 3600 * 1000);
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  return (
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  );
 };
 const computeAmount = (bp, cid, cod, nor) => {
   return (bp * nor * (new Date(cod) - new Date(cid))) / 86400000;
@@ -32,11 +37,13 @@ const BookingPage = () => {
           process.env.REACT_APP_BACKEND_URL + "/rooms/" + id
         );
         setRoomCategoryData(rcd.data.data);
-
-        const availableRoomsData = (await axios.patch(
-          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/available",
-          { type: rcd.data.data.type, checkInDate, checkOutDate }
-        )).data.data;
+        const availableRoomsData = (
+          await axios.patch(
+            process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/available",
+            { type: rcd.data.data.type, checkInDate, checkOutDate }
+          )
+        ).data.data;
+        // console.log(availableRoomsData);
         setNoOfRooms(availableRoomsData.length === 0 ? 0 : 1);
         setRoomsData(availableRoomsData);
       } catch (e) {
@@ -134,10 +141,16 @@ const BookingPage = () => {
             )}
           </h3>
           <h5>
-            {(new Date(checkOutDate) - new Date(checkInDate)) / 86400000} nights
-            stay
+            {(new Date(checkOutDate) - new Date(checkInDate)) / 86400000 > 0
+              ? (new Date(checkOutDate) - new Date(checkInDate)) / 86400000 +
+                " nights stay"
+              : "invalid dates entered"}
           </h5>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={noOfRooms <= 0}
+          >
             Book
           </button>
         </form>

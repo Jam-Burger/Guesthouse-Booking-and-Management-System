@@ -106,7 +106,8 @@ const ProfilePage = () => {
                   alt="profile"
                   className="rounded-circle object-fit-cover border border-black"
                   style={{
-                    width: "200px",
+                    minWidth: "200px",
+                    maxWidth: "200px",
                     height: "200px",
                   }}
                 />

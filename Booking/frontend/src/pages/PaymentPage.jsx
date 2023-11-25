@@ -15,7 +15,7 @@ const PaymentPage = () => {
   const validate = (_cardNumber, _cardholderName, _expiryDate, _cvv) => {
     return true;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       cardNumber === "" ||
@@ -23,27 +23,37 @@ const PaymentPage = () => {
       expiryDate === "" ||
       cvv === "" ||
       !validate(cardNumber, cardholderName, expiryDate, cvv)
-    )
+    ) {
       return;
+    }
+
     try {
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/me",
+        { withCredentials: true }
+      );
+      const userData = response.data.data;
+      const guestDetails = {
+        fullName: userData.firstName + " " + userData.lastName,
+        gender: userData.gender,
+        age: userData.age,
+        contactNo: userData.contactNo,
+      };
       rooms.forEach(async (roomNo) => {
         const booking = {
           checkInDate,
           checkOutDate,
           roomNo,
-          guestDetails: {
-            fullName: "hello mary",
-            gender: "MALE",
-            age: 20,
-            contactNo: "121208123312",
-          },
+          guestDetails,
         };
         await axios.post(
           process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/bookings/",
           booking
         );
       });
-      navigate("/bookingConfirmation");
+      navigate("/bookingConfirmation", {
+        state: { rooms, checkInDate, checkOutDate, guestDetails },
+      });
     } catch (e) {
       console.log(e);
     }

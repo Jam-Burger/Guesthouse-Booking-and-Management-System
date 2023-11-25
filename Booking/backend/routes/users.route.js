@@ -34,13 +34,14 @@ router.get("/:id", async (req, res) => {
   const findObj = { _id: id };
 
   try {
-    const data = await User.find(findObj);
-    if (data.length == 0) {
+    const data = await User.findOne(findObj);
+    if (!data) {
       res.status(404).json({
         msg: "failure",
         error: "data not found",
       });
     } else {
+      if (!data.profilePic) data.profilePic = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
       res.json({
         msg: "success",
         data: data,
@@ -131,6 +132,8 @@ router.post("/login", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, user.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
+          if (!user.profilePic) user.profilePic = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
+
           const token = jwt.sign({ currentUser: user }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });

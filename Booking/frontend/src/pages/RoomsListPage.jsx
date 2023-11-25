@@ -13,16 +13,16 @@ const RoomsListPage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
+        const hotelData = await axios.get(
           process.env.REACT_APP_BACKEND_URL + "/hotels/" + id
         );
-        if (response.data.data) {
+        if (hotelData.data.data) {
           let tempData = [];
           const allRoomsData = await axios.get(
             process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/"
           );
           if (allRoomsData.data.data) {
-            for (let roomCategoryId of response.data.data.rooms) {
+            for (let roomCategoryId of hotelData.data.data.rooms) {
               const roomCategoryData = await axios.get(
                 process.env.REACT_APP_BACKEND_URL + "/rooms/" + roomCategoryId
               );
