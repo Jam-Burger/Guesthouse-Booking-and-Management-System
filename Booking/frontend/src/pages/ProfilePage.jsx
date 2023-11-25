@@ -104,11 +104,10 @@ const ProfilePage = () => {
                 <MDBCardImage
                   src={!data ? "" : data.profilePic}
                   alt="profile"
-                  className="rounded-circle"
+                  className="rounded-circle object-fit-cover border border-black"
                   style={{
                     width: "200px",
                     height: "200px",
-                    border: "black solid",
                   }}
                 />
                 <MDBInput

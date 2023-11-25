@@ -104,8 +104,8 @@ const ProfilePage = () => {
                           <img
                             src={!data ? "" : data.profilePic}
                             alt="profile"
-                            className=" img-thumbnail"
-                            style={{ height: "200px" }}
+                            className="object-fit-cover rounded-5 border border-black"
+                            style={{ width: "200px", height: "200px" }}
                           />
                           <input
                             type="file"
