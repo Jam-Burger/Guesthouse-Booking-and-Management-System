@@ -7,6 +7,7 @@ import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
 import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 const server = express();
@@ -29,6 +30,22 @@ server.use("/bookings", bookingsRoute);
 
 server.get("/", (req, res) => {
   res.send("Management Page");
+});
+
+server.get("/me",async (req, res) => {
+  const { currentUserToken } = req.cookies;
+  console.log("someone called me : ",currentUserToken);
+  try {
+    const decoded = await jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    console.log("data sent")
+
+    res.json({ success: true, data: decoded.currentUser });
+  } catch (e) {
+    res.status(400).json({
+      success: false,
+      error: e,
+    });
+  }
 });
 
 server.get("/logout", (req, res) => {

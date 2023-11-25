@@ -28,7 +28,7 @@ const checkCollision = (booking, checkInDate, checkOutDate) => {
   
   if (date1 >= date3 && date1 < date4) return true;
   if (date2 > date3) return true;
-  console.log(new Date(checkInDate), new Date(checkOutDate), booking.checkInDate, booking.checkOutDate);
+  // console.log(new Date(checkInDate), new Date(checkOutDate), booking.checkInDate, booking.checkOutDate);
   return false;
 };
 
@@ -40,7 +40,7 @@ router.patch("/available", async (req, res) => {
     const availableRooms= allRooms.filter(async (room) => {
       const previousBookings = await Booking.find({ roomNo: room.roomNo });
       let isCollision = previousBookings.length > 0;
-      // console.log(previousBookings);
+      console.log("previousBookings : ",previousBookings);
       previousBookings.forEach((booking) => {
         if (checkCollision(booking, checkInDate, checkOutDate)) {
           isCollision = true;
@@ -48,7 +48,7 @@ router.patch("/available", async (req, res) => {
       });
       return !isCollision;
     });
-    // console.log(availableRooms);
+    console.log("availableRooms : ",availableRooms);
     res.json({
       msg: "success",
       data: availableRooms,

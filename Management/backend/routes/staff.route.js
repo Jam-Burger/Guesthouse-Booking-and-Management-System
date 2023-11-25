@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 const router = express.Router();
 const saltRounds = 10;
 
-// find(query, queryProjection)
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
   return result;
@@ -14,12 +13,9 @@ async function comparePassword(plaintextPassword, hash) {
 
 router.get("/", async (req, res) => {
   const { currentUserToken } = req.cookies;
-  console.log("req.cookies : ", req.cookies);
   try {
     const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
-    // console.log(decoded);
     if (decoded.currentUser.role === "admin") {
-      // console.log("admin verified")
       const data = await Staff.find({ role: { $ne: "admin" } });
       res.json({
         success: true,
@@ -27,7 +23,6 @@ router.get("/", async (req, res) => {
         data: data,
       });
     } else {
-      // console.log("admin not verified")
       res.status(400).send("Unauthorized Access");
     }
   } catch (e) {
