@@ -57,31 +57,24 @@ router.get("/:id", async (req, res) => {
 const upload = multer();
 router.patch("/", upload.single('picture'), async (req, res) => {
   try {
-    let updates = JSON.parse(req.body.profileData);
+    let updatedData = JSON.parse(req.body.profileData);
     if (req.file) {
       const { webContentLink } = await uploadFile(req.file);
       console.log(webContentLink);
-      updates = { ...updates, profilePic: webContentLink };
+      updatedData = { ...updatedData, profilePic: webContentLink };
     }
-    const findObj = { _id: updates._id };
-    let data = await User.findOneAndUpdate(findObj, updates);
+    const findObj = { _id: updatedData._id };
+    await User.findOneAndUpdate(findObj, updatedData);
 
-    if (!data) {
-      res.status(404).json({
-        msg: "failure",
-        error: "data not found",
-      });
-    } else {
-      const token = jwt.sign({ currentUser: data }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
-      res.cookie("currentUserToken", token, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 1000,
-      });
-      res.json({ msg: "success", data });
-      console.log("data updated successfully");
-    }
+    const token = jwt.sign({ currentUser: updatedData }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentUserToken", token, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
+    res.json({ msg: "success", data: updatedData });
+    console.log("data updated successfully");
   } catch (e) {
     console.log(e);
     res.status(500).json({
@@ -99,7 +92,16 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const user = new User({ ...data, password: hashedPassword });
     console.log(plainPassword);
+
     await user.save();
+    const token = jwt.sign({ currentUser: user }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentUserToken", token, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
+    
     res.status(201).json({
       msg: "success",
       data: user,
