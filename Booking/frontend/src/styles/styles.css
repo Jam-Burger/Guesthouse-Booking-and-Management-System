@@ -31,7 +31,7 @@ a:link{
 }
 
 .imgSrcBack{
-    background-image: url("../../public/images/signup_backImg5.jpg");
+    background-image: url("../../public/img/signup_backImg5.jpg");
     /* opacity: 0.7; */
     background-repeat: no-repeat;
     background-position:center;
@@ -42,7 +42,7 @@ a:link{
 }
 
 .imgSrcBack2{
-    background-image: url("../../public/images/signup_backImg2.jpg");
+    background-image: url("../../public/img/signup_backImg2.jpg");
     /* opacity: 0.7; */
     background-repeat: no-repeat;
     background-position:right;

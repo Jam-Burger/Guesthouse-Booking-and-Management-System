@@ -19,7 +19,14 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+<<<<<<< HEAD
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.4"
+=======
+    "googleapis": "^128.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.4",
+    "multer": "^1.4.5-lts.1"
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
   }
 }

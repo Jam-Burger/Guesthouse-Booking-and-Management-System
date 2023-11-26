@@ -28,12 +28,17 @@ const checkCollision = (booking, checkInDate, checkOutDate) => {
   
   if (date1 >= date3 && date1 < date4) return true;
   if (date2 > date3) return true;
+<<<<<<< HEAD
   console.log(new Date(checkInDate), new Date(checkOutDate), booking.checkInDate, booking.checkOutDate);
+=======
+  // console.log(new Date(checkInDate), new Date(checkOutDate), booking.checkInDate, booking.checkOutDate);
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
   return false;
 };
 
 router.patch("/available", async (req, res) => {
   const { type, checkInDate, checkOutDate } = req.body;
+<<<<<<< HEAD
   // console.log(req.body);
   try {
     const allRooms = await Room.find({ type: type });
@@ -52,6 +57,45 @@ router.patch("/available", async (req, res) => {
     res.json({
       msg: "success",
       data: availableRooms,
+=======
+  if (new Date(checkInDate).getTime() > new Date(checkOutDate).getTime()) {
+    res.json({
+      msg: "success",
+      data: []
+    });
+    return;
+  }
+  try {
+    const allRooms = await Room.find({ type: type });
+    const availableRooms = await Promise.all(
+      allRooms.map(async (room) => {
+        const bookedDates = [];
+        const previousBookings = await Booking.find({ roomNo: room.roomNo });
+
+        previousBookings.forEach((booking) => {
+          const startDate = booking.checkInDate;
+          const endDate = booking.checkOutDate;
+
+          for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+            bookedDates.push(date.toISOString().substring(0, 10)); // Convert Date to YYYY-MM-DD format
+          }
+        });
+
+        const isAvailable = !bookedDates.some((bookedDate) => {
+          return (
+            checkInDate <= bookedDate &&
+            checkOutDate >= bookedDate
+          );
+        });
+
+        return isAvailable ? room : null;
+      })
+    );
+
+    res.json({
+      msg: "success",
+      data: availableRooms.filter((room) => room !== null), // Filter out null values
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
     });
   } catch (e) {
     res.status(400).json({
@@ -61,6 +105,10 @@ router.patch("/available", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   const findObj = { _id: id };

@@ -11,9 +11,9 @@ import PageNotFound from "./pages/PageNotFound"
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<LoginPage />}></Route>
+      <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/reservation" element={<ReservationPage />}></Route>
-      <Route path="/home" element={<HomePage />}></Route>
+      <Route path="/" element={<HomePage />}></Route>
       <Route path="/staff" element={<StaffManagementPage />}></Route>
       <Route path="/booking" element={<BookingHistoryPage />}></Route>
       <Route path="/profile" element={<ProfilePage />}></Route>

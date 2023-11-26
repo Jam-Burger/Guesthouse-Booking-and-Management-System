@@ -12,6 +12,7 @@ import React from 'react';
 // }
 // <button id='bookBtn' className='rBookBtn' onclick={(e)=>{loginReq(e)}}>Book Now!</button> //use this code below
 
+<<<<<<< HEAD
 function RoomCard(props){
     return (
     <div className="rCard">
@@ -23,6 +24,38 @@ function RoomCard(props){
             <p className='rAditn'>{props.additional2}</p>
             <p className='rAditn'>{props.additional3}</p>
             <p className='rPara'>{props.para}</p>
+=======
+  data.rating = data.rating === undefined ? 0 : data.rating;
+  // console.log(data);
+  return (
+    <>
+      <div className="card" style={{ width: "70%" }}>
+        <div className="row g-0">
+          <div className="col-md-6" style={{ width: "25rem" }}>
+            <img
+              src={imageLink}
+              className="card-img object-fit-cover rounded-start"
+              alt="..."
+            />
+          </div>
+          <div className="col-md-4">
+            <div className="card-body">
+              <h5 className="card-title">{data.type}</h5>
+              <p className="card-text">&#8377;{data.bookingPrice}/night</p>
+              <p className="card-text">
+                <small className="text-muted">capacity: {data.capacity}</small>
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  navigate("/bookings/" + data._id);
+                }}
+              >
+                {"Book now!"}
+              </button>
+            </div>
+          </div>
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
         </div>
         <div className='rDetails'>
             <div className='rRating'>

@@ -2,6 +2,7 @@ import Navbar2 from "../components/Navbar2";
 import Sidebar from "../components/Sidebar";
 import DataGrid from "../components/DataGrid";
 import { useEffect, useState } from "react";
+import Unauthorized from "../components/Unauthorized";
 import axios from "axios";
 function objectDiff(obj1, obj2) {
   const differences = {};
@@ -167,9 +168,13 @@ const StaffManagementPage = () => {
             }}
           />
         ) : (
+<<<<<<< HEAD
           <div style={{ display: "flex", justifyContent: "center" }}>
             <h1>{message}</h1>
           </div>
+=======
+          <Unauthorized />
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
         )}
       </div>
     </div>

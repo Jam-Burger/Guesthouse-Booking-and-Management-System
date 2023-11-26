@@ -36,13 +36,35 @@ const ProfilePage = () => {
         formData,
         { withCredentials: true }
       );
+<<<<<<< HEAD
       navigate("/profile");
+=======
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
       console.log(response.data);
     } catch (e) {
       console.log(e);
     }
   };
+<<<<<<< HEAD
 
+=======
+  const cancel = async () => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/me",
+        { withCredentials: true }
+      );
+      if (response.data.data) {
+        setData(response.data.data);
+        setEditing(false);
+      } else {
+        console.log(response.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
   const logout = async () => {
     try {
       const response = await axios.get(
@@ -55,6 +77,10 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
   useEffect(() => {
     async function fetchData() {
       try {
@@ -82,6 +108,7 @@ const ProfilePage = () => {
         <MDBContainer className="py-5">
           <MDBCol lg="2">
             <MDBContainer className="d-flex justify-content-center">
+<<<<<<< HEAD
               <label for="upload-photo" style={{ cursor: "pointer" }}>
                 <MDBCardImage
                   src={!data ? "" : data.profilePic}
@@ -91,6 +118,19 @@ const ProfilePage = () => {
                     width: "200px",
                     height: "200px",
                     border: "black solid",
+=======
+              <label
+                for="upload-photo"
+                style={isEditing ? { cursor: "pointer" } : {}}
+              >
+                <MDBCardImage
+                  src={!data ? "" : data.profilePic}
+                  alt="profile"
+                  className="rounded-circle object-fit-cover border border-black"
+                  style={{
+                    width: "200px",
+                    height: "200px",
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                   }}
                 />
                 <MDBInput
@@ -98,6 +138,10 @@ const ProfilePage = () => {
                   id="upload-photo"
                   accept="image/*"
                   style={{ opacity: 0, position: "absolute", zIndex: -1 }}
+<<<<<<< HEAD
+=======
+                  disabled={!isEditing}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                   onChange={(e) => {
                     changeProfilePic(e.target.files[0]);
                   }}
@@ -120,6 +164,16 @@ const ProfilePage = () => {
                         defaultValue={
                           !data ? "" : data.firstName + " " + data.lastName
                         }
+<<<<<<< HEAD
+=======
+                        onChange={(e) => {
+                          const names = e.target.value.split(" ", 2);
+                          console.log(names);
+                          const firstName = names[0];
+                          const lastName = names[1];
+                          setData({ ...data, firstName, lastName });
+                        }}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                       />
                     ) : (
                       <MDBCardText className="text-muted">
@@ -138,6 +192,12 @@ const ProfilePage = () => {
                       <MDBInput
                         type="text"
                         defaultValue={!data ? "" : data.gender}
+<<<<<<< HEAD
+=======
+                        onChange={(e) => {
+                          setData({ ...data, gender: e.target.value });
+                        }}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                       />
                     ) : (
                       <MDBCardText className="text-muted">
@@ -156,6 +216,12 @@ const ProfilePage = () => {
                       <MDBInput
                         type="number"
                         defaultValue={!data ? 0 : data.age}
+<<<<<<< HEAD
+=======
+                        onChange={(e) => {
+                          setData({ ...data, age: e.target.value });
+                        }}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                       />
                     ) : (
                       <MDBCardText className="text-muted">
@@ -174,6 +240,12 @@ const ProfilePage = () => {
                       <MDBInput
                         type="email"
                         defaultValue={!data ? "" : data.emailId}
+<<<<<<< HEAD
+=======
+                        onChange={(e) => {
+                          setData({ ...data, email: e.target.value });
+                        }}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                       />
                     ) : (
                       <MDBCardText className="text-muted">
@@ -192,6 +264,12 @@ const ProfilePage = () => {
                       <MDBInput
                         type="text"
                         defaultValue={!data ? "" : data.contactNo}
+<<<<<<< HEAD
+=======
+                        onChange={(e) => {
+                          setData({ ...data, contactNo: e.target.value });
+                        }}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                       />
                     ) : (
                       <MDBCardText className="text-muted">
@@ -215,8 +293,16 @@ const ProfilePage = () => {
                   </MDBCol>
                   <MDBCol>
                     <MDBCol>
+<<<<<<< HEAD
                       <button className="btn btn-danger" onClick={logout}>
                         Log Out
+=======
+                      <button
+                        className="btn btn-danger"
+                        onClick={isEditing ? cancel : logout}
+                      >
+                        {isEditing ? "Cancel" : "Log Out"}
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                       </button>
                     </MDBCol>
                   </MDBCol>

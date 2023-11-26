@@ -7,6 +7,10 @@ import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
 import cookieParser from "cookie-parser";
+<<<<<<< HEAD
+=======
+import jwt from "jsonwebtoken";
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
 
 dotenv.config();
 const server = express();
@@ -44,6 +48,22 @@ server.get("/logout", (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+server.get("/me", (req, res) => {
+  const { currentUserToken } = req.cookies;
+  try {
+    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    res.json({ success: true, data: decoded.currentUser });
+  } catch (e) {
+    res.status(400).json({
+      success: false,
+      error: e,
+    });
+  }
+});
+
+>>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
