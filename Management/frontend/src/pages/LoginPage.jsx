@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const handleClick = async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
       emailId: e.target.emailId.value,
@@ -63,7 +64,7 @@ const LoginPage = () => {
                 access the secure staff portal.
               </b>
             </p>
-            <form className="card-body d-flex flex-column align-items-center">
+            <form className="card-body d-flex flex-column align-items-center" onSubmit={handleSubmit}>
               <div style={{ width: "70%" }}>
                 <input
                   type="email"
@@ -86,11 +87,7 @@ const LoginPage = () => {
               <br />
               <div className="d-flex justify-content-center">
                 <button
-                  type="submit"
-                  className="btn btn-primary btn-block  "
-                  onClick={() => {
-                    handleClick();
-                  }}
+                  className="btn btn-primary btn-block"
                 >
                   Login
                 </button>

@@ -44,22 +44,22 @@ const RoomsListPage = () => {
     <div>
       <h1 className="m-4">{hotelData && hotelData.name}</h1>
       <div className="d-flex flex-row px-4 justify-content-between">
-        <div className="col-md-7">
+        <div className="col-sm-7">
           <div className="d-flex flex-column" style={{ height: "100vh" }}>
             {data.map((item, id) => {
               return <RoomCard data={item} key={id} />;
             })}
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-sm-3">
           <h2>
             <b>Reviews</b>
           </h2>
           <div className="d-flex flex-column">
-            {hotelData &&
+            {/* {hotelData &&
               hotelData.reviews.map((item, id) => {
                 return <ReviewCard data={item} key={id} />;
-              })}
+              })} */}
           </div>
         </div>
       </div>

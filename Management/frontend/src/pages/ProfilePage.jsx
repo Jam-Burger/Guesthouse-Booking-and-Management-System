@@ -213,6 +213,9 @@ const ProfilePage = () => {
                               <select
                                 className="form-select form-select-sm border-1 border-black"
                                 defaultValue={!data ? "" : data.gender}
+                                onChange={(e) => {
+                                  setData({ ...data, gender: e.target.value });
+                                }}
                               >
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
