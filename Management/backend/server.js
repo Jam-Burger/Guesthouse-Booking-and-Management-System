@@ -34,7 +34,7 @@ server.get("/", (req, res) => {
 
 server.get("/logout", (req, res) => {
   try {
-    res.clearCookie("currentUserToken");
+    res.clearCookie("currentStaffToken");
     res.json({
       success: true,
       message: "logged out successfully",

@@ -1,8 +1,16 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+
 const Navbar = () => {
   const [role, setRole] = useState("");
+  const [profileImg, setProfileImg] = useState("/img/profile.png");
+  const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(true);
+
+  const handleNavbarToggle = () => {
+    setIsNavbarCollapsed(!isNavbarCollapsed);
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -13,6 +21,7 @@ const Navbar = () => {
         // console.log(response.data);
         if (response.data.data) {
           setRole(response.data.data.role);
+          setProfileImg(response.data.data.profilePic);
         } else {
           console.log(response.data);
         }
@@ -22,94 +31,127 @@ const Navbar = () => {
     }
     fetchData();
   }, []);
+
   return (
-    <>
-      <nav className={` `}>
-        <span className="navbar-brand d-flex align-items-center">
+    <nav
+      className="navbar navbar-expand-md navbar-dark"
+      aria-label="Fourth navbar example"
+    >
+      <div className="container-fluid px-2">
+        <span
+          className="navbar-brand d-flex align-items-center justify-content-s"
+          style={{ fontSize: "2rem", color: "white" }}
+        >
           <img
-            src="/img/hotel_logo.png"
+            className="mx-2"
+            src="/img/logo.png"
             alt="Hotel Logo"
-            width="60px"
-            height="60px"
+            width="80px"
+            height="80px"
           />
-          <a href="/" style={{ textDecoration: "none" }}>
-            <span
-              style={{ color: "white", fontSize: "1.8rem" }}
-              className="mx-3 mt-5 "
-            >
-              The Haven
-            </span>
-          </a>
         </span>
-        <span>
-          {role === "admin" || role === "Receptionist" ? (
-            <span className="mx-5">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsExample04"
+          aria-controls="navbarsExample04"
+          aria-expanded={!isNavbarCollapsed}
+          aria-label="Toggle navigation"
+          onClick={handleNavbarToggle}
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          className={`collapse navbar-collapse ${
+            isNavbarCollapsed ? "" : "show"
+          }`}
+          id="navbarsExample04"
+        >
+          <ul className="navbar-nav d-flex  align-items-end text-align-lest ms-auto mb-2 mb-md-0">
+            {(role === "admin" || role === "Receptionist") && (
+              <li className="nav-item mx-4">
+                <a
+                  href="/booking"
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "1.4rem",
+                    color: "white",
+                  }}
+                >
+                  Booking History
+                </a>
+              </li>
+            )}
+            {role === "admin" && (
+              <li className="nav-item mx-4">
+                <a
+                  href="/staff"
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "1.4rem",
+                    color: "white",
+                  }}
+                >
+                  Staff Details
+                </a>
+              </li>
+            )}
+            {(role === "admin" || role === "Receptionist") && (
+              <li className="nav-item mx-4">
+                <a
+                  href="/reservation"
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "1.4rem",
+                    color: "white",
+                  }}
+                >
+                  Reservation
+                </a>
+              </li>
+            )}
+            {(role === "admin" || role === "Inventory-Manager") && (
+              <li className="nav-item mx-4">
+                <a
+                  href="/inventory"
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "1.4rem",
+                    color: "white",
+                  }}
+                >
+                  Inventory
+                </a>
+              </li>
+            )}
+            <li className="nav-item mx-4">
               <a
-                href="/reservation"
-                style={{ textDecoration: "none", fontSize: "1.4rem" }}
+                href="/profile"
+                style={{
+                  textDecoration: "none",
+                  fontSize: "1.4rem",
+                  color: "white",
+                }}
               >
-                Reservation
+                {!isNavbarCollapsed ? (
+                  <span>Profile</span>
+                ) : (
+                  <img
+                    src={profileImg}
+                    alt="Profile"
+                    className="rounded-circle object-fit-cover"
+                    width="35px"
+                    height="35px"
+                  />
+                )}
               </a>
-            </span>
-          ) : (
-            <span></span>
-          )}
-          {role === "admin" || role === "Inventory-Manager" ? (
-            <span className="mx-5">
-              {" "}
-              <a
-                href="/inventory"
-                style={{ textDecoration: "none", fontSize: "1.4rem" }}
-              >
-                Inventory
-              </a>
-            </span>
-          ) : (
-            <span></span>
-          )}
-          {role === "admin" ? (
-            <span className="mx-5">
-              {" "}
-              <a
-                href="/staff"
-                style={{ textDecoration: "none", fontSize: "1.4rem" }}
-              >
-                Staff
-              </a>
-            </span>
-          ) : (
-            <span></span>
-          )}
-          {role === "admin" || role === "Receptionist" ? (
-            <span className="mx-5">
-              {" "}
-              <a
-                href="/booking"
-                style={{ textDecoration: "none", fontSize: "1.4rem" }}
-              >
-                Booking History
-              </a>
-            </span>
-          ) : (
-            <span></span>
-          )}
-          <span className="mx-5">
-            <a href="/profile">
-              <button style={{ border: "none", padding: "0px" }}>
-                <img
-                  src="/img/no-profile-picture.png"
-                  width="38px"
-                  height="38px"
-                  alt="profile pic"
-                  padding="0px"
-                  bac
-                />
-              </button>
-            </a>
-          </span>
-        </span>
-      </nav>
-    </> 
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
 
