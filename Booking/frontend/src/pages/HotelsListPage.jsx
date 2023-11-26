@@ -20,7 +20,7 @@ const HotelsListPage = () => {
   return (
     <>
       <Navbar />
-      <div className="d-flex flex-wrap mx-auto" style={{ width: "70%" }}>
+      <div className="d-flex flex-wrap mt-4 mx-auto" style={{ width: "70%" }}>
         {data.msg === "success" &&
           data.data.map((item, id) => {
             return <HotelCard data={item} key={id} />;

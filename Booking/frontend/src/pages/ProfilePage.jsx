@@ -96,7 +96,7 @@ const ProfilePage = () => {
     <>
       <Navbar />
       <section style={{ backgroundColor: "white", height: "100vh", backgroundSize: "cover" }}>
-        <MDBContainer className=" d-flex flex-column align-items-center pt-3">
+        <MDBContainer className=" d-flex flex-column align-items-center pt-3 ">
           <MDBCol lg="3">
             <MDBContainer className="d-flex flex-column align-items-center">
               <label
@@ -117,7 +117,7 @@ const ProfilePage = () => {
                 <MDBCardImage
                   src={!data ? "./img/maleprofile.png" : data.profilePic}
                   alt="profile"
-                  className={isEditing ? "rounded-circle i object-fit-cover" : "rounded-circle object-fit-cover"}
+                  className={isEditing ? "rounded-circle i object-fit-cover shadow-lg" : "rounded-circle object-fit-cover shadow-lg"}
                   style={{
                     width: "150px",
                     height: "150px",
@@ -131,8 +131,8 @@ const ProfilePage = () => {
           </MDBCol>
 
           <MDBCol lg="6">
-            <MDBCard className="p-2 rounded-4" >
-              <MDBCardBody >
+            <MDBCard className="p-2 rounded-4 shadow-lg" >
+              <MDBCardBody  >
                 <MDBRow>
                   <MDBCol sm="4">
                     <MDBCardText>Full Name</MDBCardText>

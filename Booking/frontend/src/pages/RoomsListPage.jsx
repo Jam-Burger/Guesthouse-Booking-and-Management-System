@@ -45,7 +45,7 @@ const RoomsListPage = () => {
     >
       {data.map((item, id) => {
         // console.log(item);
-        return <RoomCard data={item} key={id} />;
+        return <RoomCard data={item}  key={id} />;
       })}
     </div>
   );
