@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  
   useEffect(() => {
     async function fetchData() {
       try {
@@ -27,7 +28,7 @@ const HomePage = () => {
       }
     }
     fetchData();
-  }, []);
+  });
 
   return (
     <>

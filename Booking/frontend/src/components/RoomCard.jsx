@@ -10,15 +10,14 @@ const RoomCard = ({ data }) => {
   // console.log(data);
   return (
     <>
-      <div className="card" style={{ width: "70%" }}>
+      <div className="card mb-2">
         <div className="row g-0">
-          <div className="col-md-6" style={{ width: "25rem" }}>
-            <img
-              src={imageLink}
-              className="card-img object-fit-cover rounded-start"
-              alt="..."
-            />
-          </div>
+          <img
+            src={imageLink}
+            style={{ width: "25rem", maxHeight: "15rem" }}
+            className="col-md-6 card-img object-fit-cover overflow-hidden"
+            alt="..."
+          />
           <div className="col-md-4">
             <div className="card-body">
               <h5 className="card-title">{data.type}</h5>
