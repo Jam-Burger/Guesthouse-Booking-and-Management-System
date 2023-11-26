@@ -14,10 +14,13 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 router.get("/", async (req, res) => {
-  const { currentUserToken } = req.cookies;
+  const { currentStaffToken } = req.cookies;
+  // console.log("req.cookies : ", req.cookies);
   try {
-    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
-    if (decoded.currentUser.role === "admin") {
+    const decoded = jwt.verify(currentStaffToken, process.env.JWT_SECRET);
+    // console.log(decoded);
+    if (decoded.currentStaff.role === "admin") {
+      // console.log("admin verified")
       const data = await Staff.find({ role: { $ne: "admin" } });
       res.json({
         success: true,

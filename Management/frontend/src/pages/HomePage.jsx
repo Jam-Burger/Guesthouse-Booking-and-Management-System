@@ -14,7 +14,7 @@ const HomePage = () => {
           process.env.REACT_APP_BACKEND_URL + "/me",
           { withCredentials: true }
         );
-        // console.log(response.data);
+        console.log(response.data);
         if (response.data.data) {
           setIsLoggedIn(true);
         } else {

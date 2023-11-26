@@ -34,7 +34,13 @@ const checkCollision = (booking, checkInDate, checkOutDate) => {
 
 router.patch("/available", async (req, res) => {
   const { type, checkInDate, checkOutDate } = req.body;
-
+  if (new Date(checkInDate).getTime() > new Date(checkOutDate).getTime()) {
+    res.json({
+      msg: "success",
+      data: []
+    });
+    return;
+  }
   try {
     const allRooms = await Room.find({ type: type });
     const availableRooms = await Promise.all(
