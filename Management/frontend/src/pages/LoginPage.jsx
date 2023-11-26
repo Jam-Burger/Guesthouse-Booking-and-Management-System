@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleClick = async (e) => {
+    e.preventDefault();
     const user = {
       emailId: event.target.emailId.value,
       password: event.target.password.value,
@@ -32,89 +32,60 @@ const LoginPage = () => {
   };
   return (
     <div
-      style={{
-        background: "url('img/bgimg.png')",
-        height: "739px",
-        width: "100%",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 739px",
-      }}
-      className="my-0"
-    >
-      <div className="row justify-content-around mx-0">
-        <div className="col-4">
-          <img
-            src="img/logo.png"
-            alt="./Group 2.png"
-            width="400px"
-            height="400px"
-            className="my-5"
-          />
-        </div>
-        <div className="col-4">
-          <br />
-          <div className="container mt-5">
-            <div className="row justify-content-center">
-              <div className="col-md-12">
-                <div
-                  className="card custom-card my-5 d-flex "
-                  style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-                >
-                  <div className="card-body">
-                    <form onSubmit={handleSubmit}>
-                      <div className="mb-3">
-                        <input
-                          type="email"
-                          name="emailId"
-                          id="emailId"
-                          className="form-control"
-                          placeholder="Enter your email"
-                          required
-                        />
-                        <br />
-                      </div>
-                      <div className="mb-3">
-                        <input
-                          type="password"
-                          name="password"
-                          id="password"
-                          className="form-control"
-                          placeholder="Enter your password"
-                          required
-                        />
-                      </div>
-                      <div className="d-flex flex-column justify-content-center">
-                        <button
-                          type="submit"
-                          className="btn btn-success btn-block "
-                        >
-                          Login
-                        </button>
-                        <div
-                          style={{ color: "white" }}
-                          className="d-flex justify-content-center"
-                        >
-                          {message}
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+      style={{        background: "url('img/lg1.jpg') no-repeat center center fixed", backgroundSize: "cover", height: "100vh"      }}>
+      <div className="container d-flex justify-content-center px-2 ">
+        {/********************  CARD************* */}
+        <div className="card shadow rounded-4" style={{ backgroundColor: "rgba(255,255,255, 0.5)", width: '30rem', marginTop: "6%" }}>
+          <div className="card-body">
+            <div className="d-flex justify-content-center"><img src="img/blogo.png" alt="./Group 2.png" width="20%" height="20%"/></div>
+            <p className="text-center rounded-4 text-dark px-3">
+              <b>Welcome, valued hotel staff! Please enter your credentials to access the secure staff portal.</b>
+            </p>
+            <form className="card-body d-flex flex-column align-items-center">
+              <div style={{width: '70%'}}>
+                <input
+                  type="email"
+                  name="emailId"
+                  id="emailId"
+                  className="form-control border border-dark "
+                  placeholder="Enter your email"
+                />
+                <br />
               </div>
-            </div>
+              <div style={{width: '70%'}}>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="form-control border border-dark "
+                  placeholder="Enter your password"
+                />
+              </div>
+              <br />
+              <div className="d-flex justify-content-center">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block  "
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
+                  Login
+                </button>
+                <div style={{ color: "white" }} className="d-flex justify-content-center">
+                  {message}
+                </div>
+                
+              </div>
+              <br />
+              <p className="text-center rounded-4 text-dark px-3">
+                <b>Your dedication ensures the smooth operation of our hotel, and we appreciate your commitment to providing exceptional service.</b>
+              </p>
+            </form>
           </div>
+          <br />
         </div>
-      </div>
-      <div
-        className="quote"
-        style={{
-          textAlign: "center",
-          fontSize: "3rem",
-          color: "white",
-          fontStyle: "italic",
-        }}
-      >
-        <p>Indulge in the Heart of our Heaven,The Haven</p>
+        {/****** CARD ***************/}
       </div>
     </div>
   );

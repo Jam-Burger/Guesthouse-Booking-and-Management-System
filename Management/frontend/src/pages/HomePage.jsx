@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import MyNavbar from "../components/MyNavbar";
+
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +33,15 @@ const HomePage = () => {
 
   return (
     <>
+      <div style={{ background: "url('img/lg1.jpg') no-repeat center center fixed", backgroundSize: "cover", height: "100vh"}}>
+        <div> 
+          <div className="container-fluid px-0">
+            <MyNavbar/>
+            <div style={{marginTop:"10%"}}>
+              {/* <h2 className="mx-5" style={{color:"white",fontSize:"1.5rem"}}>Welcome to </h2> */}
+              <h1 className="mx-5" style={{color:"white", fontSize:"6rem"}}>The HAVEN</h1>
+              <h4 className="mx-5" style={{color:"white",fontSize:"1.5rem"}}>Elevate your stay</h4>
+            </div>
       {isLoggedIn && (
         <div style={{ backroundColor: "#001C30" }}>
           <Navbar />
@@ -50,6 +61,8 @@ const HomePage = () => {
           {/* <div style={{background:"#001C30", zIndex:"2", width:"100%", height:"100%", position:"absolute", top:"0",left:"0",opacity:"0.5"}}></div> */}
         </div>
       )}
+        
+      </div>
     </>
   );
 };
