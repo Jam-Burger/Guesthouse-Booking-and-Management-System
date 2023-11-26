@@ -8,7 +8,6 @@ import uploadFile from "../utills/file-uploader.js"
 const router = express.Router();
 const saltRounds = 10;
 
-// find(query, queryProjection)
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
   return result;
@@ -29,7 +28,6 @@ router.get("/", async (req, res) => {
         data: data,
       });
     } else {
-      // console.log("admin not verified")
       res.status(400).send("Unauthorized Access");
     }
   } catch (e) {
