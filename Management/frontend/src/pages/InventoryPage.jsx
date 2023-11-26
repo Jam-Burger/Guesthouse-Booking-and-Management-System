@@ -3,7 +3,8 @@ import Sidebar from "../components/Sidebar";
 import DataGrid from "../components/DataGrid";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
+import Unauthorized from "../components/Unauthorized";
 function objectDiff(obj1, obj2) {
   const differences = {};
 
@@ -65,7 +66,8 @@ const content = [
 
 const InventoryPage = () => {
   const [data, setData] = useState({});
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   const handleChange = async (args) => {
     console.log("args : ", args);
     if (args.action === "edit" || args.action === "add") {
@@ -114,22 +116,43 @@ const InventoryPage = () => {
       //   `Are you sure that you want to delte the item with Item ID = ${args.data[0].itemId} ?, Press 'Y' to confirm and Press 'N' to cancel `
       // );
       // if (answer === "y" || answer ==="Y") {
-        try {
-          console.log(args.data[0].itemId);
-          const response = await axios.delete(
-            `http://localhost:5000/items/${args.data[0].itemId}`
-          );
-          console.log(response);
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        console.log(args.data[0].itemId);
+        const response = await axios.delete(
+          `http://localhost:5000/items/${args.data[0].itemId}`
+        );
+        console.log(response);
+      } catch (e) {
+        console.log(e);
+      }
       // }
     }
   };
   useEffect(() => {
+    async function getAuthentication() {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/me",
+          { withCredentials: true }
+        );
+        console.log(response.data);
+        if (response.data.data) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+          console.log(response.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getAuthentication();
+
     async function fetchData() {
       try {
-        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/items/");
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND_URL + "/items/"
+        );
         if (response.data.data) {
           let tempData = response.data.data;
           setData(tempData);
@@ -138,6 +161,7 @@ const InventoryPage = () => {
         console.log(e);
       }
     }
+
     fetchData();
   }, []);
 
@@ -145,7 +169,7 @@ const InventoryPage = () => {
     <div>
       <Navbar2 />
       <Sidebar />
-      <div style={{ marginLeft: "80px" }}>
+      {isLoggedIn? <div style={{ marginLeft: "80px" }}>
         <DataGrid
           page="INVENTORY"
           content={content}
@@ -154,7 +178,7 @@ const InventoryPage = () => {
             handleChange(args);
           }}
         />
-      </div>
+      </div> : <Unauthorized /> }
     </div>
   );
 };

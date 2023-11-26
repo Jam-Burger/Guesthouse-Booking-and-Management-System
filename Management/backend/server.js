@@ -34,7 +34,7 @@ server.get("/", (req, res) => {
 
 server.get("/logout", (req, res) => {
   try {
-    res.clearCookie("currentUserToken");
+    res.clearCookie("currentStaffToken");
     res.json({
       success: true,
       message: "logged out successfully",
@@ -46,10 +46,10 @@ server.get("/logout", (req, res) => {
 });
 
 server.get("/me", (req, res) => {
-  const { currentUserToken } = req.cookies;
+  const { currentStaffToken } = req.cookies;
   try {
-    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
-    res.json({ success: true, data: decoded.currentUser });
+    const decoded = jwt.verify(currentStaffToken, process.env.JWT_SECRET);
+    res.json({ success: true, data: decoded.currentStaff });
   } catch (e) {
     res.status(400).json({
       success: false,

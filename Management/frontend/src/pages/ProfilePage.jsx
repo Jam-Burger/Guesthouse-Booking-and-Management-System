@@ -59,7 +59,7 @@ const ProfilePage = () => {
         { withCredentials: true }
       );
       console.log(response);
-      navigate("/");
+      navigate("/login");
     } catch (e) {
       console.log(e);
     }

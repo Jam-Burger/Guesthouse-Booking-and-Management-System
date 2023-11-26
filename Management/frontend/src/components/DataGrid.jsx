@@ -49,12 +49,12 @@ function DataGrid(props) {
         allowSorting="true"
         allowMultiSorting="true"
         editSettings={{
-          allowAdding: true,
+          allowAdding: !props.edit,
           allowEditing: true,
-          allowDeleting: true,
+          allowDeleting: !props.edit,
           mode: "Dialog",
         }}
-        toolbar= {["Add", "Delete", "Edit"]}
+        toolbar= { props.edit ? ["Edit"]: ["Add", "Delete", "Edit"]}
         height={300}
         actionComplete={actionComplete}
         enableStickyHeader="true"

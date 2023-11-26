@@ -15,9 +15,8 @@ const checkCollision = function (item, data) {
 
 router.get("/", async (req, res) => {
   const hotelName = req.query.hotelName;
-  const findObj = { hotelName: hotelName };
   try {
-    const data = await Booking.find(findObj);
+    const data = await Booking.find({});
     res.json({
       msg: "success",
       data: data,

@@ -76,7 +76,7 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("currentUserToken", token, {
+    res.cookie("currentStaffToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,
@@ -107,10 +107,10 @@ router.post("/login", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });
-          res.cookie("currentUserToken", token, {
+          res.cookie("currentStaffToken", token, {
             secure: process.env.NODE_ENV !== "development",
             sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
             httpOnly: true,
@@ -151,7 +151,7 @@ router.patch("/", upload.single('picture'), async (req, res) => {
     const token = jwt.sign({ currentUser: updatedData }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("currentUserToken", token, {
+    res.cookie("currentStaffToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,
