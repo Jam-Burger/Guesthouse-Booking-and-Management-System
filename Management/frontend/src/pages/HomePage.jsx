@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import styles from "../styles/HomePage.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -42,12 +41,13 @@ const HomePage = () => {
               width="100%"
               height="659px"
             />
-            <div className={`${styles.tagline}`}>
+            <div>
               <h1 style={{ color: "white", fontSize: "5rem" }}>
                 Welcome to The Haven
               </h1>
             </div>
           </div>
+          {/* <div style={{background:"#001C30", zIndex:"2", width:"100%", height:"100%", position:"absolute", top:"0",left:"0",opacity:"0.5"}}></div> */}
         </div>
       )}
     </>

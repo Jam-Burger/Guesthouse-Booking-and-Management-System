@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../styles/Navbar.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 const Navbar = () => {
@@ -25,8 +24,8 @@ const Navbar = () => {
   }, []);
   return (
     <>
-      <div className={`${styles.navbar}`}>
-        <span>
+      <nav className={` `}>
+        <span className="navbar-brand d-flex align-items-center">
           <img
             src="/img/hotel_logo.png"
             alt="Hotel Logo"
@@ -36,13 +35,13 @@ const Navbar = () => {
           <a href="/" style={{ textDecoration: "none" }}>
             <span
               style={{ color: "white", fontSize: "1.8rem" }}
-              className="mx-5"
+              className="mx-3 mt-5 "
             >
               The Haven
             </span>
           </a>
         </span>
-        <span className={`${styles.navbar_right_side}`}>
+        <span>
           {role === "admin" || role === "Receptionist" ? (
             <span className="mx-5">
               <a
@@ -109,8 +108,8 @@ const Navbar = () => {
             </a>
           </span>
         </span>
-      </div>
-    </>
+      </nav>
+    </> 
   );
 };
 

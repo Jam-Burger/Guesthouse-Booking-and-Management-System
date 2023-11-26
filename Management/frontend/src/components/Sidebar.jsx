@@ -10,6 +10,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 const Sidebar = () => {
   const [role, setRole] = useState("");
   useEffect(() => {
@@ -33,7 +34,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <>
+    <div className="mt-3">
       <div>
         <div
           style={{
@@ -59,7 +60,7 @@ const Sidebar = () => {
 
             <CDBSidebarContent className="sidebar-content">
               <CDBSidebarMenu>
-                {(role === "admin" || role === "Receptionist") ? 
+                {role === "admin" || role === "Receptionist" ? (
                   <>
                     <NavLink to="/reservation" activeclassname="activeClicked">
                       <CDBSidebarMenuItem icon="calendar">
@@ -71,24 +72,28 @@ const Sidebar = () => {
                         Booking History
                       </CDBSidebarMenuItem>
                     </NavLink>
-                  </> : <span></span>
-                }
-                {(role === "admin" || role === "Inventory-Manager") ? 
-                  
-                <NavLink to="/inventory" activeclassname="activeClicked">
+                  </>
+                ) : (
+                  <span></span>
+                )}
+                {role === "admin" || role === "Inventory-Manager" ? (
+                  <NavLink to="/inventory" activeclassname="activeClicked">
                     <CDBSidebarMenuItem icon="warehouse">
                       Inventory
                     </CDBSidebarMenuItem>
-                  </NavLink> : <span></span>
-
-                }
-                {role === "admin" ? 
+                  </NavLink>
+                ) : (
+                  <span></span>
+                )}
+                {role === "admin" ? (
                   <NavLink to="/staff" activeclassname="activeClicked">
                     <CDBSidebarMenuItem icon="user-cog">
                       Staff Management
                     </CDBSidebarMenuItem>
-                  </NavLink> : <span></span>
-                }
+                  </NavLink>
+                ) : (
+                  <span></span>
+                )}
               </CDBSidebarMenu>
             </CDBSidebarContent>
 
@@ -107,7 +112,7 @@ const Sidebar = () => {
           </CDBSidebar>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
