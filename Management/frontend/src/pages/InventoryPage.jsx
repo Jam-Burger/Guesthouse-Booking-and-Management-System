@@ -1,5 +1,5 @@
 import Navbar2 from "../components/Navbar2";
-import Sidebar from "../components/Sidebar";
+
 import DataGrid from "../components/DataGrid";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -145,7 +145,7 @@ const InventoryPage = () => {
     <div style={{backgroundImage:'url("/img/backgroundimg.jpeg")',backgroundRepeat:"no-repeat", height:"100vh", backgroundSize:"cover"}}>
       <Navbar2 />
       
-      <div style={{ marginLeft: "80px" }}>
+      <div >
         <DataGrid
           page="INVENTORY"
           content={content}
