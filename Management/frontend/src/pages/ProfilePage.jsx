@@ -2,15 +2,6 @@ import React from "react";
 import Navbar2 from "../components/Navbar2";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-
-const editInfo = () => {};
-
-const ProfilePage = () => {
-  const navigate = useNavigate();
-
-=======
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Unauthorized from "../components/Unauthorized";
@@ -61,7 +52,6 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
   const logout = async () => {
     try {
       const response = await axios.get(
@@ -74,8 +64,6 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
-<<<<<<< HEAD
-=======
 
   useEffect(() => {
     async function fetchData() {
@@ -97,30 +85,11 @@ const ProfilePage = () => {
     fetchData();
   }, []);
 
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
   return (
     <div>
       <Navbar2 />
       <Sidebar />
       <div style={{ marginLeft: "80px" }}>
-<<<<<<< HEAD
-        <div className="pt-4 container-fluid">
-          <div className="container">
-            <div className="main-body">
-              <div className="row gutters-sm">
-                <div className="col-md-4 mb-3">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="d-flex flex-column align-items-center text-center">
-                        <img
-                          src="/img/maleprofile.png"
-                          alt="profile_img"
-                          className="rounded-circle"
-                          width="150"
-                        />
-                        <div className="mt-3">
-                          <h4>John Doe</h4>
-=======
         {data ? (
           <div className="pt-4 container-fluid">
             <div className="container">
@@ -160,85 +129,10 @@ const ProfilePage = () => {
                               {data && data.firstName} {data && data.lastName}
                             </h4>
                           </div>
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                         </div>
                       </div>
                     </div>
                   </div>
-<<<<<<< HEAD
-                </div>
-                <div className="col-md-8">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Full Name</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">
-                          Jay Parikh
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Email</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">
-                          fip@jukmuh.al
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Phone</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">
-                          (239) 816-9029
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Gender</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">Male</div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Age</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">35</div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Role</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">
-                          Receptionist
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-12 d-flex justify-content-center">
-                          <button
-                            className="btn mx-2 btn-info"
-                            onClick={() => {
-                              editInfo();
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="btn mx-2 btn-danger"
-                            onClick={() => {
-                              logout();
-                            }}
-                          >
-                            Log out
-                          </button>
-=======
                   <div className="col-md-8">
                     <div className="card mb-3">
                       <div className="card-body">
@@ -388,7 +282,6 @@ const ProfilePage = () => {
                               {isEditing ? "Cancel" : "Log Out"}
                             </button>
                           </div>
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
                         </div>
                       </div>
                     </div>
