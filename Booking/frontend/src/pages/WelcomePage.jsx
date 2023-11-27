@@ -1,6 +1,6 @@
 import React from "react";
 import AutoScroll from "../components/AutoScroll2";
-import "../css/classicHome.css";
+import "../css/welcomePage.css";
 
 function ClassicHome() {
     return (
