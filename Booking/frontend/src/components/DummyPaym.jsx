@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
 import '../css/dummyPay.css';
+import h2c from 'html2canvas';
+import jsPdf, { jsPDF } from 'jspdf';
 
 function DummyPaym(){
     const [cardNumber, setCardNumber] = useState('');
     const [cardholderName, setCardholderName] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [cvv, setCvv] = useState('');
+    const [ttime,setTtime] = useState(false);
+
+    const generatePdf = () => {
+        const capture = document.querySelector('.paymDiv');
+        setTtime(true);
+        h2c(capture).then((canvas) =>{
+            const imgData = canvas.toDataURL('img/png');
+            const doc = new jsPDF('p','cm','a4');
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            doc.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
+            setTtime(false);
+            doc.save('Invoice1.pdf');
+        })
+    }
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -18,7 +35,7 @@ function DummyPaym(){
 
     return (
         <div className="paymDiv">
-            <h1 className='dumTitle'>Dummy Payment Page</h1>
+            <h1 className='dumTitle'>Payment Getaway Page</h1>
             <div className="paymImg">
                 <img src="./images/amazonPayImg.png" alt="Payment Logo" className="paymLogo" />
                 <img src="./images/masterCardImg.png" className="paymLogo" />
@@ -75,6 +92,9 @@ function DummyPaym(){
                     required
                 />
                 <button type="submit" className='btn'>Pay Now</button>
+                <button className='btn' onClick={generatePdf} disabled={!(ttime===false)}>
+                    {ttime?(<span>Downloading</span>):(<span>Download</span>)}
+                </button>
             </form>
         </div>
     );

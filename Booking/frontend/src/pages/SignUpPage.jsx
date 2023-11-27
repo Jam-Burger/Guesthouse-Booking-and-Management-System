@@ -41,12 +41,12 @@ function SignUp() {
               </a>
             </div>
           </div>
-          <div className="w-full mt-20 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-center justify-center pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
               <p className="w-full text-4xl font-medium text-center leading-snug font-serif justify-center">
-                Welcome !!
+                Welcome!
               </p>
-              <p className="w-1/2 text-center text-4xl mt-3 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
+              <p className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
                 Sign Up
               </p>
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
@@ -60,7 +60,7 @@ function SignUp() {
                       id="emailId"
                       placeholder="Email"
                       type="email"
-                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                       autoFocus
                     />
@@ -74,7 +74,7 @@ function SignUp() {
                       name="firstName"
                       id="firstName"
                       placeholder="First Name"
-                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
                   </div>
@@ -87,7 +87,7 @@ function SignUp() {
                       id="lastName"
                       placeholder="Last Name"
                       type="text"
-                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
                   </div>
@@ -102,7 +102,7 @@ function SignUp() {
                       min="3"
                       max="200"
                       placeholder="Age"
-                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      className="border placeholder-gray-400 focus:border-blue w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
                   </div>
@@ -115,7 +115,7 @@ function SignUp() {
                       name="password"
                       id="password"
                       placeholder="Password"
-                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
                   </div>
@@ -130,7 +130,7 @@ function SignUp() {
                       type="text"
                       minlength="10"
                       maxlength="10"
-                      className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
                   </div>
@@ -141,7 +141,9 @@ function SignUp() {
                     <select
                       name="gender"
                       id="gender"
-                      className="form-control"
+                      className="form-control border placeholder-gray-400 focus:outline-none w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      minlength="10"
+                      maxlength="10"
                       required
                     >
                       <option value="">Please select one…</option>
