@@ -2,7 +2,7 @@ import React from "react";
 import AutoScroll from "../components/AutoScroll2";
 import "../css/welcomePage.css";
 
-function ClassicHome() {
+function WelcomePage() {
     return (
         <div>
             <div className="relative bg-[#f8f2ed] overflow-x-hidden">
@@ -48,4 +48,4 @@ function ClassicHome() {
     );
 }
 
-export default ClassicHome;
+export default WelcomePage;
