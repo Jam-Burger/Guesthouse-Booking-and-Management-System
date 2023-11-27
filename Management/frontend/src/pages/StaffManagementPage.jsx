@@ -168,13 +168,7 @@ const StaffManagementPage = () => {
             }}
           />
         ) : (
-<<<<<<< HEAD
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <h1>{message}</h1>
-          </div>
-=======
           <Unauthorized />
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
         )}
       </div>
     </div>
