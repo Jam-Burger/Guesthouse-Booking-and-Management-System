@@ -7,10 +7,7 @@ import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
 import cookieParser from "cookie-parser";
-<<<<<<< HEAD
-=======
 import jwt from "jsonwebtoken";
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
 
 dotenv.config();
 const server = express();
@@ -37,7 +34,7 @@ server.get("/", (req, res) => {
 
 server.get("/logout", (req, res) => {
   try {
-    res.clearCookie("currentUserToken");
+    res.clearCookie("currentStaffToken");
     res.json({
       success: true,
       message: "logged out successfully",
@@ -48,13 +45,11 @@ server.get("/logout", (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 server.get("/me", (req, res) => {
-  const { currentUserToken } = req.cookies;
+  const { currentStaffToken } = req.cookies;
   try {
-    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
-    res.json({ success: true, data: decoded.currentUser });
+    const decoded = jwt.verify(currentStaffToken, process.env.JWT_SECRET);
+    res.json({ success: true, data: decoded.currentStaff });
   } catch (e) {
     res.status(400).json({
       success: false,
@@ -63,7 +58,6 @@ server.get("/me", (req, res) => {
   }
 });
 
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {

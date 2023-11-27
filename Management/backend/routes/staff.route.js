@@ -2,11 +2,8 @@ import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-<<<<<<< HEAD
-=======
 import multer from "multer";
 import uploadFile from "../utills/file-uploader.js"
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
 
 const router = express.Router();
 const saltRounds = 10;
@@ -17,21 +14,12 @@ async function comparePassword(plaintextPassword, hash) {
 }
 
 router.get("/", async (req, res) => {
-<<<<<<< HEAD
-  const { currentUserToken } = req.cookies;
-  console.log("req.cookies : ", req.cookies);
-  try {
-    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
-    // console.log(decoded);
-    if (decoded.currentUser.role === "admin") {
-=======
   const { currentStaffToken } = req.cookies;
   // console.log("req.cookies : ", req.cookies);
   try {
     const decoded = jwt.verify(currentStaffToken, process.env.JWT_SECRET);
     // console.log(decoded);
     if (decoded.currentStaff.role === "admin") {
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
       // console.log("admin verified")
       const data = await Staff.find({ role: { $ne: "admin" } });
       res.json({
@@ -40,10 +28,6 @@ router.get("/", async (req, res) => {
         data: data,
       });
     } else {
-<<<<<<< HEAD
-      // console.log("admin not verified")
-=======
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
       res.status(400).send("Unauthorized Access");
     }
   } catch (e) {
@@ -87,9 +71,6 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const staff = new Staff({ ...data, password: hashedPassword });
-<<<<<<< HEAD
-    await staff.save();
-=======
 
     await staff.save();
     const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
@@ -101,7 +82,6 @@ router.post("/signup", async (req, res) => {
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
     res.status(201).json({
       msg: "success",
       data: Staff,
@@ -131,11 +111,8 @@ router.post("/login", async (req, res) => {
             expiresIn: "1h",
           });
           res.cookie("currentUserToken", token, {
-<<<<<<< HEAD
-=======
             secure: process.env.NODE_ENV !== "development",
             sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });
