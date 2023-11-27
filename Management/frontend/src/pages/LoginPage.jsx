@@ -24,13 +24,7 @@ const LoginPage = () => {
       }
 
       if (response.data.redirect) {
-<<<<<<< HEAD
-        navigate("/home", {
-          state: { isLoggedIn: true, user: response.data.user },
-        });
-=======
         navigate("/");
->>>>>>> 1a80ac3a634119659f124c11cc8c588aac25157e
       }
     } catch (e) {
       console.log(e);
