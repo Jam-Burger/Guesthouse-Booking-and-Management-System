@@ -2,23 +2,24 @@ import express from "express";
 import { Staff } from "../models/staff.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import multer from "multer";
+import uploadFile from "../utills/file-uploader.js"
 
 const router = express.Router();
 const saltRounds = 10;
 
-// find(query, queryProjection)
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
   return result;
 }
 
 router.get("/", async (req, res) => {
-  const { currentUserToken } = req.cookies;
-  console.log("req.cookies : ", req.cookies);
+  const { currentStaffToken } = req.cookies;
+  // console.log("req.cookies : ", req.cookies);
   try {
-    const decoded = jwt.verify(currentUserToken, process.env.JWT_SECRET);
+    const decoded = jwt.verify(currentStaffToken, process.env.JWT_SECRET);
     // console.log(decoded);
-    if (decoded.currentUser.role === "admin") {
+    if (decoded.currentStaff.role === "admin") {
       // console.log("admin verified")
       const data = await Staff.find({ role: { $ne: "admin" } });
       res.json({
@@ -27,7 +28,6 @@ router.get("/", async (req, res) => {
         data: data,
       });
     } else {
-      // console.log("admin not verified")
       res.status(400).send("Unauthorized Access");
     }
   } catch (e) {
@@ -71,7 +71,17 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const staff = new Staff({ ...data, password: hashedPassword });
+
     await staff.save();
+    const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentStaffToken", token, {
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
     res.status(201).json({
       msg: "success",
       data: Staff,
@@ -97,10 +107,14 @@ router.post("/login", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+          if (!staff.profilePic) staff.profilePic = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
+
+          const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });
-          res.cookie("currentUserToken", token, {
+          res.cookie("currentStaffToken", token, {
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });
@@ -124,26 +138,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.patch("/:emailId", async (req, res) => {
-  const emailId = req.params.emailId;
-  const updates = req.body;
-  const findObj = { emailId: emailId };
-
+const upload = multer();
+router.patch("/", upload.single('picture'), async (req, res) => {
   try {
-    const data = await Staff.findOneAndUpdate(findObj, updates);
-    if (data.length == 0) {
-      res.status(404).json({
-        msg: "failure",
-        error: "data not found",
-      });
-    } else {
-      res.json({
-        msg: "success",
-        data: data,
-      });
+    let updatedData = JSON.parse(req.body.profileData);
+    if (req.file) {
+      const { webContentLink } = await uploadFile(req.file);
+      console.log(webContentLink);
+      updatedData = { ...updatedData, profilePic: webContentLink };
     }
+    const findObj = { _id: updatedData._id };
+    await Staff.findOneAndUpdate(findObj, updatedData);
+
+    const token = jwt.sign({ currentStaff: updatedData }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("currentStaffToken", token, {
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+    });
+    res.json({ msg: "success", data: updatedData });
+    console.log("data updated successfully");
   } catch (e) {
-    res.status(400).json({
+    console.log(e);
+    res.status(500).json({
       msg: "failure",
       error: e,
     });

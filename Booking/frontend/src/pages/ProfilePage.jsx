@@ -7,8 +7,9 @@ import {
   MDBCardBody,
   MDBInput,
   MDBCardImage,
+  MDBSpinner,
 } from "mdb-react-ui-kit";
-import '../styles/profile.css';
+import "../styles/profile.css";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
@@ -37,7 +38,6 @@ const ProfilePage = () => {
         formData,
         { withCredentials: true }
       );
-      navigate("/profile");
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -95,8 +95,14 @@ const ProfilePage = () => {
   return (
     <>
       <Navbar />
-      <section style={{ backgroundColor: "white", height: "100vh", backgroundSize: "cover" }}>
-        <MDBContainer className=" d-flex flex-column align-items-center pt-3 ">
+      <section
+        style={{
+          backgroundColor: "white",
+          height: "100vh",
+          backgroundSize: "cover",
+        }}
+      >
+        <MDBContainer className=" d-flex flex-column align-items-center pt-3">
           <MDBCol lg="3">
             <MDBContainer className="d-flex flex-column align-items-center">
               <label
@@ -108,7 +114,7 @@ const ProfilePage = () => {
                   type="file"
                   id="upload-photo"
                   accept="image/*"
-                  style={{ display:"none", zIndex: -1 }}
+                  style={{ display: "none", zIndex: -1 }}
                   disabled={!isEditing}
                   onChange={(e) => {
                     changeProfilePic(e.target.files[0]);
@@ -117,22 +123,20 @@ const ProfilePage = () => {
                 <MDBCardImage
                   src={!data ? "./img/maleprofile.png" : data.profilePic}
                   alt="profile"
-                  className={isEditing ? "rounded-circle i object-fit-cover shadow-lg" : "rounded-circle object-fit-cover shadow-lg"}
+                  className={isEditing ? "rounded-circle i object-fit-cover" : "rounded-circle object-fit-cover"}
                   style={{
                     width: "150px",
                     height: "150px",
                     border: "black solid",
                   }}
-                  
                 />
-                
               </label>
             </MDBContainer>
           </MDBCol>
 
           <MDBCol lg="6">
-            <MDBCard className="p-2 rounded-4 shadow-lg" >
-              <MDBCardBody  >
+            <MDBCard className="p-2 rounded-4" >
+              <MDBCardBody >
                 <MDBRow>
                   <MDBCol sm="4">
                     <MDBCardText>Full Name</MDBCardText>
@@ -166,13 +170,17 @@ const ProfilePage = () => {
                   </MDBCol>
                   <MDBCol sm="8">
                     {isEditing ? (
-                      <MDBInput
-                        type="text"
+                      <select
+                        className="form-select"
                         defaultValue={!data ? "" : data.gender}
                         onChange={(e) => {
                           setData({ ...data, gender: e.target.value });
                         }}
-                      />
+                      >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
                     ) : (
                       <MDBCardText className="text-muted">
                         {data && data.gender}
@@ -256,15 +264,12 @@ const ProfilePage = () => {
                       {isEditing ? "Save" : "Edit"}
                     </button>
 
-
-
                     <button
                       className="btn btn-danger mx-3 my-0"
                       onClick={isEditing ? cancel : logout}
                     >
                       {isEditing ? "Cancel" : "Log Out"}
                     </button>
-
                   </div>
                 </MDBRow>
               </MDBCardBody>

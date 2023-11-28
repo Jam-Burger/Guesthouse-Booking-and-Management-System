@@ -8,14 +8,14 @@ const HotelsListPage = () => {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_BACKEND_URL+"/hotels")
+      .get(process.env.REACT_APP_BACKEND_URL + "/hotels")
       .then((res) => {
         setData(res.data);
       })
       .catch((e) => {
         console.log("error occured : " + e);
       });
-  });
+  }, []);
 
   return (
     <>
