@@ -93,3 +93,18 @@
     /* height:10em; 
     width:100%;
     padding: 0 20px; */
+
+.dwnIcn{
+    color: white;
+    width: 5rem;
+    height: 5rem;
+    align-items: flex-end;
+    flex-direction: col;
+    transition: 0.7s;
+    position: relative;
+    align-self: baseline;
+}
+
+.dwnIcn:hover{
+    transform: translateY(1em);
+}
