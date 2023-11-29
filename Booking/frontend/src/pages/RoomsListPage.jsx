@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import RoomCard from "../components/RoomCard";
 import "../styles/HotelList.css";
 import axios from "axios";
-import ReviewCard from "../components/ReviewCard";
 
 const RoomsListPage = () => {
   const { id } = useParams();

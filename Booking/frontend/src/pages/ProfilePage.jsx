@@ -7,7 +7,6 @@ import {
   MDBCardBody,
   MDBInput,
   MDBCardImage,
-  MDBSpinner,
 } from "mdb-react-ui-kit";
 import "../styles/profile.css";
 import axios from "axios";
