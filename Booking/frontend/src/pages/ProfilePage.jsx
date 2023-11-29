@@ -70,7 +70,6 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
-
   useEffect(() => {
     async function fetchData() {
       try {

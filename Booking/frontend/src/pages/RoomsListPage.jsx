@@ -40,14 +40,16 @@ const RoomsListPage = () => {
   }, [id]);
 
   return (
-    <div
-      className="d-flex flex-column justify-content-center align-items-center"
-      style={{ height: "100vh" }}
-    >
-      {data.map((item, id) => {
-        // console.log(item);
-        return <RoomCard data={item} key={id} />;
-      })}
+    <div className="d-flex justify-content-center">
+      <div
+        className="d-flex flex-column justify-content-center align-items-center"
+        style={{ width: "70%", height: "100vh" }}
+      >
+        {data.map((item, id) => {
+          console.log(item);
+          return <RoomCard data={item} key={id} />;
+        })}
+      </div>
     </div>
   );
 };

@@ -1,43 +1,53 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+//deluxe, simple,luxury ke 3 vertical room cards banane hai
 
+// function loginReq(e){
+// iss function ko use karlena divyam bhai...agar bina login ke koi booking kar raha ho toh
+//     if(e != accountLogin){
+//         document.getElementById('bookBtn').hidden = true;
+//         <p className='rRating'>Please Login first to make this booking.</p>
+//     }else{
+//         document.getElementById('bookBtn').hidden = false;
+//     }
+// }
+// <button id='bookBtn' className='rBookBtn' onclick={(e)=>{loginReq(e)}}>Book Now!</button> //use this code below
 const RoomCard = ({ data }) => {
   const navigate = useNavigate();
   const imageLink =
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
 
   data.rating = data.rating === undefined ? 0 : data.rating;
-  // console.log(data);
   return (
-    <>
-      <div className="card mb-2">
-        <div className="row g-0">
+    <div className="card mb-2 w-full">
+      <div className="row">
+        <div className="col-md-6">
           <img
             src={imageLink}
-            style={{ width: "25rem", maxHeight: "15rem" }}
-            className="col-md-6 card-img object-fit-cover overflow-hidden"
+            style={{ height: "15rem" }}
+            className="card-img object-fit-cover overflow-hidden"
             alt="..."
           />
-          <div className="col-md-4">
-            <div className="card-body">
-              <h5 className="card-title">{data.type}</h5>
-              <p className="card-text">&#8377;{data.bookingPrice}/night</p>
-              <p className="card-text">
-                <small className="text-muted">capacity: {data.capacity}</small>
-              </p>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  navigate("/bookings/" + data._id);
-                }}
-              >
-                {"Book now!"}
-              </button>
-            </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card-body">
+            <h5 className="card-title">{data.type}</h5>
+            <p className="card-text">&#8377;{data.bookingPrice}/night</p>
+            <p className="card-text">
+              <small className="text-muted">capacity: {data.capacity}</small>
+            </p>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                navigate("/bookings/" + data._id);
+              }}
+            >
+              {"Book now!"}
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

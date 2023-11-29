@@ -10,12 +10,14 @@ import LoginPage from "./pages/LoginPage";
 import SignUp from "./pages/SignUpPage";
 import BookingConfirmationPage from "./pages/BookingConfirmationPage";
 import PageNotFound from "./pages/PageNotFound";
+import WelcomePage from "./pages/WelcomePage";
 
 const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
+      <Route path="/welcome" element={<WelcomePage />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/bookings/:id" element={<BookingPage />}></Route>
       <Route path="/profile" element={<ProfilePage />}></Route>

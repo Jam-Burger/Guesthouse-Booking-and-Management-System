@@ -25,7 +25,7 @@ const checkCollision = (booking, checkInDate, checkOutDate) => {
   const date3 = booking.checkInDate.getTime();
   const date4 = booking.checkOutDate.getTime();
 
-
+  
   if (date1 >= date3 && date1 < date4) return true;
   if (date2 > date3) return true;
   // console.log(new Date(checkInDate), new Date(checkOutDate), booking.checkInDate, booking.checkOutDate);
@@ -79,7 +79,6 @@ router.patch("/available", async (req, res) => {
     });
   }
 });
-
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;

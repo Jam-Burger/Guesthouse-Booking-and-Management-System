@@ -3,6 +3,7 @@ import { Booking } from "../models/booking.model.js";
 import { Room } from "../models/room.model.js";
 
 const router = express.Router();
+const BreakError = {};
 
 const checkCollision = function (item, data) {
   const date1 = (new Date(data.checkInDate)).getTime();
@@ -13,7 +14,8 @@ const checkCollision = function (item, data) {
 };
 
 router.get("/", async (req, res) => {
-  const findObj = {};
+  const hotelName = req.query.hotelName;
+  const findObj = { hotelName: hotelName };
   try {
     const data = await Booking.find(findObj);
     res.json({
