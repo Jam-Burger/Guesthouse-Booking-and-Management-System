@@ -73,10 +73,10 @@ router.post("/signup", async (req, res) => {
     const staff = new Staff({ ...data, password: hashedPassword });
 
     await staff.save();
-    const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("currentStaffToken", token, {
+    res.cookie("currentUserToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,
@@ -107,12 +107,10 @@ router.post("/login", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          if (!staff.profilePic) staff.profilePic = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
-
-          const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });
-          res.cookie("currentStaffToken", token, {
+          res.cookie("currentUserToken", token, {
             secure: process.env.NODE_ENV !== "development",
             sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
             httpOnly: true,
@@ -150,10 +148,10 @@ router.patch("/", upload.single('picture'), async (req, res) => {
     const findObj = { _id: updatedData._id };
     await Staff.findOneAndUpdate(findObj, updatedData);
 
-    const token = jwt.sign({ currentStaff: updatedData }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ currentUser: updatedData }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("currentStaffToken", token, {
+    res.cookie("currentUserToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,

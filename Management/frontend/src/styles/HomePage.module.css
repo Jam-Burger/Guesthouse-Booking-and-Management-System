@@ -1,0 +1,90 @@
+.tagline{
+    position:absolute;
+    top:50%;
+    left:20%;
+    z-index: 1;
+}
+
+.slider{
+	/* display: flex; */
+	background-color: #E3E3E3;
+	align-items: center;
+	justify-content: center;
+	height: 700px;
+	width: 100vw;
+	/* margin: auto;  */
+	position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+	overflow: hidden;
+	background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+	
+    &::before {
+		left: 0;
+		top: 0;
+	}
+
+	&::after {
+		right: 0;
+		top: 0;
+	}
+	
+	.cards {
+		display: flex;
+		margin-top: 10%;
+		height: inherit;
+		width: calc(400px * 14);
+		animation: scrolls 30s linear infinite;
+	}
+
+	.indCard {
+		height: auto;
+		width: inherit;
+		margin: 0 15px;
+	}
+
+	.indCard figure{
+		background-color: #2e1503;
+		border-radius: 20px;
+		transition: transform 1s ease-in-out;
+	}
+
+	.indCard figure img{
+		opacity: 1;
+		transition: transform 1s ease-in-out;
+		border-radius: 20px;
+		width: 400px;
+		height: 400px;
+	}
+
+	.indCard figure img:hover{
+		opacity: 0.5;
+		/* transform: translateZ(20px); */
+		box-shadow: rgba(100, 100, 111, 0.5) 0px 13px 29px 0px;
+		/* animation-play-state: paused; */
+    }
+
+	.indCard figure:hover{
+		transform: scale(1.05);
+	}
+
+	.text {
+		opacity: 0;
+		z-index: -1;
+	}
+
+	.indCard figure .text{
+		z-index: 1;
+	}
+
+}
+
+@keyframes scrolls {
+	0% {
+        transform: translateX(0);
+    }
+	100% { 
+        transform: translateX(calc(-430px * 7))
+    }
+}
+

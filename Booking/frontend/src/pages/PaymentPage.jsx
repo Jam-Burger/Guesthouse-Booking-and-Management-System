@@ -55,34 +55,25 @@ const PaymentPage = () => {
     if (!validate(cardNumber, cardHolderName, expiryDate, cvv)) {
       return;
     }
-
     try {
-      const response = await axios.get(
-        process.env.REACT_APP_BACKEND_URL + "/me",
-        { withCredentials: true }
-      );
-      const userData = response.data.data;
-      const guestDetails = {
-        fullName: userData.firstName + " " + userData.lastName,
-        gender: userData.gender,
-        age: userData.age,
-        contactNo: userData.contactNo,
-      };
       rooms.forEach(async (roomNo) => {
         const booking = {
           checkInDate,
           checkOutDate,
           roomNo,
-          guestDetails,
+          guestDetails: {
+            fullName: "hello mary",
+            gender: "MALE",
+            age: 20,
+            contactNo: "121208123312",
+          },
         };
         await axios.post(
           process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/bookings/",
           booking
         );
       });
-      navigate("/bookingConfirmation", {
-        state: { rooms, checkInDate, checkOutDate, guestDetails },
-      });
+      navigate("/bookingConfirmation");
     } catch (e) {
       console.log(e);
     }
