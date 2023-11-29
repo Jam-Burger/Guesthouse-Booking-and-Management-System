@@ -15,9 +15,9 @@ import WelcomePage from "./pages/WelcomePage";
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<HomePage />}></Route>
+      <Route path="/" element={<WelcomePage />}></Route>
+      {/* <Route path="/" element={<HomePage />}></Route> */}
       <Route path="/login" element={<LoginPage />}></Route>
-      <Route path="/welcome" element={<WelcomePage />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/bookings/:id" element={<BookingPage />}></Route>
       <Route path="/profile" element={<ProfilePage />}></Route>

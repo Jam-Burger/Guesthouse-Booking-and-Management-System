@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import "../styles/dummyPay.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import PageNotFound from "./PageNotFound";
 
-const PaymentPage = () => {
+const PaymentPage = () => {  
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
-  const { state } = useLocation();
-  const { checkInDate, checkOutDate, rooms, amount } = state;
+  
   const [msg, setMessage] = useState("");
   const navigate = useNavigate();
+  
+  const { state } = useLocation();
+  if (!state) return <PageNotFound />;
+  const { checkInDate, checkOutDate, rooms, amount } = state;
 
   const validate = (_cardNumber, _cardHolderName, _expiryDate, _cvv) => {
     const cardNumberRegex = /^\d{16}$/;
     const cvvRegex = /^\d{3}$/;
     const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-    const cardHolderNameRegex = /^[a-zA-Z]{5,30}$/;
+    const cardHolderNameRegex = /^[a-zA-Z ]{5,30}$/;
 
     if (!_cardNumber.match(cardNumberRegex)) {
       setMessage("Invalid card number. Please enter a 16-digit number.");
@@ -30,7 +33,7 @@ const PaymentPage = () => {
       !cardHolderName.match(cardHolderNameRegex)
     ) {
       setMessage(
-        "Invalid cardholder name. Please enter alphabetic characters only."
+        "Invalid cardholder name. Please enter alphabetic name between 5-30 characters."
       );
       return false;
     }
@@ -56,24 +59,33 @@ const PaymentPage = () => {
       return;
     }
     try {
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/me",
+        { withCredentials: true }
+      );
+      const user = response.data.data;
+      if (!user) {
+        console.log(response.data);
+        return;
+      }
       rooms.forEach(async (roomNo) => {
         const booking = {
           checkInDate,
           checkOutDate,
           roomNo,
           guestDetails: {
-            fullName: "hello mary",
-            gender: "MALE",
-            age: 20,
-            contactNo: "121208123312",
+            fullName: user.firstName + " " + user.lastName,
+            gender: user.gender,
+            age: user.age,
+            contactNo: user.contactNo,
           },
         };
         await axios.post(
-          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/bookings/",
+          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/bookings",
           booking
         );
       });
-      navigate("/bookingConfirmation");
+      navigate("/bookingConfirmation", { state: {...state, user}, replace: true });
     } catch (e) {
       console.log(e);
     }
@@ -96,6 +108,7 @@ const PaymentPage = () => {
         <img src="/img/visaImg.png" alt="Visa Logo" className="paymLogo" />
         <img src="/img/gPayImg.png" alt="Payment Logo" className="paymLogo" />
       </div>
+
       <form onSubmit={handleSubmit}>
         <label htmlFor="cardNumber" className=" ">
           Card Number:

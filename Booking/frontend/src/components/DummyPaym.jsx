@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/dummyPay.css';
 import h2c from 'html2canvas';
-import jsPdf, { jsPDF } from 'jspdf';
+import { jsPDF } from 'jspdf';
 
 function DummyPaym(){
     const [cardNumber, setCardNumber] = useState('');
@@ -20,7 +20,7 @@ function DummyPaym(){
             const pageHeight = doc.internal.pageSize.getHeight();
             doc.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
             setTtime(false);
-            doc.save('Invoice1.pdf');
+            doc.save('Invoice.pdf');
         })
     }
 

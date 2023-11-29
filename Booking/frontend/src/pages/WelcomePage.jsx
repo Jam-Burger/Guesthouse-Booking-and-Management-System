@@ -43,7 +43,7 @@ const WelcomePage = () => {
             <div className="masking w-full flex flex-col h-full justify-center items-center overflow-hidden bg-cover">
               <div
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
-                class="absolute flex flex-col justify-center items-center content-center  bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
+                className="absolute flex flex-col justify-center items-center content-center  bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
               >
                 <div className="maskingText w-full ">
                   <h1 className="text-white text-center text-4xl font-bold cursive">
@@ -51,7 +51,7 @@ const WelcomePage = () => {
                   </h1>
                   <button
                     type="button"
-                    className="text-white text-center text-2xl mt-4 font-light inline-block rounded border-2 border-neutral-50 px-6 pb-[8px] pt-1 uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+                    className="text-white text-center text-2xl mt-4 font-light inline-block rounded border-2 border-neutral-50 px-6 pb-[8px] pt-1 uppercase leading-normal transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={() => {

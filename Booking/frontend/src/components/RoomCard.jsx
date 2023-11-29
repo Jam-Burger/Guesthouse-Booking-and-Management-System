@@ -1,25 +1,33 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-//deluxe, simple,luxury ke 3 vertical room cards banane hai
+import axios from "axios";
 
-// function loginReq(e){
-// iss function ko use karlena divyam bhai...agar bina login ke koi booking kar raha ho toh
-//     if(e != accountLogin){
-//         document.getElementById('bookBtn').hidden = true;
-//         <p className='rRating'>Please Login first to make this booking.</p>
-//     }else{
-//         document.getElementById('bookBtn').hidden = false;
-//     }
-// }
-// <button id='bookBtn' className='rBookBtn' onclick={(e)=>{loginReq(e)}}>Book Now!</button> //use this code below
 const RoomCard = ({ data }) => {
   const navigate = useNavigate();
   const imageLink =
     data.pictures && data.pictures.length > 0 ? data.pictures[0] : null;
 
   data.rating = data.rating === undefined ? 0 : data.rating;
+
+  const handleCLick = async () => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/me",
+        { withCredentials: true }
+      );
+      // console.log(response.data);
+      if (response.data.data) {
+        navigate("/bookings/" + data._id);
+      } else {
+        navigate("/login");
+      }
+    } catch (e) {
+      console.log(e);
+      navigate("/login");
+    }
+  };
   return (
-    <div className="card mb-2 w-full">
+    <div className="card mb-2">
       <div className="row">
         <div className="col-md-6">
           <img
@@ -36,12 +44,7 @@ const RoomCard = ({ data }) => {
             <p className="card-text">
               <small className="text-muted">capacity: {data.capacity}</small>
             </p>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                navigate("/bookings/" + data._id);
-              }}
-            >
+            <button className="btn btn-primary" onClick={handleCLick}>
               {"Book now!"}
             </button>
           </div>

@@ -6,11 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 const getTodayDate = () => {
   const date = new Date();
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  return (
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  );
 };
 const getTomorrowDate = () => {
   const date = new Date(Date.now() + 24 * 3600 * 1000);
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  return (
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  );
 };
 const computeAmount = (bp, cid, cod, nor) => {
   return (bp * nor * (new Date(cod) - new Date(cid))) / 86400000;
@@ -33,10 +37,12 @@ const BookingPage = () => {
         );
         setRoomCategoryData(rcd.data.data);
 
-        const availableRoomsData = (await axios.patch(
-          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/available",
-          { type: rcd.data.data.type, checkInDate, checkOutDate }
-        )).data.data;
+        const availableRoomsData = (
+          await axios.patch(
+            process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/available",
+            { type: rcd.data.data.type, checkInDate, checkOutDate }
+          )
+        ).data.data;
         setNoOfRooms(availableRoomsData.length === 0 ? 0 : 1);
         setRoomsData(availableRoomsData);
       } catch (e) {
@@ -59,6 +65,7 @@ const BookingPage = () => {
       return item.roomNo;
     });
     navigate("/payment", {
+      replace: true,
       state: {
         amount,
         checkInDate,

@@ -73,10 +73,10 @@ router.post("/signup", async (req, res) => {
     const staff = new Staff({ ...data, password: hashedPassword });
 
     await staff.save();
-    const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("currentUserToken", token, {
+    res.cookie("currentStaffToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,
@@ -107,10 +107,10 @@ router.post("/login", async (req, res) => {
         } else if (!(await comparePassword(plainPassword, staff.password))) {
           res.json({ msg: "Wrong Password, Try again." });
         } else {
-          const token = jwt.sign({ currentUser: staff }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
             expiresIn: "1h",
           });
-          res.cookie("currentUserToken", token, {
+          res.cookie("currentStaffToken", token, {
             secure: process.env.NODE_ENV !== "development",
             sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
             httpOnly: true,
@@ -148,10 +148,10 @@ router.patch("/", upload.single('picture'), async (req, res) => {
     const findObj = { _id: updatedData._id };
     await Staff.findOneAndUpdate(findObj, updatedData);
 
-    const token = jwt.sign({ currentUser: updatedData }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ currentStaff: updatedData }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("currentUserToken", token, {
+    res.cookie("currentStaffToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       httpOnly: true,
@@ -171,14 +171,14 @@ router.patch("/", upload.single('picture'), async (req, res) => {
 router.delete("/:emailId", async (req, res) => {
   const emailId = req.params.emailId;
   const findObj = { emailId: emailId };
-  const deletedUser = await Staff.deleteOne(findObj);
-  if (deletedUser.deletedCount === 0) {
+  const deletedStaff = await Staff.deleteOne(findObj);
+  if (deletedStaff.deletedCount === 0) {
     // Document not found
-    return res.status(404).json({ error: "User not found" });
+    return res.status(404).json({ error: "Staff not found" });
   }
 
   // Document deleted successfully
-  return res.status(204).json({ message: "User deleted successfully" });
+  return res.status(204).json({ message: "Staff deleted successfully" });
 });
 
 export default router;

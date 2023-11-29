@@ -2,12 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RoomCard from "../components/RoomCard";
-import "../styles/HotelList.css";
 import axios from "axios";
+import "../styles/HotelList.css";
 
 const RoomsListPage = () => {
   const { id } = useParams();
-  const [hotelData, setHotelData] = useState();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,14 +15,13 @@ const RoomsListPage = () => {
         const hd = await axios.get(
           process.env.REACT_APP_BACKEND_URL + "/hotels/" + id
         );
-        setHotelData(hd.data.data);
-        if (hotelData) {
+        if (hd.data.data) {
           let tempData = [];
           const allRoomsData = await axios.get(
             process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/rooms/"
           );
           if (allRoomsData.data.data) {
-            for (let roomCategoryId of hotelData.rooms) {
+            for (let roomCategoryId of hd.data.data.rooms) {
               const roomCategoryData = await axios.get(
                 process.env.REACT_APP_BACKEND_URL + "/rooms/" + roomCategoryId
               );
@@ -42,11 +40,10 @@ const RoomsListPage = () => {
   return (
     <div className="d-flex justify-content-center">
       <div
-        className="d-flex flex-column justify-content-center align-items-center"
+        className="d-flex flex-column justify-center"
         style={{ width: "70%", height: "100vh" }}
       >
         {data.map((item, id) => {
-          console.log(item);
           return <RoomCard data={item} key={id} />;
         })}
       </div>
