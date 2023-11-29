@@ -6,9 +6,16 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+<<<<<<< HEAD
   const handleSumbit = async (e) => {
+=======
+
+  const handleSubmit = async (e) => {
+>>>>>>> d10bcaddc19dee9821ef50ca1c98f1066b39e8d9
     e.preventDefault();
     const user = {
+      emailId: e.target.emailId.value,
+      password: e.target.password.value,
       emailId: e.target.emailId.value,
       password: e.target.password.value,
     };
@@ -24,9 +31,7 @@ const LoginPage = () => {
       }
 
       if (response.data.redirect) {
-        navigate("/home", {
-          state: { isLoggedIn: true, user: response.data.user },
-        });
+        navigate("/");
       }
     } catch (e) {
       console.log(e);
@@ -34,18 +39,39 @@ const LoginPage = () => {
   };
   return (
     <div
-      style={{ background: "url('img/lg1.jpg') no-repeat center center fixed", backgroundSize: "cover", height: "100vh" }}>
+      style={{
+        background: "url('img/lg1.jpg') no-repeat center center fixed",
+        backgroundSize: "cover",
+        height: "100vh",
+      }}
+    >
       <div className="container d-flex justify-content-center px-2 ">
         {/********************  CARD************* */}
-        <div className="card shadow rounded-4" style={{ backgroundColor: "rgba(255,255,255, 0.5)", width: '30rem', marginTop: "6%" }}>
+        <div
+          className="card shadow rounded-4"
+          style={{
+            backgroundColor: "rgba(255,255,255, 0.5)",
+            width: "30rem",
+            marginTop: "6%",
+          }}
+        >
           <div className="card-body">
-            <div className="d-flex justify-content-center"><img src="img/blogo.png" alt="./Group 2.png" width="20%" height="20%" /></div>
+            <div className="d-flex justify-content-center">
+              <img
+                src="img/blogo.png"
+                alt="./Group 2.png"
+                width="20%"
+                height="20%"
+              />
+            </div>
             <p className="text-center rounded-4 text-dark px-3">
-              <b>Welcome, valued hotel staff! Please enter your credentials to access the secure staff portal.</b>
+              <b>
+                Welcome, valued hotel staff! Please enter your credentials to
+                access the secure staff portal.
+              </b>
             </p>
-            <form className="card-body d-flex flex-column align-items-center" onSubmit={ handleSumbit
-            }>
-              <div style={{ width: '70%' }}>
+            <form className="card-body d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+              <div style={{ width: "70%" }}>
                 <input
                   type="email"
                   name="emailId"
@@ -55,7 +81,7 @@ const LoginPage = () => {
                 />
                 <br />
               </div>
-              <div style={{ width: '70%' }}>
+              <div style={{ width: "70%" }}>
                 <input
                   type="password"
                   name="password"
@@ -67,20 +93,24 @@ const LoginPage = () => {
               <br />
               <div className="d-flex justify-content-center">
                 <button
-                  type="submit"
-                  className="btn btn-primary btn-block  "
-
+                  className="btn btn-primary btn-block"
                 >
                   Login
                 </button>
-                <div style={{ color: "white" }} className="d-flex justify-content-center">
+                <div
+                  style={{ color: "white" }}
+                  className="d-flex justify-content-center"
+                >
                   {message}
                 </div>
-
               </div>
               <br />
               <p className="text-center rounded-4 text-dark px-3">
-                <b>Your dedication ensures the smooth operation of our hotel, and we appreciate your commitment to providing exceptional service.</b>
+                <b>
+                  Your dedication ensures the smooth operation of our hotel, and
+                  we appreciate your commitment to providing exceptional
+                  service.
+                </b>
               </p>
             </form>
           </div>
