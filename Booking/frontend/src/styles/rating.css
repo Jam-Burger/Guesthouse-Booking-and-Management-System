@@ -11,7 +11,7 @@
     color: #ccc;
   } */
 
-.reviewCard{
+/* .reviewCard{
     display: flex;
     margin: 2%;
     padding: 2%;
@@ -21,4 +21,30 @@
     border: 2px solid lightgray;
     border-radius: 30px;
     font-family: 'Open Sans', sans-serif;   
+} */
+
+
+.reviewCard{
+  display: flex;
+  margin: 2%;
+  padding: 2%;
+  gap: 25px;
+  height: 20%;
+  justify-content: space-between;
+  border: 2px solid lightgray;
+  border-radius: 30px;
+  font-family: 'Open Sans', sans-serif;   
+}
+
+.rCard{
+  transition: 0.7s;
+}
+.rCards:hover > .rCard:hover {
+  transform: translateX(2.2em) ;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  z-index: 5;
+}
+
+.rCards:hover > .rCard:not(:hover) {
+  opacity: 0.5;
 }

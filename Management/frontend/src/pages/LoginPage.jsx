@@ -6,12 +6,8 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-<<<<<<< HEAD
-  const handleSumbit = async (e) => {
-=======
 
   const handleSubmit = async (e) => {
->>>>>>> d10bcaddc19dee9821ef50ca1c98f1066b39e8d9
     e.preventDefault();
     const user = {
       emailId: e.target.emailId.value,

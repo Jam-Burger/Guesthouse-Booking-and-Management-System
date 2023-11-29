@@ -27,29 +27,26 @@ const RoomCard = ({ data }) => {
     }
   };
   return (
-    <div className="card mb-2">
-      <div className="row">
-        <div className="col-md-6">
-          <img
-            src={imageLink}
-            style={{ height: "15rem" }}
-            className="card-img object-fit-cover overflow-hidden"
-            alt="..."
-          />
+    <div>
+    <div className='rCard'>
+    <div className="card mb-3 mt-3 border-dark shadow" style={{ maxWidth: "800px" }}>
+        <div className="row g-0">
+            <div className="col-md-4">
+                <img src={imageLink} className="img-fluid rounded-start " alt="img/bgimg.png" />
+            </div>
+            <div className="col-md-8 ">
+                <div className="card-body row d-flex justify-content-center">
+                    <div className='col-md-8 mb-0 mt-2 '>
+                        <h1 className='text-info-emphasis'>{data.type}</h1>
+                          <h3><p className='m-0'>₹{data.bookingPrice}/night</p></h3>  
+                            <h5><p className='m-0 px-2 text-secondary'>{data.capacity}</p></h5>
+                            <button className='btn btn-primary mt-3'  onClick={handleCLick}>Book Now!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="col-md-4">
-          <div className="card-body">
-            <h5 className="card-title">{data.type}</h5>
-            <p className="card-text">&#8377;{data.bookingPrice}/night</p>
-            <p className="card-text">
-              <small className="text-muted">capacity: {data.capacity}</small>
-            </p>
-            <button className="btn btn-primary" onClick={handleCLick}>
-              {"Book now!"}
-            </button>
-          </div>
-        </div>
-      </div>
+    </div>
     </div>
   );
 };
