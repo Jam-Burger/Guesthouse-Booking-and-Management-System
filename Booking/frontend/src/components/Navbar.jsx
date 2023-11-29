@@ -12,29 +12,24 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav className="navbar bg-body-tertiary">
+    <nav className="navbar bg-tertiary-subtle bg-gradient shadow">
       <div className="container-fluid">
         <a className="navbar-brand" href="/home">
-          Booking.com
+          <img src="./img/logoJug_beyondSky-removebg.png" alt="BeyondSky" width="150"></img>
         </a>
 
-        {location.state && location.state.isLoggedIn ? (
-          <button onClick={handleClick} style={{ border: "none" }}>
-            <img
-              src={no_profile_picture}
-              width="38px"
-              height="38px"
-              alt="profile pic"
-            />
-          </button>
-        ) : window.location.pathname === "/" ? (
-          <a class="btn btn-primary m-1" href="/login" role="button">
-            Login
-          </a>
-        ) : (
-          ""
-        )}
+        <header class="d-flex flex-wrap justify-content-center">
+
+          <ul class="nav nav-pills">
+
+            <li class="nav-item" ><a href="/home" class="nav-link text-black" style={{ textDecoration: "none",fontSize:"1.2rem"  }}>Home</a></li>
+            <li class="nav-item"><a href="/hotels" class="nav-link text-black" style={{ textDecoration: "none",fontSize:"1.2rem" }}>Hotel</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link text-black" style={{ textDecoration: "none",fontSize:"1.2rem" }}>Profile</a></li>
+
+          </ul>
+        </header>
       </div>
+
     </nav>
   );
 };

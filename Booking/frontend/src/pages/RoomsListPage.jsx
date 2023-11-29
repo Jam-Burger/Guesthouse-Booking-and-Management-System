@@ -41,28 +41,14 @@ const RoomsListPage = () => {
   }, [id]);
 
   return (
-    <div>
-      <h1 className="m-4">{hotelData && hotelData.name}</h1>
-      <div className="d-flex flex-row px-4 justify-content-between">
-        <div className="col-sm-7">
-          <div className="d-flex flex-column" style={{ height: "100vh" }}>
-            {data.map((item, id) => {
-              return <RoomCard data={item} key={id} />;
-            })}
-          </div>
-        </div>
-        <div className="col-sm-3">
-          <h2>
-            <b>Reviews</b>
-          </h2>
-          <div className="d-flex flex-column">
-            {/* {hotelData &&
-              hotelData.reviews.map((item, id) => {
-                return <ReviewCard data={item} key={id} />;
-              })} */}
-          </div>
-        </div>
-      </div>
+    <div
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      {data.map((item, id) => {
+        // console.log(item);
+        return <RoomCard data={item} key={id} />;
+      })}
     </div>
   );
 };

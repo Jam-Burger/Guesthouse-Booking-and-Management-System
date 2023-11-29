@@ -125,8 +125,8 @@ const ProfilePage = () => {
                   alt="profile"
                   className={
                     isEditing
-                      ? "rounded-circle i object-fit-cover"
-                      : "rounded-circle object-fit-cover"
+                      ? "rounded-circle i object-fit-cover shadow-lg"
+                      : "rounded-circle object-fit-cover shadow-lg"
                   }
                   style={{
                     width: "150px",
@@ -139,7 +139,7 @@ const ProfilePage = () => {
           </MDBCol>
 
           <MDBCol lg="6">
-            <MDBCard className="p-2 rounded-4">
+            <MDBCard className="p-2 rounded-4 shadow-lg">
               <MDBCardBody>
                 <MDBRow>
                   <MDBCol sm="4">

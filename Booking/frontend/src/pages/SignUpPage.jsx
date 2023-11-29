@@ -20,7 +20,7 @@ function SignUp() {
 
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, user);
-      navigate("/home", { state: { isLoggedIn: true } });
+      navigate("/", { state: { isLoggedIn: true } });
     } catch (e) {
       console.log(e);
     }
