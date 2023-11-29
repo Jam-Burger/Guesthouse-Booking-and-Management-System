@@ -91,7 +91,7 @@ const InventoryPage = () => {
       }
       try {
         const response = await axios.patch(
-          `http://localhost:5000/items/${args.primaryKeyValue[0]}`,
+          process.env.REACT_APP_BACKEND_URL +`/items/${args.primaryKeyValue[0]}`,
           newDataToChange
         );
         console.log(response);
@@ -102,7 +102,7 @@ const InventoryPage = () => {
     if (args.action === "add") {
       try {
         const response = await axios.post(
-          `http://localhost:5000/items/`,
+          process.env.REACT_APP_BACKEND_URL +`/items/`,
           args.data
         );
         console.log(response);
@@ -119,7 +119,7 @@ const InventoryPage = () => {
       try {
         console.log(args.data[0].itemId);
         const response = await axios.delete(
-          `http://localhost:5000/items/${args.data[0].itemId}`
+          process.env.REACT_APP_BACKEND_URL +`/items/${args.data[0].itemId}`
         );
         console.log(response);
       } catch (e) {
