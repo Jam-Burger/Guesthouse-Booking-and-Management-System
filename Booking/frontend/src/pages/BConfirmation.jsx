@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import "../css/bookingConfirm.css";
+import "./styles/bookingConfirm.css";
 import h2c from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
@@ -30,12 +29,11 @@ function BookingConfirmation() {
                     </div>
                 </div>
             </div>
-            <div className='container align-content-center mt-5 mb-3 w-50'>
+            <div className='container align-content-center mt-5 mb-3 mw-25'>
                 <div class="printCard card ">
                     <div class="card-header d-flex bg-success justify-content-center">
-                        {/* <i class="bi bi-check-circle"></i> */}
-                        <IoMdCheckmarkCircleOutline className='tickIcon' /> 
-                        <h1 className='text-white py-2 d-inline-flex px-2'>Booking Confirmed!</h1>
+                    <i className="bi bi-check2-circle text-white display-6"></i>
+                        <h1 className='text-white py-1 px-2'><p>Booking Confirmed!</p></h1>
                     </div>
                     <div class="card-body ">
                         <div className='row'>
@@ -44,7 +42,7 @@ function BookingConfirmation() {
                                 <p class="card-text">Following are the booking details:</p>
                             </div>
                             <div className='d-flex ms-auto align-items-start col col-sm col-md col-xl col-xxl col-lg align-top justify-content-end'>
-                                <img src="./images/logoJug_beyondSky-removebg.png" className='beyondIcon' />
+                                <img src="./img/logoJug_beyondSky-removebg.png" className='beyondIcon' />
                             </div>
                         </div>
                         <div className="print-area p-2 ">
@@ -82,7 +80,7 @@ function BookingConfirmation() {
                 <div className="row pt-3">
                     <div className="col d-flex justify-content-start"><button type="button" class="btn btn-primary">Go <i class="fas fa-circle-check"></i> Home</button></div>
                     <div className="col d-flex justify-content-end">
-                        <button type="button" onClick={generatePdf} class="btn btn-primary" disabled={!ttime === false}>
+                        <button type="button"  class="btn btn-primary" onClick={generatePdf} disabled={!ttime === false}>
                             {ttime ? (<span>Downloading</span>) : (<span>Download</span>)}
                         </button>
                     </div>
