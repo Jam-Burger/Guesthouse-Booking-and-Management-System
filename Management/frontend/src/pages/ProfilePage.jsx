@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar2 from "../components/Navbar2";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Unauthorized from "../components/Unauthorized";
 
@@ -10,6 +9,7 @@ const ProfilePage = () => {
   const [data, setData] = useState();
   const [isEditing, setEditing] = useState(false);
   const [pictureFile, setPictureFile] = useState();
+  const [tempEmail, setTempEmail] = useState(); // Temporary email storage
   const navigate = useNavigate();
 
   const changeProfilePic = async (file) => {
@@ -24,7 +24,6 @@ const ProfilePage = () => {
       formData.append("profileData", JSON.stringify(data));
       formData.append("picture", pictureFile);
 
-      // console.log(formData);
       const response = await axios.patch(
         process.env.REACT_APP_BACKEND_URL + "/staff",
         formData,
@@ -36,6 +35,7 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
+
   const cancel = async () => {
     try {
       const response = await axios.get(
@@ -52,6 +52,7 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
+
   const logout = async () => {
     try {
       const response = await axios.get(
@@ -65,6 +66,57 @@ const ProfilePage = () => {
     }
   };
 
+  // Validation Functions
+  const validateName = (name) => /^[A-Za-z]+$/.test(name);
+  const validateEmail = (email) =>
+    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  const validatePhone = (phone) => /^\d{0,10}$/.test(phone);
+  const validateAge = (age) => !isNaN(age) && age >= 0 && age <= 150;
+
+  const handleInputChange = (e, field) => {
+    const value = e.target.value;
+    switch (field) {
+      case "fullName":
+        const names = value.split(" ", 2);
+        const firstName = names[0];
+        const lastName = names[1] || "";
+        if (!validateName(firstName)) {
+          alert("First name should be alphabetic and not empty.");
+          return;
+        }
+        setData({ ...data, firstName, lastName });
+        break;
+      case "email":
+        // Store the email temporarily and validate it only when saving
+        setTempEmail(value);
+        break;
+      case "phone":
+        if (!validatePhone(value)) {
+          alert("Phone number should be up to 10 digits.");
+          return;
+        }
+        setData({ ...data, contactNo: value });
+        break;
+      case "age":
+        if (!validateAge(value)) {
+          alert("Age should be a number between 0 and 150.");
+          return;
+        }
+        setData({ ...data, age: value });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const saveEmail = () => {
+    if (!validateEmail(tempEmail)) {
+      alert("Invalid email format.");
+      return;
+    }
+    setData({ ...data, email: tempEmail }); // Update email only when it's valid
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -72,7 +124,6 @@ const ProfilePage = () => {
           process.env.REACT_APP_BACKEND_URL + "/me",
           { withCredentials: true }
         );
-        // console.log(response.data);
         if (response.data.data) {
           setData(response.data.data);
         } else {
@@ -100,7 +151,7 @@ const ProfilePage = () => {
                       <div className="card-body">
                         <div className="d-flex flex-column text-center">
                           <label
-                            for="upload-photo"
+                            htmlFor="upload-photo"
                             style={isEditing ? { cursor: "pointer" } : {}}
                           >
                             <img
@@ -149,13 +200,9 @@ const ProfilePage = () => {
                                   ? ""
                                   : data.firstName + " " + data.lastName
                               }
-                              onChange={(e) => {
-                                const names = e.target.value.split(" ", 2);
-                                console.log(names);
-                                const firstName = names[0];
-                                const lastName = names[1];
-                                setData({ ...data, firstName, lastName });
-                              }}
+                              onChange={(e) =>
+                                handleInputChange(e, "fullName")
+                              }
                             />
                           ) : (
                             <div className="col-sm-9 text-secondary">
@@ -169,17 +216,23 @@ const ProfilePage = () => {
                             <h6 className="mb-0">Email</h6>
                           </div>
                           {isEditing ? (
-                            <input
-                              type="email"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={!data ? "" : data.emailId}
-                              onChange={(e) => {
-                                setData({ ...data, email: e.target.value });
-                              }}
-                            />
+                            <>
+                              <input
+                                type="email"
+                                className="form-control-sm col-sm-7"
+                                defaultValue={!data ? "" : data.email}
+                                onChange={(e) => setTempEmail(e.target.value)}
+                              />
+                              <button
+                                className="btn btn-sm btn-primary col-sm-2 ms-2"
+                                onClick={saveEmail}
+                              >
+                                Save
+                              </button>
+                            </>
                           ) : (
                             <div className="col-sm-9 text-secondary">
-                              {data && data.emailId}
+                              {data && data.email}
                             </div>
                           )}
                         </div>
@@ -193,9 +246,7 @@ const ProfilePage = () => {
                               type="text"
                               className="form-control-sm col-sm-9"
                               defaultValue={!data ? "" : data.contactNo}
-                              onChange={(e) => {
-                                setData({ ...data, contactNo: e.target.value });
-                              }}
+                              onChange={(e) => handleInputChange(e, "phone")}
                             />
                           ) : (
                             <div className="col-sm-9 text-secondary">
@@ -238,9 +289,7 @@ const ProfilePage = () => {
                               type="number"
                               className="form-control-sm col-sm-9"
                               defaultValue={!data ? "" : data.age}
-                              onChange={(e) => {
-                                setData({ ...data, age: e.target.value });
-                              }}
+                              onChange={(e) => handleInputChange(e, "age")}
                             />
                           ) : (
                             <div className="col-sm-9 text-secondary">
@@ -257,15 +306,15 @@ const ProfilePage = () => {
                             {data && data.role}
                           </div>
                         </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Shift</h6>
+                        <hr />
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <h6 className="mb-0">Shift</h6>
+                          </div>
+                          <div className="col-sm-9 text-secondary">
+                            {data && data.shift}
+                          </div>
                         </div>
-                        <div className="col-sm-9 text-secondary">
-                          {data && data.shift}
-                        </div>
-                      </div>
                         <hr />
                         <div className="row">
                           <div className="col-sm-12 d-flex justify-content-center">
