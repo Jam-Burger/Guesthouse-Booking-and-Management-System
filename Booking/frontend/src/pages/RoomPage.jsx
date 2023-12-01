@@ -1,9 +1,9 @@
 import React from 'react'
-import Card from './components/Card'
-import img from './components/bgimg.png'
+import Card from '../components/Card'
+import img from '../components/bgimg.png'
 // import Navbar from './components/Navbar'
-import Rating from './components/Rating';
-import './components/rating.css';
+import Rating from '../components/Rating';
+import '../components/rating.css';
 
 export default function HotelList() {
 
