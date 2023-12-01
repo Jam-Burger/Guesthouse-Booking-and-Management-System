@@ -94,7 +94,6 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const user = new User({ ...data, password: hashedPassword });
     console.log(plainPassword);
-
     await user.save();
     const token = jwt.sign({ currentUser: user }, process.env.JWT_SECRET, {
       expiresIn: "1h",

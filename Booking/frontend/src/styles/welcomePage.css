@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.coverImg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* .container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+.backImg {
+    height: auto;
+    max-width: 70%;
+    transition-duration: 0.7s;
+    position: relative;
+}
+
+.cursive {
+    font-family: Architects Daughter;
+}
+
+/* .backCircle{
+    /* width: 30%;
+    height: 30%;
+    /* display: flex; */
+/* background-color: cyan;
+    border-radius: 20%;
+    margin-top: 0%;
+    z-index: 1;
+    top: 0px;
+    justify-content: flex-end;
+    right: 0px; */
+
+/* width: 20%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    &:before {
+        border-radius: 50%;
+        width: 100%;
+        padding-bottom: 100%;
+        background: red;
+        content: "";
+        position: absolute;
+        z-index: -1;
+      }
+     */
+
+
+/* border-radius: 50%;
+     width: 100%;
+     /* padding-bottom: 100%; */
+/* background: red;
+     position: absolute;
+     z-index: 1; */
+/* position: sticky; */
+/* display:flex; */
+/* shape-outside: circle();
+    clip-path: circle(); */
+
+.masking{
+    height: 60vh;
+    width: 100vw;
+    background-image: url("../../public/img/_backImg7.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    text-align:center; 
+    position:relative;
+    margin-bottom: auto;
+}
+
+/* .maskingText{
+    /* position: absolute; */
+    /* height:10em; 
+    width:100%;
+    padding: 0 20px; */

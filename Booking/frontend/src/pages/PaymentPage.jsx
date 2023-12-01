@@ -1,49 +1,91 @@
 import React, { useState } from "react";
 import "../styles/dummyPay.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import PageNotFound from "./PageNotFound";
 
-const PaymentPage = () => {
+const PaymentPage = () => {  
   const [cardNumber, setCardNumber] = useState("");
-  const [cardholderName, setCardholderName] = useState("");
+  const [cardHolderName, setCardHolderName] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
-  const { state } = useLocation();
-  const { checkInDate, checkOutDate, rooms, amount } = state;
+  
+  const [msg, setMessage] = useState("");
   const navigate = useNavigate();
-  const validate = (_cardNumber, _cardholderName, _expiryDate, _cvv) => {
+  
+  const { state } = useLocation();
+  if (!state) return <PageNotFound />;
+  const { checkInDate, checkOutDate, rooms, amount } = state;
+
+  const validate = (_cardNumber, _cardHolderName, _expiryDate, _cvv) => {
+    const cardNumberRegex = /^\d{16}$/;
+    const cvvRegex = /^\d{3}$/;
+    const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+    const cardHolderNameRegex = /^[a-zA-Z ]{5,30}$/;
+
+    if (!_cardNumber.match(cardNumberRegex)) {
+      setMessage("Invalid card number. Please enter a 16-digit number.");
+      return false;
+    }
+
+    if (
+      _cardHolderName.trim() === "" ||
+      !cardHolderName.match(cardHolderNameRegex)
+    ) {
+      setMessage(
+        "Invalid cardholder name. Please enter alphabetic name between 5-30 characters."
+      );
+      return false;
+    }
+
+    if (!_expiryDate.match(expiryDateRegex)) {
+      setMessage(
+        "Invalid expiry date. Please enter a valid date in MM/YY format."
+      );
+      return false;
+    }
+
+    if (!_cvv.match(cvvRegex)) {
+      setMessage("Invalid CVV. Please enter a 3-digit number.");
+      return false;
+    }
+
     return true;
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      cardNumber === "" ||
-      cardholderName === "" ||
-      expiryDate === "" ||
-      cvv === "" ||
-      !validate(cardNumber, cardholderName, expiryDate, cvv)
-    )
+    if (!validate(cardNumber, cardHolderName, expiryDate, cvv)) {
       return;
+    }
     try {
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/me",
+        { withCredentials: true }
+      );
+      const user = response.data.data;
+      if (!user) {
+        console.log(response.data);
+        return;
+      }
       rooms.forEach(async (roomNo) => {
         const booking = {
           checkInDate,
           checkOutDate,
           roomNo,
           guestDetails: {
-            fullName: "hello mary",
-            gender: "MALE",
-            age: 20,
-            contactNo: "121208123312",
+            fullName: user.firstName + " " + user.lastName,
+            gender: user.gender,
+            age: user.age,
+            contactNo: user.contactNo,
           },
         };
         await axios.post(
-          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/bookings/",
+          process.env.REACT_APP_MANAGEMENT_BACKEND_URL + "/bookings",
           booking
         );
       });
-      navigate("/bookingConfirmation");
+      navigate("/bookingConfirmation", { state: {...state, user}, replace: true });
     } catch (e) {
       console.log(e);
     }
@@ -51,7 +93,7 @@ const PaymentPage = () => {
 
   return (
     <div className="paymDiv">
-      <h1 className="dumTitle">Net Banking </h1>
+      <h1 className="dumTitle">Payment</h1>
       <div className="paymImg">
         <img
           src="/img/amazonPayImg.png"
@@ -66,8 +108,11 @@ const PaymentPage = () => {
         <img src="/img/visaImg.png" alt="Visa Logo" className="paymLogo" />
         <img src="/img/gPayImg.png" alt="Payment Logo" className="paymLogo" />
       </div>
+
       <form onSubmit={handleSubmit}>
-        <label htmlFor="cardNumber">Card Number:</label>
+        <label htmlFor="cardNumber" className=" ">
+          Card Number:
+        </label>
         <input
           className="inpText"
           type="text"
@@ -75,7 +120,7 @@ const PaymentPage = () => {
           name="cardNumber"
           placeholder="XXXX-XXXX-XXXX-XXXX"
           value={cardNumber}
-          onChange={(evt) => setCardNumber(evt.target.value)}
+          onChange={(e) => setCardNumber(e.target.value)}
           required
           autoFocus
         />
@@ -86,9 +131,9 @@ const PaymentPage = () => {
           type="text"
           id="cardholderName"
           name="cardholderName"
-          placeholder="Surname Name"
-          value={cardholderName}
-          onChange={(evt) => setCardholderName(evt.target.value)}
+          placeholder="Cardholder Name"
+          value={cardHolderName}
+          onChange={(e) => setCardHolderName(e.target.value)}
           required
         />
 
@@ -100,7 +145,7 @@ const PaymentPage = () => {
           name="expiryDate"
           placeholder="MM/YY"
           value={expiryDate}
-          onChange={(evt) => setExpiryDate(evt.target.value)}
+          onChange={(e) => setExpiryDate(e.target.value)}
           required
         />
 
@@ -112,9 +157,10 @@ const PaymentPage = () => {
           name="cvv"
           placeholder="***"
           value={cvv}
-          onChange={(evt) => setCvv(evt.target.value)}
+          onChange={(e) => setCvv(e.target.value)}
           required
         />
+        <div className="text-danger">{msg}</div>
         <div className="d-flex justify-content-between flex-direction-row align-items-center">
           <span>Amount : &#8377;{amount}/- only</span>
           <button type="submit" className=" d-inline btn btn-success just ">

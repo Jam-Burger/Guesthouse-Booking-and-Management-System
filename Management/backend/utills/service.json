@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "guesthouse-bnm-system-404509",
+  "private_key_id": "ab54ae73cac48daf07485ff53029ee80dc4f504a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC+juUsmTWlpaza\nP4jM7Pg15NMl3vxx7HB46tMEX+IhW/DhsLheBkn9aTPSrdQbhPB+yX05J/1ggSXv\n6tjPsWtLuuvNNznugGNDH4iyH+Qs0i/0Q5Gj8vfJpBGr/NH2gs50b0CK6sefPRp2\nIt6HPQKB+GHvbfkYj1/w4IHE0b86qLcXcCeLPlq9+0ef+F33SolZEkFu7nYC0gea\nQZq1OVGAj1V9wLG5Yyxx4uddFgohSS1SOrOh9OTQR1hIJsNTL2PsfB2jam8zINqC\n7+FMUEAlQcwmziE4G38MsV42GeFuGcrSovcKqmjQho8ctrRQB+DOy2gB+vzVxgla\nDGAT4s7PAgMBAAECggEABsCFHKTwcoZMec6ULYAHYCV+WSettehaUzaC3p36eGh2\naxDPdOlvzWO2Zd8p67BfXdFhjK5pkHX9tE1pJvF9lfPcGhaRs2081yqIC0O3r+I3\nYnDTJBuJAyM7SxGiFkQr8OfmQhCFR+kAMIfAxHWkH/B/S966MPrCPASVzzWyuxnN\nNprAT2CMpUSvu3ff5Uss6e44otAQ214ohdZXePg8JSiDkxqLfAiauIgmYly7Yshw\nIlNr+HieFdv2RQze12QxGgHi8tC2Fot9MQWQi3Xye7T3a1GSwA/qqY0BGLkJYtgh\nYy0CH+3hr1/stjtt1boKQbSYZWAPGgw/P7q51L7wqQKBgQD4nnkxygqSCG03/LBT\ncqxeoFZ3oQV3bLN2fBNYHPa5EI8jWVzo/LeaPSMhOHJR70p/worrMUcF4JCQ6OuE\n05iRpMc2V6/NNYzpzao7V2GVqoMGIDSzolFiJ3AV/XebyBBr5jX8M/xugACWeqJD\n5DtmHkHSprwZPvAJQXZCo5qflwKBgQDENyd5z3Bgt1GmAlEFvZ+YdKmla7et5YwH\n3gQ5TNTyf56Dpy24GaZAX4mGn8RS4aEqTr9/Grexy36KjcsMWKIj7dL3t823HEDd\nhlqyd2eIsRTlMVsKvQRn9JjVrFrSxXQmuLcjtV4TmuyrnKTiprfrxUwvlorZJCVc\nNKoByhSxiQKBgBwKw+C5yTdve+I0vi6rYIXLz/TuVI+D0zoqBISLv8hf9cUm7zPY\nTV04SB4XH83eD6kZaFHe3QPssGGn4+i3dR34V//pJAshXyN/7xOCZ59Z/C1UtJ0O\nUd+gUyQn0rXfevqwnKY1tuM/zNEsQ+EkfQ6nmwUHiW/PiYOBvrUFfwtBAoGAB49M\ncRAB92f4uFmsf3kf1gLgqmPtDsEiVQdDyGViavlpxQ7C3y31ztMffFVZfgv9ZqDk\nFeSUoUAC3xm5cf9UN+go0ax+O4jWIvLTOb8J+SVBddch99byfYLaBJmAYlCDOh6x\nx6lsN3snlTES1TyxJ19RoR++t8EBw3yv9COyCmkCgYAVym/+P1b6A8IgGzmyVGoa\n1ZF+o4ymAPTC3093c3bDy/9zetL0xnPTX6rwKowtey9uLaKzg995cEtFSPB+fUBq\n5JRFPJ268st9OP7tKccIhKJpjGyWjv3CzVNqxk+YWQ+FnaFht0hQ5Br8iAQH7aQv\nKdZm6JoLy/MwVA1lN0HDgA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "drive-uploader@guesthouse-bnm-system-404509.iam.gserviceaccount.com",
+  "client_id": "118138013946255795207",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/drive-uploader%40guesthouse-bnm-system-404509.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

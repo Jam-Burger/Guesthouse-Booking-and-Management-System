@@ -46,3 +46,22 @@
     transform: rotate(360deg);
   }
 }
+
+/* Add these styles to your CSS file */
+
+/* Styles for the open state */
+.open {
+  width: 250px; /* Adjust the width as needed */
+  transition: width 0.3s ease;
+}
+
+/* Styles for the closed state */
+.closed {
+  width: 60px; /* Adjust the width as needed */
+  transition: width 0.3s ease;
+}
+
+/* Additional styling for the content area */
+.sidebar-content {
+  padding: 20px; /* Adjust the padding as needed */
+}
