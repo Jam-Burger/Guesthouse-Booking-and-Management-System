@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from '../components/Card'
+import RoomCard from '../components/RoomCard'
 import img from '../components/bgimg.png'
 // import Navbar from './components/Navbar'
 import Rating from '../components/Rating';
@@ -12,19 +12,19 @@ export default function HotelList() {
       {/* <Navbar /> */}
       <div className='d-flex flex-column justify-content-center align-items-center'>
       <div className="rCards">
-        <Card
+        <RoomCard
           photu={img}
           roomName="Executive Suite"
           price="45,000/night"
           capacity='Capacity: 2'
         />
-        <Card
+        <RoomCard
           photu={img}
           roomName="Deluxe Ocean View Suite"
           price="45,000/night"
           capacity='Capacity: 2'
         />
-        <Card
+        <RoomCard
           photu={img}
           roomName="Presidential Suite"
           price="60,000/night"
