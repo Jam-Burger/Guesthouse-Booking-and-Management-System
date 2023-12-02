@@ -163,6 +163,10 @@ const BookingPage = () => {
         </form>
       </div>
     </div>
+    </div>
+    </div>
+}
+</>
   );
 };
 
