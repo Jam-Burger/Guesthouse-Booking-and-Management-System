@@ -29,12 +29,19 @@ A guesthouse booking system is a software application that enables guesthouses a
 
 
 # Need for this Project
+
 ● Prone to Errors: Manual systems are highly susceptible to human errors, including double bookings, incorrect data entry, or miscommunication, leading to guest dissatisfaction and operational inefficiencies.
+
 ● Time-Consuming: Manually managing bookings, updating availability, and handling guest information is time-consuming.
+
 ● Ineffective Reporting and Analysis: Generating reports or analyzing booking trends manually is cumbersome. Lack of real-time data and insights makes it difficult for guesthouses to make informed decisions for marketing strategies, pricing, or resource allocation.
+
 ● Reduced Guest Experience: Manual systems may lead to slower check-in/check-out processes, longer waiting times, or inaccuracies in guest information, impacting the overall guest experience negatively.
+
 ● Limited Scalability: As the guesthouse grows, manual systems struggle to handle increased bookings and operations. Managing a larger volume of guests becomes challenging without an automated system in place.
+
 ● Inventory Management:Manual recording of inventory levels is prone to errors such as miscounts, misplaced items, or incorrect entries, leading to discrepancies in stock levels.
+
 ● Scheduling Challenges: Creating staff schedules manually can be complex and time-consuming, leading to inefficiencies, conflicts, or understaffing/overstaffing situations.
 
 
