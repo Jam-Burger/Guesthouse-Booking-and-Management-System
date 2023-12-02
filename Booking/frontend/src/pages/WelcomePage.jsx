@@ -37,7 +37,7 @@ const WelcomePage = () => {
               </h2>
               <hr className="h-0.5 my-1 mx-4 flex-row rounded w-48 bg-gray-200 border-0 md:my-10 dark:bg-gray-400" />
             </div>
-            <div className="scroll-smooth ">
+            <div className="scroll-smooth">
               <AutoScroll />
             </div>
             <div className="masking w-full flex flex-col h-full justify-center items-center overflow-hidden bg-cover">

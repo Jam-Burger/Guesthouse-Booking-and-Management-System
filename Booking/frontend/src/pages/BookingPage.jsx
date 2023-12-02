@@ -75,18 +75,22 @@ const BookingPage = () => {
     });
   };
   return (
-    <>
+    <div>
       {roomCategoryData && (
         <div className="card m-auto my-4 shadow" style={{ maxWidth: "600px" }}>
           <div className="card-body">
             <div className="d-flex flex-column align-items-center justify-content-center pt-3">
               <div style={{ width: "80%" }}>
-                <h1 style={{ textAlign: "center" }}>The Haven</h1>
+                <div className="h1" style={{ textAlign: "center" }}>
+                  {"The Haven"}
+                </div>
                 <hr />
-                <h2 className="text-capitalize">
+                <div className="h2 text-capitalize">
                   {roomCategoryData.type.toLowerCase()} room
-                </h2>
-                <h3>&#8377;{roomCategoryData.bookingPrice}/night</h3>
+                </div>
+                <div className="h3">
+                  &#8377;{roomCategoryData.bookingPrice}/night
+                </div>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="checkInDate" className="form-label">
@@ -139,7 +143,7 @@ const BookingPage = () => {
                       })}
                     </select>
                   </div>
-                  <h3>
+                  <div>
                     Payment= &#8377;
                     {computeAmount(
                       roomCategoryData.bookingPrice,
@@ -147,8 +151,8 @@ const BookingPage = () => {
                       checkOutDate,
                       noOfRooms
                     )}
-                  </h3>
-                  <h5>
+                  </div>
+                  <div className="h5">
                     {(new Date(checkOutDate) - new Date(checkInDate)) /
                       86400000 >
                     0
@@ -156,7 +160,7 @@ const BookingPage = () => {
                           86400000 +
                         " nights stay"
                       : "invalid dates entered"}
-                  </h5>
+                  </div>
                   <button
                     type="submit"
                     className="btn btn-primary"
@@ -171,7 +175,7 @@ const BookingPage = () => {
         </div>
       )}
       ;
-    </>
+    </div>
   );
 };
 
