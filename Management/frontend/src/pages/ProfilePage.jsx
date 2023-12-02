@@ -5,6 +5,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Unauthorized from "../components/Unauthorized";
 
+const validateName = (name) => /^[A-Za-z]+$/.test(name);
+const validateEmail = (email) =>
+  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+const validatePhone = (phone) => /^\d{0,10}$/.test(phone);
+const validateAge = (age) => !isNaN(age) && age >= 0 && age <= 150;
+
 const ProfilePage = () => {
   const [data, setData] = useState();
   const [isEditing, setEditing] = useState(false);
@@ -19,6 +25,11 @@ const ProfilePage = () => {
   };
 
   const updateData = async () => {
+    validateAge();
+    validateEmail();
+    validateName();
+    validatePhone();
+
     try {
       const formData = new FormData();
       formData.append("profileData", JSON.stringify(data));
@@ -67,11 +78,6 @@ const ProfilePage = () => {
   };
 
   // Validation Functions
-  const validateName = (name) => /^[A-Za-z]+$/.test(name);
-  const validateEmail = (email) =>
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-  const validatePhone = (phone) => /^\d{0,10}$/.test(phone);
-  const validateAge = (age) => !isNaN(age) && age >= 0 && age <= 150;
 
   const handleInputChange = (e, field) => {
     const value = e.target.value;
@@ -109,14 +115,6 @@ const ProfilePage = () => {
     }
   };
 
-  const saveEmail = () => {
-    if (!validateEmail(tempEmail)) {
-      alert("Invalid email format.");
-      return;
-    }
-    setData({ ...data, email: tempEmail }); // Update email only when it's valid
-  };
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -149,7 +147,7 @@ const ProfilePage = () => {
                   <div className="col-md-4 mb-3">
                     <div className="card">
                       <div className="card-body">
-                        <div className="d-flex flex-column text-center">
+                        <div className="d-flex flex-column text-center ">
                           <label
                             htmlFor="upload-photo"
                             style={isEditing ? { cursor: "pointer" } : {}}
@@ -200,9 +198,6 @@ const ProfilePage = () => {
                                   ? ""
                                   : data.firstName + " " + data.lastName
                               }
-                              onChange={(e) =>
-                                handleInputChange(e, "fullName")
-                              }
                             />
                           ) : (
                             <div className="col-sm-9 text-secondary">
@@ -219,16 +214,9 @@ const ProfilePage = () => {
                             <>
                               <input
                                 type="email"
-                                className="form-control-sm col-sm-7"
+                                className="form-control-sm col-sm-9"
                                 defaultValue={!data ? "" : data.email}
-                                onChange={(e) => setTempEmail(e.target.value)}
                               />
-                              <button
-                                className="btn btn-sm btn-primary col-sm-2 ms-2"
-                                onClick={saveEmail}
-                              >
-                                Save
-                              </button>
                             </>
                           ) : (
                             <div className="col-sm-9 text-secondary">
@@ -239,14 +227,13 @@ const ProfilePage = () => {
                         <hr />
                         <div className="row">
                           <div className="col-sm-3">
-                            <h6 className="mb-0">Phone</h6>
+                            <h6 className="mb-0">Contact No</h6>
                           </div>
                           {isEditing ? (
                             <input
                               type="text"
-                              className="form-control-sm col-sm-9"
+                              className="form-control-sm col-sm-9 border-1"
                               defaultValue={!data ? "" : data.contactNo}
-                              onChange={(e) => handleInputChange(e, "phone")}
                             />
                           ) : (
                             <div className="col-sm-9 text-secondary">
@@ -289,7 +276,6 @@ const ProfilePage = () => {
                               type="number"
                               className="form-control-sm col-sm-9"
                               defaultValue={!data ? "" : data.age}
-                              onChange={(e) => handleInputChange(e, "age")}
                             />
                           ) : (
                             <div className="col-sm-9 text-secondary">
