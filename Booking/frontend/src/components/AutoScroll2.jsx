@@ -7,7 +7,7 @@ function AutoScroll() {
         <div className="slider">
             <div className="cards">
                 <div className="indCard">
-                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/98/5c/37/hotel-exterior.jpg?w=1200&h=-1&s=1"  alt='1'/>
+                    <img src="https://dynamic-media-cdn.tripadvisor.cgitom/media/photo-o/2a/98/5c/37/hotel-exterior.jpg?w=1200&h=-1&s=1"  alt='1'/>
                 </div>
                 <div className="indCard">
                     <img src="https://media.istockphoto.com/id/903417402/photo/luxury-construction-hotel-with-swimming-pool-at-sunset.jpg?s=612x612&w=0&k=20&c=NyPC_c-wE3W_CImA4t57FpyGy6f428CYROd80jxVC4A="  alt='2' />
