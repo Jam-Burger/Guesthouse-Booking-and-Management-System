@@ -6,15 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 const getTodayDate = () => {
   const date = new Date();
-  return (
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-  );
+  return date.toISOString().substring(0, 10);
 };
 const getTomorrowDate = () => {
   const date = new Date(Date.now() + 24 * 3600 * 1000);
-  return (
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-  );
+  return date.toISOString().substring(0, 10);
 };
 const computeAmount = (bp, cid, cod, nor) => {
   return (bp * nor * (new Date(cod) - new Date(cid))) / 86400000;
@@ -152,15 +148,17 @@ const BookingPage = () => {
                       noOfRooms
                     )}
                   </div>
-                  <div className="h5">
-                    {(new Date(checkOutDate) - new Date(checkInDate)) /
-                      86400000 >
-                    0
-                      ? (new Date(checkOutDate) - new Date(checkInDate)) /
-                          86400000 +
-                        " nights stay"
-                      : "invalid dates entered"}
-                  </div>
+
+                  {(new Date(checkOutDate) - new Date(checkInDate)) / 86400000 >
+                  0 ? (
+                    <div className="h5">
+                      {(new Date(checkOutDate) - new Date(checkInDate)) /
+                        86400000 +
+                        " nights stay"}
+                    </div>
+                  ) : (
+                    <h5 className="text-danger"> Invalid dates Entered</h5>
+                  )}
                   <button
                     type="submit"
                     className="btn btn-primary"
