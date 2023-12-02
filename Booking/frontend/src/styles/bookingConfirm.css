@@ -5,7 +5,7 @@ html{
 .masking{
     height: 50vh;
     width: 100vw;
-    background-image: url("../../public/images/backImage_2_trans.jpg");
+    background-image: url("../../public/img/backImage_2_trans.jpg");
     background-size: cover;
     background-position:bottom ;
     background-attachment: fixed;
