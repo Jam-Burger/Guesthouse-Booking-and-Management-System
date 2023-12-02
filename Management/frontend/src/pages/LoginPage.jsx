@@ -72,6 +72,8 @@ const LoginPage = () => {
                   id="emailId"
                   className="form-control border border-dark "
                   placeholder="Enter your email"
+                  autoFocus
+                  required
                 />
                 <br />
               </div>
@@ -82,6 +84,14 @@ const LoginPage = () => {
                   id="password"
                   className="form-control border border-dark "
                   placeholder="Enter your password"
+                  pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#!@$%^&*_+-=]).{8,32}$"
+                  title="Password must contain at least:
+                  one uppercase letter, 
+                  one lowercase letter, 
+                  one digit, 
+                  one special character 
+                  and the length of the pasword should be between 8 to 32"
+                  required
                 />
               </div>
               <br />
