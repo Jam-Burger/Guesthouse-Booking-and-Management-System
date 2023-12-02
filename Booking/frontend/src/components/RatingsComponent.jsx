@@ -1,8 +1,8 @@
 import React from 'react';
-import Rating from "../components/Rating";
-import '../css/rating.css';
+import Rating from "./Rating";
+import '../styles/rating.css';
 
-function RoomPage(){
+function RatingsComponent(){
     return (
         <div id="accordion-flush" data-accordion="collapse" data-active-classes="p-5 font-bold dark:bg-gray-900 text-white dark:text-white" data-inactive-classes="text-white font-[32px] px-5 dark:text-white bg-gray-900">
         <h2 id="accordion-flush-heading-1">
@@ -24,4 +24,4 @@ function RoomPage(){
     );
 }
 
-export default RoomPage;
+export default RatingsComponent;
