@@ -20,6 +20,7 @@ const App = () => (
       <Route path="/inventory" element={<InventoryPage />}></Route>
       <Route path="*" element={<PageNotFound />}></Route>
     </Routes>
+    {/* testing check */}
   </BrowserRouter>
 );
 
