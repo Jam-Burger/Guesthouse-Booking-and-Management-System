@@ -86,7 +86,7 @@ const LoginPage = () => {
                       one uppercase letter, 
                       one lowercase letter, 
                       one digit, 
-                      one special character 
+                      one special character from #!@$%^&*_+-=,
                       and the length of the pasword should be between 8 to 32"
                       required
                     />
@@ -107,7 +107,7 @@ const LoginPage = () => {
                     </p>
                   </div>
                 </form>
-                <div className="text-center  mt-3 mb-0">{message}</div>
+                <div className="text-center mt-3 mb-0">{message}</div>
               </div>
             </div>
             <svg

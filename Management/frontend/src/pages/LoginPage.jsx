@@ -89,7 +89,7 @@ const LoginPage = () => {
                   one uppercase letter, 
                   one lowercase letter, 
                   one digit, 
-                  one special character 
+                  one special character from #!@$%^&*_+-=,
                   and the length of the pasword should be between 8 to 32"
                   required
                 />
