@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const data = await Room.find({});
+    const data = await Room.find({}).sort({ roomNo: 1 });
     res.json({
       msg: "success",
       data: data,

@@ -1,0 +1,93 @@
+html{
+     scroll-behavior: smooth;
+}
+
+.masking{
+    height: 50vh;
+    width: 100vw;
+    background-image: url("../../public/img/backImage_2_trans.jpg");
+    background-size: cover;
+    background-position:bottom ;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    text-align:center; 
+    position:relative;
+    margin-bottom: auto;
+}
+
+.cursive {
+    font-family: Architects Daughter;
+}
+
+.divider{
+    position: relative;
+    display: flex;
+    margin-top: 3%;
+	height: 3%;
+}
+
+.hrr:before{
+    content: "";
+	position: absolute;
+	top: 0;
+	left: 5%;
+	right: 5%;
+	width: 90%;
+	height: 1px;
+	background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
+}
+
+.beyondIcon{
+    width: 90%;
+    max-width: 90%;
+    /* height: 100%; */
+    /* display: flex; */
+    flex-direction: row;
+    justify-content: end;
+
+}
+
+.tickIcon{
+    color: white;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin-right: 0.5rem;
+    margin-top: 0.8rem;
+    justify-content: center;
+    /* align-content: center ; */
+    align-items: center;
+    font-size: 3rem;
+    /* padding: 5; */
+}
+
+.printCard{
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px; */
+    /* box-shadow: rgba(0, 0, 0, 0.09) 0px 4px 12px; */
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border: none;
+}
+
+/* .flex-3{
+    flex:3;
+}
+
+.flex-2{
+    flex:2;
+}
+
+.flex-1{
+    flex:1;
+} */
+
+/* .text-sm{
+    font-size: 0.875em;
+}
+
+.text-lg{
+    font-size: 1.125em;
+}
+
+.text-md{
+    font-size: 1em;
+} */

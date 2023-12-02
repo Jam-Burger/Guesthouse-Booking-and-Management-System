@@ -6,16 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 const getTodayDate = () => {
   const date = new Date();
-  return (
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-  );
+  return date.toISOString().substring(0, 10);
 };
 
 const getTomorrowDate = () => {
   const date = new Date(Date.now() + 24 * 3600 * 1000);
-  return (
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-  );
+  return date.toISOString().substring(0, 10);
 };
 const computeAmount = (bp, cid, cod, nor) => {
   return (bp * nor * (new Date(cod) - new Date(cid))) / 86400000;
@@ -101,72 +97,78 @@ const BookingPage = () => {
                     />
                   </div>
 
-          <div className="mb-3">
-            <label htmlFor="checkOutDate" className="form-label">
-              Check out date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              id="checkOutDate"
-              value={checkOutDate}
-              onChange={(e) => {
-                setCheckOutDate(e.target.value);
-              }}
-              min={checkInDate}
-            />
+                  <div className="mb-3">
+                    <label htmlFor="checkOutDate" className="form-label">
+                      Check out date
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="checkOutDate"
+                      value={checkOutDate}
+                      onChange={(e) => {
+                        setCheckOutDate(e.target.value);
+                      }}
+                      min={checkInDate}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="noOfRo0ms" className="form-label">
+                      Select number of rooms to book
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      value={noOfRooms}
+                      onChange={(e) => {
+                        setNoOfRooms(e.target.value);
+                      }}
+                    >
+                      {roomsData.map((item, id) => {
+                        return (
+                          <option key={id + 1} value={id + 1}>
+                            {" "}
+                            {id + 1}{" "}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div>
+                    Payment= &#8377;
+                    {computeAmount(
+                      roomCategoryData.bookingPrice,
+                      checkInDate,
+                      checkOutDate,
+                      noOfRooms
+                    )}
+                  </div>
+
+                  {(new Date(checkOutDate) - new Date(checkInDate)) / 86400000 >
+                  0 ? (
+                    <div className="h5">
+                      {(new Date(checkOutDate) - new Date(checkInDate)) /
+                        86400000 +
+                        " nights stay"}
+                    </div>
+                  ) : (
+                    <h5 className="text-danger"> Invalid dates Entered</h5>
+                  )}
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={noOfRooms <= 0}
+                  >
+                    Book
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="noOfRo0ms" className="form-label">
-              Select number of rooms to book
-            </label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              value={noOfRooms}
-              onChange={(e) => {
-                setNoOfRooms(e.target.value);
-              }}
-            >
-              {roomsData.map((item, id) => {
-                return (
-                  <option key={id + 1} value={id + 1}>
-                    {" "}
-                    {id + 1}{" "}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <h3>
-            Payment= &#8377;
-            {computeAmount(
-              roomCategoryData.bookingPrice,
-              checkInDate,
-              checkOutDate,
-              noOfRooms
-            )}
-          </h3>
-          <h5>
-            {(new Date(checkOutDate) - new Date(checkInDate)) / 86400000 > 0
-              ? (new Date(checkOutDate) - new Date(checkInDate)) / 86400000 +
-                " nights stay"
-              : "invalid dates entered"}
-          </h5>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={noOfRooms <= 0}
-          >
-            Book
-          </button>
-        </form>
-      </div>
+        </div>
+      )}
+      ;
     </div>
-    </div>
-    </div>
-}
-</>
   );
 };
 

@@ -13,9 +13,9 @@ const checkCollision = function (item, data) {
 };
 
 router.get("/", async (req, res) => {
-  const findObj = {};
+  // const hotelName = req.query.hotelName;
   try {
-    const data = await Booking.find(findObj);
+    const data = await Booking.find({});
     res.json({
       msg: "success",
       data: data,
@@ -80,6 +80,38 @@ router.post("/", async (req, res) => {
       data: newBooking,
     });
   } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
+
+router.patch("/", async (req, res) => {
+  try {
+    const data = req.body;
+    const prevData = data.prevData;
+    const newData = data.newData;
+    console.log("prevData : ",prevData);
+    console.log("newData : ",newData);
+    // const prevBookings = await Booking.find({roomNo:})
+
+    // const bookingData = req.body;
+    // const previousBookings = await Booking.find({ roomNo: bookingData.roomNo });
+    // let isCollision = false;
+
+    // previousBookings.forEach((item) => {
+    //   if (checkCollision(item, bookingData)) {
+    //     console.log("Error, Rooms are not available on your specified date");
+    //     isCollision = true;
+    //   }
+    // });
+    // if (isCollision) {
+    //   res.json({ msg: "No Rooms are available" });
+    //   return;
+    // }
+  }catch (e) {
     console.log(e);
     res.status(500).json({
       msg: "failure",
