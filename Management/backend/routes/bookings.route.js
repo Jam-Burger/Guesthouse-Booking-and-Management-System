@@ -5,11 +5,11 @@ import { Room } from "../models/room.model.js";
 const router = express.Router();
 const BreakError = {};
 
-const checkCollision = function (item, data) {
+const checkCollision = function (prevBooking, data) {
   const date1 = (new Date(data.checkInDate)).getTime();
   const date2 = (new Date(data.checkOutDate)).getTime();
-  if (date1 > item.checkInDate.getTime() && date1 < item.checkOutDate.getTime()) return true;
-  if (date2 > item.checkInDate.getTime() && date2 < item.checkOutDate.getTime()) return true;
+  if (date1 > prevBooking.checkInDate.getTime() && date1 < prevBooking.checkOutDate.getTime()) return true;
+  if (date2 > prevBooking.checkInDate.getTime() && date2 < prevBooking.checkOutDate.getTime()) return true;
   return false;
 };
 
@@ -60,14 +60,14 @@ router.post("/", async (req, res) => {
     const previousBookings = await Booking.find({ roomNo: bookingData.roomNo });
     let isCollision = false;
 
-    previousBookings.forEach((item) => {
-      if (checkCollision(item, bookingData)) {
+    previousBookings.forEach((prevBooking) => {
+      if (checkCollision(prevBooking, bookingData)) {
         console.log("Error, Rooms are not available on your specified date");
         isCollision = true;
       }
     });
     if (isCollision) {
-      res.json({ msg: "No Rooms are available" });
+      res.json({ success:"false", msg: "Error, Rooms are not available on your specified date" });
       return;
     }
 
@@ -92,11 +92,23 @@ router.post("/", async (req, res) => {
 router.patch("/", async (req, res) => {
   try {
     const data = req.body;
-    const prevData = data.prevData;
+    const prevData = data.oldData;
     const newData = data.newData;
+    prevData.checkInDate = prevData.checkInDate+"T00:00:00.000+00:00";
+    prevData.checkOutDate = prevData.checkOutDate+"T00:00:00.000+00:00";
+    newData.checkInDate = newData.checkInDate+"+00:00";
+    newData.checkOutDate = newData.checkOutDate+"+00:00";
+
+    if ((newData.checkInDate === prevData.checkInDate) && (newData.checkOutDate === prevData.checkOutDate))
+    {
+      // const { guestDetails.fullName : fullName } = newData;
+      const updatedBooking = await Booking.findOneAndUpdate({roomNo: prevData.roomNo, checkInDate: prevData.checkInDate, checkOutDate : prevData.checkOutDate}, newData);
+    }
+
     console.log("prevData : ",prevData);
     console.log("newData : ",newData);
-    // const prevBookings = await Booking.find({roomNo:})
+    const prevBooking = await Booking.find({roomNo: prevData.roomNo, checkInDate: prevData.checkInDate, checkOutDate : prevData.checkOutDate});
+    console.log("This is prev BOoking : ",prevBooking);
 
     // const bookingData = req.body;
     // const previousBookings = await Booking.find({ roomNo: bookingData.roomNo });

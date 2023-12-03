@@ -153,7 +153,7 @@ const ProfilePage = () => {
                             style={isEditing ? { cursor: "pointer" } : {}}
                           >
                             <img
-                              src={!data ? "" : data.profilePic}
+                              src={!data.profilePic ? "/img/blank-profile-picture.webp" : data.profilePic}
                               alt="profile"
                               className="object-fit-cover rounded-5 border border-black"
                               style={{ width: "200px", height: "200px" }}
