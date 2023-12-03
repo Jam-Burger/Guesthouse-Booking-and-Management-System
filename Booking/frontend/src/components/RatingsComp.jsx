@@ -1,6 +1,6 @@
 import React from 'react';
 import Rating2 from "./Rating2";
-import '../css/rating.css';
+import '../styles/rating.css';
 
 function RatingsComp() {
     return (
