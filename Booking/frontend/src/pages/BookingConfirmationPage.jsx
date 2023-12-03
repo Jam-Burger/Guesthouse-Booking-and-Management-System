@@ -17,7 +17,7 @@ const BookingConfirmationPage = () => {
 
   const { state } = useLocation();
   if (!state) return <PageNotFound />;
-  const { checkInDate, checkOutDate, rooms, amount, user, guests } = state;
+  const { checkInDate, checkOutDate, rooms, amount, user } = state;
 
   const generatePdf = () => {
     const capture = document.querySelector(".printCard");
@@ -63,7 +63,9 @@ const BookingConfirmationPage = () => {
       <div className="cheh d-flex flex-col justify-content-center items-center overflow-hidden bg-cover">
         <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }} className="absolute d-flex justify-content-center align-items-center h-100 w-100 overflow-hidden bg-fixed">
           <div className="maskingText w-full ">
-            <h1 className="text-white text-center display-2">Thank You for Booking from beyondSky!</h1>
+            <h1 className="text-white text-center display-2">
+              Thank You for Booking from beyondSky!
+            </h1>
           </div>
         </div>
       </div>
@@ -71,7 +73,9 @@ const BookingConfirmationPage = () => {
         <div className="printCard card ">
           <div className="card-header d-flex bg-success justify-content-center">
             <i className="bi bi-check2-circle text-white display-6"></i>
-            <h1 className='text-white px-2'><p>Booking Confirmed!</p></h1>
+            <h1 className="text-white px-2">
+              <p>Booking Confirmed!</p>
+            </h1>
           </div>
           <div className="card-body ">
             <div className='row'>
@@ -84,34 +88,38 @@ const BookingConfirmationPage = () => {
               </div>
             </div>
             <div className="print-area p-2 ">
-              <div className='row'>
-                <div className='col-12 col-xl-8'>
-                  <ul className='list-unstyled'>
-                    <li>Date:
+              <div className="row">
+                <div className="col-12 col-xl-8">
+                  <ul className="list-unstyled">
+                    <li>
+                      {"Date: "}
                       {date.toLocaleDateString("en-GB", {
                         day: "numeric",
                         month: "long",
-                        year: "numeric"
+                        year: "numeric",
                       })}
                     </li>
                     <li>Booking ID: BD123456</li>
                     <li>User: {user.firstName + " " + user.lastName}</li>
                   </ul>
                 </div>
-                <div className='col-12 col-xl-8'>
-                  <p className='m-0 fw-bold'>Room Details:</p>
-                  <ul className='list-unstyled'>
+                <div className="col-12 col-xl-8">
+                  <p className="m-0 fw-bold">Room Details:</p>
+                  <ul className="list-unstyled">
                     <li>Rooms: {rooms.length}</li>
-                    <li>Room Type: {rooms.type}</li>
-                    <li>No. of Guests: {guests}</li>
+                    <li>Room Type: {rooms[0].type}</li>
                     <li>Room Numbers: {rooms.join(", ")}</li>
                   </ul>
                 </div>
               </div>
 
-              <div className='row'>
-                <div className='col d-flex justify-content-start'>Checkin Date: {checkInDate}</div>
-                <div className='col d-flex justify-content-end'>Checkout Date: {checkOutDate}</div>
+              <div className="row">
+                <div className="col d-flex justify-content-start">
+                  Checkin Date: {checkInDate}
+                </div>
+                <div className="col d-flex justify-content-end">
+                  Checkout Date: {checkOutDate}
+                </div>
               </div>
               <div className='row'>
                 <p className='mt-2 d-flex justify-content-end'>{"Amount Paid:"} &#160;<span className='fw-bold'> INR {amount}/-</span></p>

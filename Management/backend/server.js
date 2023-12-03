@@ -6,6 +6,7 @@ import staffRoute from "./routes/staff.route.js";
 import itemsRoute from "./routes/items.route.js";
 import roomsRoute from "./routes/rooms.route.js";
 import bookingsRoute from "./routes/bookings.route.js";
+import reservationRoute from "./routes/reservations.route.js"
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 
@@ -27,6 +28,7 @@ server.use("/staff", staffRoute);
 server.use("/items", itemsRoute);
 server.use("/rooms", roomsRoute);
 server.use("/bookings", bookingsRoute);
+server.use("/reservations", reservationRoute);
 
 server.get("/", (req, res) => {
   res.send("Management Page");
