@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import AutoScroll from "../components/AutoScroll2";
 import "../styles/welcomePage.css";
 import { FaChevronDown } from "react-icons/fa";
-
 const WelcomePage = () => {
   const navigate = useNavigate();
 

@@ -28,7 +28,7 @@ function SignUp() {
 
   return (
     <div className="imgSrcBack2 object-contain relative">
-      <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row">
+      <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row ">
         <div className="flex flex-col items-center w-full pt-5 pr-10 pb-20 pl-10 lg:pt-20 lg:flex-row">
           <div className="w-full bg-cover relative max-w-md lg:max-w-2xl lg:w-7/12">
             <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
@@ -41,12 +41,12 @@ function SignUp() {
               </a>
             </div>
           </div>
-          <div className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div style={{minWidth:"300px"}} className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-center justify-center pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
               <p className="w-full text-4xl font-medium text-center leading-snug font-serif justify-center">
                 Welcome!
               </p>
-              <p className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
+              <p style={{width:"170px"}} className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
                 Sign Up
               </p>
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
