@@ -21,8 +21,13 @@ const BookingConfirmationPage = () => {
 
   const generatePdf = () => {
     const capture = document.querySelector(".printCard");
+    const cw = capture.offsetWidth;
+    const ch = capture.offsetHeight;
     setDownloading(true);
-    h2c(capture).then((canvas) => {
+    h2c(capture, {
+      width: cw,
+      height: ch,
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("img/png");
 
       if (cw > ch) {
@@ -98,12 +103,20 @@ const BookingConfirmationPage = () => {
                     <li>User: {user.firstName + " " + user.lastName}</li>
                   </ul>
                 </div>
+<<<<<<<<< Temporary merge branch 1
+                <div className="col-12 col-xl-8">
+                  <p className="m-0 fw-bold">Room Details:</p>
+                  <ul className="list-unstyled">
+                    <li>Rooms: {rooms.length}</li>
+                    <li>Room Type: {rooms[0].type}</li>
+=========
                 <div className='col-12 col-xl-8'>
                   <p className='m-0 fw-bold'>Room Details:</p>
                   <ul className='list-unstyled'>
                     <li>Rooms: {rooms.length}</li>
                     <li>Room Type: {rooms.type}</li>
                     <li>No. of Guests: {guests}</li>
+>>>>>>>>> Temporary merge branch 2
                     <li>Room Numbers: {rooms.join(", ")}</li>
                   </ul>
                 </div>
