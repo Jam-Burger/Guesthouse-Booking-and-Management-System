@@ -74,6 +74,7 @@ function SignUp() {
                       name="firstName"
                       id="firstName"
                       placeholder="First Name"
+                      maxlength="25"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
@@ -87,6 +88,7 @@ function SignUp() {
                       id="lastName"
                       placeholder="Last Name"
                       type="text"
+                      maxLength="25"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
@@ -108,7 +110,7 @@ function SignUp() {
                   </div>
                   <div className="relative textBoxes">
                     <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                      Password
+                      New Password
                     </p>
                     <input
                       type="password"
@@ -116,6 +118,13 @@ function SignUp() {
                       id="password"
                       placeholder="Password"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#!@$%^&*_+-=]).{8,32}$"
+                      title="Password must contain at least:
+                      one uppercase letter, 
+                      one lowercase letter, 
+                      one digit, 
+                      one special character from #!@$%^&*_+-=,
+                      and the length of the pasword should be between 8 to 32"
                       required
                     />
                   </div>
@@ -126,7 +135,7 @@ function SignUp() {
                     <input
                       name="contactNo"
                       id="contactNo"
-                      placeholder="Password"
+                      placeholder="Contact Number"
                       type="text"
                       minlength="10"
                       maxlength="10"

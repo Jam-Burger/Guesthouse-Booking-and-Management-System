@@ -81,6 +81,13 @@ const LoginPage = () => {
                       placeholder="Password"
                       type="password"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#!@$%^&*_+-=]).{8,32}$"
+                      title="Password must contain at least:
+                      one uppercase letter, 
+                      one lowercase letter, 
+                      one digit, 
+                      one special character from #!@$%^&*_+-=,
+                      and the length of the pasword should be between 8 to 32"
                       required
                     />
                   </div>
@@ -100,7 +107,7 @@ const LoginPage = () => {
                     </p>
                   </div>
                 </form>
-                <div className="text-center  mt-3 mb-0">{message}</div>
+                <div className="text-center mt-3 mb-0">{message}</div>
               </div>
             </div>
             <svg
