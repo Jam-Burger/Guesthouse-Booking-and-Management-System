@@ -107,4 +107,15 @@
 
 .dwnIcn:hover{
     transform: translateY(1em);
+    background-color: none;
+}
+
+.textFront{
+    font-weight: 100rem;
+    font-family: Architects Daughter;
+}
+
+.textFrontf{
+    font-weight: 700;
+    font-family:'Raleway', sans-serif;
 }

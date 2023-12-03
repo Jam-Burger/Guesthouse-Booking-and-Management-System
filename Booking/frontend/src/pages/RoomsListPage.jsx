@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RoomCard from "../components/RoomCard";
 import axios from "axios";
-import "../styles/HotelList.css";
+import "../styles/roomsList.css";
 
 const RoomsListPage = () => {
   const { id } = useParams();
@@ -38,16 +38,13 @@ const RoomsListPage = () => {
   }, [id]);
 
   return (
-    <div className="d-flex justify-content-center">
-      <div
-        className="d-flex flex-column justify-center"
-        style={{ width: "70%", height: "100vh" }}
-      >
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      <div className="rCards">
         {data.map((item, id) => {
           return <RoomCard data={item} key={id} />;
         })}
       </div>
-    </div>
+  </div>
   );
 };
 

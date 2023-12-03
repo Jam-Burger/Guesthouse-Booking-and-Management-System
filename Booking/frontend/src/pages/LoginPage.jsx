@@ -100,7 +100,7 @@ const LoginPage = () => {
                     </p>
                   </div>
                 </form>
-                <div className="text-center  mt-3 mb-0">{message}</div>
+                <div className="text-center mt-3 mb-0">{message}</div>
               </div>
             </div>
             <svg

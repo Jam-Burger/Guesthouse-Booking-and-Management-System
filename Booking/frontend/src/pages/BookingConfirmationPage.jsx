@@ -4,12 +4,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import h2c from "html2canvas";
 import { jsPDF } from "jspdf";
 import PageNotFound from "./PageNotFound";
+import "../styles/bookingConfirm.css";
 
 const BookingConfirmationPage = () => {
   const [isDownloading, setDownloading] = useState(false);
   const [date, setDate] = useState(new Date());
-  const navigate = useNavigate();
-  
+  const navigate= useNavigate();
+
   useEffect(() => {
     setInterval(() => setDate(new Date()), 30000);
   }, []);
@@ -20,24 +21,46 @@ const BookingConfirmationPage = () => {
 
   const generatePdf = () => {
     const capture = document.querySelector(".printCard");
+    const cw = capture.offsetWidth;
+    const ch = capture.offsetHeight;
     setDownloading(true);
-    h2c(capture).then((canvas) => {
+    h2c(capture, {
+      width: cw,
+      height: ch,
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("l", "pt", "letter");
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
-      doc.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
+
+      if (cw > ch) {
+        //desktop
+        const doc = new jsPDF("l", "px");
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        doc.addImage(imgData, "PNG", 0, 0, pageWidth, (pageWidth * ch) / cw);
+        doc.save("Invoice.pdf");
+      } else {
+        // mobile
+        const doc = new jsPDF("p", "px");
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        doc.addImage(imgData, "PNG", 0, 0, (pageHeight * cw) / ch, pageHeight);
+        doc.save("Invoice.pdf");
+      }
       setDownloading(false);
-      doc.save("Invoice.pdf");
     });
   };
   return (
-    <div className="relative overflow-hidden mb-5">
-      <div className="masking w-full d-flex flex-col h-full justify-content-center items-center overflow-hidden bg-cover">
-        <div
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
-          className="absolute flex flex-col justify-content-center items-center content-center  bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
-        >
+    // <div>
+    //   <div>
+    //     <div className="print-area p-2 bg-lime-400" style={{ display: "inline-block" }}>
+    //       <div>checkinDate: {checkInDate}</div>
+    //       <div>checkoutDate: {checkOutDate}</div>
+    //       <div>user:{user.firstName + " " + user.lastName}</div>
+    //       <div>rooms:{rooms.join(", ")}</div>
+    //     </div>
+    //   </div>
+    <div className='relative overflow-hidden mb-5'>
+      <div className="cheh d-flex flex-col justify-content-center items-center overflow-hidden bg-cover">
+        <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }} className="absolute d-flex justify-content-center align-items-center h-100 w-100 overflow-hidden bg-fixed">
           <div className="maskingText w-full ">
             <h1 className="text-white text-center display-2">
               Thank You for Booking from beyondSky!
@@ -45,7 +68,7 @@ const BookingConfirmationPage = () => {
           </div>
         </div>
       </div>
-      <div className="container align-content-center mt-5 mb-3 mw-25">
+      <div className='container align-content-center mt-5 mb-3 mw-25'>
         <div className="printCard card ">
           <div className="card-header d-flex bg-success justify-content-center">
             <i className="bi bi-check2-circle text-white display-6"></i>
@@ -54,17 +77,13 @@ const BookingConfirmationPage = () => {
             </h1>
           </div>
           <div className="card-body ">
-            <div className="row">
-              <div className="col-3 col-sm-3 col-md-3 col-xxl-3 col-xl-3 col-lg-3 flex-fill">
+            <div className='row'>
+              <div className='col-3 flex-fill'>
                 <h5 className="card-title">Dear {user.firstName}</h5>
                 <p className="card-text">Following are the booking details:</p>
               </div>
-              <div className="d-flex ms-auto align-items-start col col-sm col-md col-xl col-xxl col-lg align-top justify-content-end">
-                <img
-                  src="./img/logoJug_beyondSky-removebg.png"
-                  className="beyondIcon"
-                  alt="mask"
-                />
+              <div className='d-flex mx-auto align-items-start col align-items-top justify-content-end'>
+                <img src="./img/logoJug_beyondSky-removebg.png" className='beyondIcon' />
               </div>
             </div>
             <div className="print-area p-2 ">
@@ -83,11 +102,11 @@ const BookingConfirmationPage = () => {
                     <li>User: {user.firstName + " " + user.lastName}</li>
                   </ul>
                 </div>
-                <div className="col-12 col-xl-8">
-                  <p className="m-0 fw-bold">Room Details:</p>
-                  <ul className="list-unstyled">
+                <div className='col-12 col-xl-8'>
+                  <p className='m-0 fw-bold'>Room Details:</p>
+                  <ul className='list-unstyled'>
                     <li>Rooms: {rooms.length}</li>
-                    <li>Room Type: {rooms[0].type}</li>
+                    <li>Room Type: {rooms.type}</li>
                     <li>Room Numbers: {rooms.join(", ")}</li>
                   </ul>
                 </div>
@@ -101,37 +120,17 @@ const BookingConfirmationPage = () => {
                   Checkout Date: {checkOutDate}
                 </div>
               </div>
-              <div className="row">
-                <div className="d-flex divider hrr col justify-content-end">
-                  <p className="mt-2">
-                    Amount Paid:{" "}
-                    <span className="fw-bold">INR Rs.{amount}/-</span>
-                  </p>
-                </div>
+              <div className='row'>
+                <p className='mt-2 d-flex justify-content-end'>{"Amount Paid:"} &#160;<span className='fw-bold'> INR {amount}/-</span></p>
               </div>
             </div>
           </div>
         </div>
         <div className="row pt-3">
-          <div className="col d-flex justify-content-start">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Go <i className="fas fa-circle-check" /> Home
-            </button>
-          </div>
+          <div className="col d-flex justify-content-start"><button type="button" onClick={()=>{navigate("/")}} className="btn btn-primary">Go <i className="fas fa-circle-check"></i> Home</button></div>
           <div className="col d-flex justify-content-end">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={generatePdf}
-              disabled={!isDownloading === false}
-            >
-              {isDownloading ? <span>Downloading</span> : <span>Download</span>}
+            <button type="button" className="btn btn-primary" onClick={generatePdf} disabled={!isDownloading === false}>
+              {isDownloading ? (<span>Downloading</span>) : (<span>Download</span>)}
             </button>
           </div>
         </div>

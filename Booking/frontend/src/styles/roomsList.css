@@ -1,10 +1,24 @@
-.rHotel{
+/* .rHotel{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: flex-start;
     opacity: 1;
-    margin: 3em;
+    margin: 3em; 
+}
+*/    
+
+.rCard{
+    display: flex;
+    padding: 10px;
+    gap: 25px;
+    height: 300px;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    /* border: 2px solid lightgray; */
+    border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+    transition: 0.7s;
 }
 
 .rCards:hover > .rCard:hover {
@@ -17,35 +31,22 @@
     opacity: 0.5;
 }
 
-.rCard{
-    display: flex;
-    padding: 10px;
-    gap: 25px;
-    height: 300px;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    border: 2px solid lightgray;
-    border-radius: 5px;
-    font-family: 'Open Sans', sans-serif;
-    transition: 0.7s;
-}
-
+/* 
 .rPhotu{
     /* background-size: cover; */
-    object-fit: cover;
-    width: 300px;
-    height: 300px;
-    align-self: center;
+    /*object-fit: cover;
+    width: 30em;
+    height: 100%;
+    align-self: center;*/
     /* transition: 3s; */
-}
-
+/*}
 
 .rInfo{
     flex-direction: column;
     justify-content:space-between;
     /* align-content: sp; */
-    flex: 2;
-}
+    /* flex: 2; */
+/*}
 
 .rTitle{
     font-size: 1.875em;
@@ -136,6 +137,11 @@
 
 #bookBtn:hover{
     /* transform: scale(1.05); */
-    background-color: gold;
+    /*background-color: gold;
     color: black;
-}
+/*}
+
+.imgL{
+    width: 500px;
+    height: 500px;
+} */

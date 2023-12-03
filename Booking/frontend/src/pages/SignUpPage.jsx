@@ -63,6 +63,8 @@ function SignUp() {
                       id="emailId"
                       placeholder="Email"
                       type="email"
+                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                      title="Please enter a valid email address"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                       autoFocus
@@ -77,6 +79,9 @@ function SignUp() {
                       name="firstName"
                       id="firstName"
                       placeholder="First Name"
+                      pattern="[a-zA-Z]+"
+                      title="Please enter a valid last name with alphabetic characters only"
+                      maxlength="20"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
@@ -90,6 +95,9 @@ function SignUp() {
                       id="lastName"
                       placeholder="Last Name"
                       type="text"
+                      pattern="[a-zA-Z]+"
+                      title="Please enter a valid name with alphabetic characters only"
+                      maxLength="20"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
@@ -102,8 +110,9 @@ function SignUp() {
                       type="number"
                       name="age"
                       id="age"
-                      min="3"
-                      max="200"
+                      min="18"
+                      max="100"
+                      title="Please entesr a valid age between 18 and 100"
                       placeholder="Age"
                       className="border placeholder-gray-400 focus:border-blue w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
@@ -111,7 +120,7 @@ function SignUp() {
                   </div>
                   <div className="relative textBoxes">
                     <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                      Password
+                      New Password
                     </p>
                     <input
                       type="password"
@@ -119,6 +128,13 @@ function SignUp() {
                       id="password"
                       placeholder="Password"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#!@$%^&*_+-=]).{8,32}$"
+                      title="Password must contain at least:
+                      one uppercase letter, 
+                      one lowercase letter, 
+                      one digit, 
+                      one special character from #!@$%^&*_+-=,
+                      and the length of the pasword should be between 8 to 32"
                       required
                     />
                   </div>
@@ -133,6 +149,7 @@ function SignUp() {
                       type="text"
                       minlength="10"
                       maxlength="10"
+                      title="Please enter a valid contact number"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />

@@ -72,6 +72,8 @@ const LoginPage = () => {
                   id="emailId"
                   className="form-control border border-dark "
                   placeholder="Enter your email"
+                  autoFocus
+                  required
                 />
                 <br />
               </div>
@@ -82,6 +84,7 @@ const LoginPage = () => {
                   id="password"
                   className="form-control border border-dark "
                   placeholder="Enter your password"
+                  required
                 />
               </div>
               <br />
