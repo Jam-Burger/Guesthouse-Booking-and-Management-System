@@ -5,12 +5,13 @@ import DataGrid from "../components/DataGrid";
 import { useState, useEffect } from "react";
 import Unauthorized from "../components/Unauthorized";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function dateParser(inputDateStr) {
   // const inputDateStr = "Wed Nov 29 2023 00:00:00 GMT+0530 (India Standard Time)";
   const inputDate = new Date(inputDateStr);
   console.log("input date : ", inputDate); // Output: 2023-11-29T00:00:00.000+00:00
-  const outputDateStr = inputDate.toISOString().replace(/Z$/, "+00:00").replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d{3})+.*/, "$1-$2-$3T00:00:00.000");;
+  const outputDateStr = inputDate.toISOString().substring(0, 10);
   console.log("output date : ", outputDateStr); // Output: 2023-11-29T00:00:00.000+00:00
   return outputDateStr;
 }
@@ -128,31 +129,34 @@ const content = [
     // editType: "dropdownedit", this not done because if no female present, then female option will not come
   },
 ];
+
 const ReservationPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [data, setData] = useState({});
+  const navigate = useNavigate();
+
   const handleChange = async (args) => {
-    console.log("args : ", args);
     if (args.action === "edit") {
       if (args.data.status === "Booked") {
         //patch request
         const dataToChange = objectDiff(args.previousData, args.data);
-        console.log("data to change : ", dataToChange);
         const oldData = getOldValues(dataToChange);
         oldData.roomNo = args.data.room.roomNo;
-        console.log("old Data from frontend  : ", oldData);
-
         const newData = getNewValues(dataToChange);
-        console.log("New Data from frontend  : ", newData);
+
         const data = { oldData: oldData, newData: newData };
+        console.log("old Data from frontend  : ", oldData);
+        console.log("New Data from frontend  : ", newData);
         try {
           const response = await axios.patch(
             process.env.REACT_APP_BACKEND_URL + `/bookings/`,
             data
           );
+          // window.location.reload(true);
           // console.log(response);
         } catch (e) {
           console.log(e);
+          // window.location.reload(true);
         }
       } else {
         //post request
@@ -174,7 +178,7 @@ const ReservationPage = () => {
             process.env.REACT_APP_BACKEND_URL + `/bookings`,
             newData
           );
-          if (response.data.success ==="false"){
+          if (response.data.success === "false") {
             alert(response.data.msg);
           }
         } catch (e) {
@@ -212,8 +216,7 @@ const ReservationPage = () => {
               );
             });
             setData(allReservations);
-            console.log(allReservations);
-            
+            // console.log(allReservations);
           } else {
             console.log(reservationResponse.data);
           }
@@ -228,7 +231,14 @@ const ReservationPage = () => {
   }, []);
 
   return (
-    <div style={{backgroundImage:'url("/img/backgroundimg.jpeg")',backgroundRepeat:"no-repeat", height:"100vh", backgroundSize:"cover"}}>
+    <div
+      style={{
+        backgroundImage: 'url("/img/backgroundimg.jpeg")',
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <Navbar2 />
       <Sidebar />
       <div style={{ marginLeft: "80px" }}>
@@ -238,9 +248,7 @@ const ReservationPage = () => {
             content={content}
             data={data}
             edit="true"
-            function={(args) => {
-              handleChange(args);
-            }}
+            function={handleChange}
           />
         ) : (
           <Unauthorized />

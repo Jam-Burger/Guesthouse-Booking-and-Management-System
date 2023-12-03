@@ -19,7 +19,10 @@ function SignUp() {
     };
 
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, user);
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
+        user
+      );
       navigate("/", { state: { isLoggedIn: true } });
     } catch (e) {
       console.log(e);
@@ -126,7 +129,7 @@ function SignUp() {
                     <input
                       name="contactNo"
                       id="contactNo"
-                      placeholder="Password"
+                      placeholder="Contact Number"
                       type="text"
                       minlength="10"
                       maxlength="10"

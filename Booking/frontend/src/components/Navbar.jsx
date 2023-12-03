@@ -3,6 +3,7 @@ import axios from "axios";
 import no_profile_picture from "../static/no-profile-picture.png";
 
 const Navbar = () => {
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const [profilePic, setProfilePic] = useState(no_profile_picture);
 
   useEffect(() => {
@@ -13,8 +14,11 @@ const Navbar = () => {
           { withCredentials: true }
         );
         // console.log(response.data);
-        if (response.data.data && response.data.data.profilePic) {
-          setProfilePic(response.data.data.profilePic);
+        if (response.data.data) {
+          setLoggedIn(true);
+          if (response.data.data.profilePic) {
+            setProfilePic(response.data.data.profilePic);
+          }
         } else {
           console.log(response.data);
         }
@@ -58,7 +62,7 @@ const Navbar = () => {
             </li> */}
             <li className="nav-item">
               <a
-                href={profilePic === no_profile_picture ? "/login" : "/profile"}
+                href={!isLoggedIn ? "/login" : "/profile"}
                 className="nav-link text-black"
                 style={{ textDecoration: "none", fontSize: "1.2rem" }}
               >
@@ -70,7 +74,7 @@ const Navbar = () => {
                     style={{ width: "35px", height: "35px" }}
                   />
                   <div className="ml-2 text-lg">
-                    {profilePic === no_profile_picture ? "Log in" : ""}
+                    {!isLoggedIn ? "Log in" : ""}
                   </div>
                 </div>
               </a>
