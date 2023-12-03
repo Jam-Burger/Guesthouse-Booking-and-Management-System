@@ -21,6 +21,7 @@ const Navbar = () => {
         // console.log(response.data);
         if (response.data.data) {
           setRole(response.data.data.role);
+          if(response.data.data.profilePic)
           setProfileImg(response.data.data.profilePic);
         } else {
           console.log(response.data);

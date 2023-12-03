@@ -11,7 +11,7 @@ const Navbar2 = () => {
   return (
     <>
       <div class="container-fluid">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 mb-4 border-bottom">
           <div class="col-md-3 mb-2 mb-md-0"></div>
 
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
@@ -23,7 +23,7 @@ const Navbar2 = () => {
               style={{ filter: "invert(1)" }}
             />
             <a
-              href="/home"
+              href="/"
               style={{
                 textDecoration: "none",
                 color: "black",

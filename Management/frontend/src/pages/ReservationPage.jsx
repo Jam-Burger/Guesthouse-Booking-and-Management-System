@@ -6,29 +6,54 @@ import { useState, useEffect } from "react";
 import Unauthorized from "../components/Unauthorized";
 import axios from "axios";
 
-function dateParser(inputDateStr){
-  console.log("input date : ",inputDateStr); // Output: 2023-11-29T00:00:00.000+00:00
+function dateParser(inputDateStr) {
   // const inputDateStr = "Wed Nov 29 2023 00:00:00 GMT+0530 (India Standard Time)";
-const inputDate = new Date(inputDateStr);
-const outputDateStr = inputDate.toISOString().replace(/Z$/, "+00:00");
-console.log("output date : ",outputDateStr); // Output: 2023-11-29T00:00:00.000+00:00
-return outputDateStr;
+  const inputDate = new Date(inputDateStr);
+  console.log("input date : ", inputDate); // Output: 2023-11-29T00:00:00.000+00:00
+  const outputDateStr = inputDate.toISOString().replace(/Z$/, "+00:00").replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d{3})+.*/, "$1-$2-$3T00:00:00.000");;
+  console.log("output date : ", outputDateStr); // Output: 2023-11-29T00:00:00.000+00:00
+  return outputDateStr;
+}
+
+function getNewValues(obj) {
+  const newValues = {};
+  if (obj.checkInDate) {
+    newValues.checkInDate = dateParser(obj.checkInDate.newValue);
+  }
+  if (obj.checkOutDate) {
+    newValues.checkOutDate = dateParser(obj.checkOutDate.newValue);
+  }
+
+  if (obj.guestDetails) {
+    newValues.guestDetails = {};
+    if (obj.guestDetails.fullName) {
+      newValues.guestDetails.fullName = obj.guestDetails.fullName.newValue;
+    }
+    if (obj.guestDetails.contactNo) {
+      newValues.guestDetails.contactNo = obj.guestDetails.contactNo.newValue;
+    }
+    if (obj.guestDetails.age) {
+      newValues.guestDetails.age = obj.guestDetails.age.newValue;
+    }
+    if (obj.guestDetails.gender) {
+      newValues.guestDetails.gender = obj.guestDetails.gender.newValue;
+    }
+  }
+  return newValues;
 }
 
 function getOldValues(obj) {
   const oldValues = {};
 
-  for (const key in obj) {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      oldValues[key] = getOldValues(obj[key]);
-    } else {
-      oldValues[key] = obj[key].oldValue;
-    }
+  if (obj.checkInDate) {
+    oldValues.checkInDate = obj.checkInDate.oldValue;
+  }
+  if (obj.checkOutDate) {
+    oldValues.checkOutDate = obj.checkOutDate.oldValue;
   }
 
   return oldValues;
 }
-
 
 function objectDiff(obj1, obj2) {
   const differences = {};
@@ -112,31 +137,23 @@ const ReservationPage = () => {
       if (args.data.status === "Booked") {
         //patch request
         const dataToChange = objectDiff(args.previousData, args.data);
-        // const newDataToChange = {};
-
-        // for (const key in dataToChange) {
-        //   if (typeof dataToChange[key] === "object") {
-        //     newDataToChange[key] = dataToChange[key].newValue;
-        //   }
-        // }
-        // console.log("previousData : ",args.previousData);
-        console.log("Data to change in frontend :", dataToChange)
-        // console.log("new Data to change in frontend : ", newDataToChange)
-        // let data = {prevData : args.previousData, newData : newDataToChange }
-
-
+        console.log("data to change : ", dataToChange);
         const oldData = getOldValues(dataToChange);
-        console.log("old Data from frontend  :  aasa ",oldData);
-        // try {
-        //   const response = await axios.patch(
-        //     process.env.REACT_APP_BACKEND_URL +
-        //       `/bookings/`,
-        //     dataToChange
-        //   );
-        //   // console.log(response);
-        // } catch (e) {
-        //   console.log(e);
-        // }
+        oldData.roomNo = args.data.room.roomNo;
+        console.log("old Data from frontend  : ", oldData);
+
+        const newData = getNewValues(dataToChange);
+        console.log("New Data from frontend  : ", newData);
+        const data = { oldData: oldData, newData: newData };
+        try {
+          const response = await axios.patch(
+            process.env.REACT_APP_BACKEND_URL + `/bookings/`,
+            data
+          );
+          // console.log(response);
+        } catch (e) {
+          console.log(e);
+        }
       } else {
         //post request
         const guestDetails = {
@@ -149,15 +166,17 @@ const ReservationPage = () => {
           checkInDate: dateParser(args.data.checkInDate),
           checkOutDate: dateParser(args.data.checkOutDate),
           roomNo: args.data.room.roomNo,
-          guestDetails : guestDetails
+          guestDetails: guestDetails,
         };
-        
+
         try {
           const response = await axios.post(
-            process.env.REACT_APP_BACKEND_URL +
-              `/bookings`,
+            process.env.REACT_APP_BACKEND_URL + `/bookings`,
             newData
           );
+          if (response.data.success ==="false"){
+            alert(response.data.msg);
+          }
         } catch (e) {
           console.log(e);
         }
@@ -193,6 +212,8 @@ const ReservationPage = () => {
               );
             });
             setData(allReservations);
+            console.log(allReservations);
+            
           } else {
             console.log(reservationResponse.data);
           }
@@ -207,7 +228,7 @@ const ReservationPage = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{backgroundImage:'url("/img/backgroundimg.jpeg")',backgroundRepeat:"no-repeat", height:"100vh", backgroundSize:"cover"}}>
       <Navbar2 />
       <Sidebar />
       <div style={{ marginLeft: "80px" }}>
