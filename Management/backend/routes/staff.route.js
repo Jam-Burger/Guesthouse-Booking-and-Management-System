@@ -63,25 +63,44 @@ router.get("/:emailId", async (req, res) => {
     });
   }
 });
+router.patch("/:emailId", async (req, res) => {
+  const emailId = req.params.emailId;
+  const findObj = { emailId: emailId };
+console.log(req.body);
+  try {
+    const data = await Staff.findOneAndUpdate(findObj,req.body, { new: true });
+    if (data.length == 0) {
+      res.status(404).json({
+        msg: "failure",
+        error: "data not found",
+      });
+    } else {
+      res.json({
+        msg: "success",
+        data: data,
+      });
+    }
+  } catch (e) {
+    res.status(400).json({
+      msg: "failure",
+      error: e,
+    });
+  }
+});
 
-router.post("/signup", async (req, res) => {
+router.post("/recruit", async (req, res) => {
   try {
     const data = req.body;
-    const plainPassword = data.password;
+    data.firstName = data.fullName.split(" ")[0];
+    data.lastName = "";
+    if (data.fullName.split(" ")[1])
+    data.lastName = data.fullName.split(" ")[1];
+    const plainPassword = data.role+"@password1";
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
     const staff = new Staff({ ...data, password: hashedPassword });
-
+    
     await staff.save();
-    const token = jwt.sign({ currentStaff: staff }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-    res.cookie("currentStaffToken", token, {
-      secure: process.env.NODE_ENV !== "development",
-      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
-      httpOnly: true,
-      maxAge: 60 * 60 * 1000,
-    });
     res.status(201).json({
       msg: "success",
       data: Staff,

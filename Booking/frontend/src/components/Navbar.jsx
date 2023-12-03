@@ -4,7 +4,7 @@ import no_profile_picture from "../static/no-profile-picture.png";
 
 const Navbar = () => {
   const [profilePic, setProfilePic] = useState(no_profile_picture);
-
+  const [isLoggedIn , setIsLoggedIn] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -13,6 +13,9 @@ const Navbar = () => {
           { withCredentials: true }
         );
         // console.log(response.data);
+        if (response.data.data){
+          setIsLoggedIn(true);
+        }
         if (response.data.data && response.data.data.profilePic) {
           setProfilePic(response.data.data.profilePic);
         } else {
@@ -70,7 +73,7 @@ const Navbar = () => {
                     style={{ width: "35px", height: "35px" }}
                   />
                   <div className="ml-2 text-lg">
-                    {profilePic === no_profile_picture ? "Log in" : ""}
+                    {!isLoggedIn? "Log in" : ""}
                   </div>
                 </div>
               </a>

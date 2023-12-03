@@ -99,16 +99,16 @@ router.patch("/", async (req, res) => {
     newData.checkInDate = newData.checkInDate+"+00:00";
     newData.checkOutDate = newData.checkOutDate+"+00:00";
 
-    if ((newData.checkInDate === prevData.checkInDate) && (newData.checkOutDate === prevData.checkOutDate))
-    {
-      // const { guestDetails.fullName : fullName } = newData;
-      const updatedBooking = await Booking.findOneAndUpdate({roomNo: prevData.roomNo, checkInDate: prevData.checkInDate, checkOutDate : prevData.checkOutDate}, newData);
-    }
+    // if ((newData.checkInDate === prevData.checkInDate) && (newData.checkOutDate === prevData.checkOutDate))
+    // {
+    //   // const fullName = 
+    //   const updatedBooking = await Booking.findOneAndUpdate({roomNo: prevData.roomNo, checkInDate: prevData.checkInDate, checkOutDate : prevData.checkOutDate}, newData, { new: true });
+    // }
 
     console.log("prevData : ",prevData);
     console.log("newData : ",newData);
     const prevBooking = await Booking.find({roomNo: prevData.roomNo, checkInDate: prevData.checkInDate, checkOutDate : prevData.checkOutDate});
-    console.log("This is prev BOoking : ",prevBooking);
+    console.log("This is prev Booking : ",prevBooking);
 
     // const bookingData = req.body;
     // const previousBookings = await Booking.find({ roomNo: bookingData.roomNo });
