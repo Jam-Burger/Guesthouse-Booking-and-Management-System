@@ -7,7 +7,7 @@ function AutoScroll() {
         <div className="slider">
             <div className="cards">
                 <div className="indCard">
-                    <img src="https://dynamic-media-cdn.tripadvisor.cgitom/media/photo-o/2a/98/5c/37/hotel-exterior.jpg?w=1200&h=-1&s=1"  alt='1'/>
+                    <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg"  alt='1'/>
                 </div>
                 <div className="indCard">
                     <img src="https://media.istockphoto.com/id/903417402/photo/luxury-construction-hotel-with-swimming-pool-at-sunset.jpg?s=612x612&w=0&k=20&c=NyPC_c-wE3W_CImA4t57FpyGy6f428CYROd80jxVC4A="  alt='2' />
@@ -28,7 +28,7 @@ function AutoScroll() {
                     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/397483443.jpg?k=4c09f5cfbde876a466a31d36ce365384e3aa89059bbd1ba971281f06b534e578&o=&hp=1" alt='7' />
                 </div>
                 <div className="indCard">
-                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/98/5c/37/hotel-exterior.jpg?w=1200&h=-1&s=1"  alt='1'/>
+                    <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg"  alt='1'/>
                 </div>
                 <div className="indCard">
                     <img src="https://media.istockphoto.com/id/903417402/photo/luxury-construction-hotel-with-swimming-pool-at-sunset.jpg?s=612x612&w=0&k=20&c=NyPC_c-wE3W_CImA4t57FpyGy6f428CYROd80jxVC4A="  alt='2' />

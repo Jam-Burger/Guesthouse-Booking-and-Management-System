@@ -157,7 +157,7 @@ const StaffManagementPage = () => {
     <div style={{backgroundImage:'url("/img/backgroundimg.jpeg")',backgroundRepeat:"no-repeat", height:"100vh", backgroundSize:"cover"}}>
       <Navbar2 />
       <Sidebar />
-      <div style={{ marginLeft: "80px" }}>
+      <div style={{ marginLeft: "80px", }}>
         {message === "" ? (
           <DataGrid
             page="EMPLOYEES"

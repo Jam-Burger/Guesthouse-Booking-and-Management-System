@@ -67,6 +67,9 @@ function DataGrid(props) {
                 width={item.width}
                 isPrimaryKey={item.isPrimaryKey}
                 editType={item.editType}
+                // editTemplate={item.editTemplate}
+                // startDate={item.startDate}
+                // endDate={item.endDate}
               />
             );
           })}
