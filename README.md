@@ -7,7 +7,7 @@
 | 2 | Divyam Thacker | 202101068 |
 | 3 | Jay Parikh | 202101066 |
 | 4 | Vraj Thakkar | 202101090 |
-| 5 | Mehul Raval | 202101033 |
+| 5 | Mehul Rawal | 202101033 |
 | 6 | Dev Changela | 202101069 |
 | 7 | Ayush Mangroliya | 202101073 |
 | 8 | Suyash Bhagat | 202101085 |
