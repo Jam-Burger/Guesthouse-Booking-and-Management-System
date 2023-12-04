@@ -36,7 +36,11 @@ server.get("/", (req, res) => {
 
 server.get("/logout", (req, res) => {
   try {
-    res.clearCookie("currentStaffToken");
+    res.clearCookie("currentStaffToken", {
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
+      httpOnly: true,
+    });
     res.json({
       success: true,
       message: "logged out successfully",
