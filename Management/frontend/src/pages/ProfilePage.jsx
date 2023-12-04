@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar2 from "../components/Navbar2";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Unauthorized from "../components/Unauthorized";
 
@@ -18,24 +17,26 @@ const ProfilePage = () => {
     console.log(file);
   };
 
-  const updateData = async () => {
+  const updateData = async (e) => {
+    e.preventDefault();
+
+    console.log(e);
     try {
       const formData = new FormData();
       formData.append("profileData", JSON.stringify(data));
       formData.append("picture", pictureFile);
 
-      // console.log(formData);
       const response = await axios.patch(
         process.env.REACT_APP_BACKEND_URL + "/staff",
         formData,
         { withCredentials: true }
       );
-      navigate("/profile");
       console.log(response.data);
     } catch (e) {
       console.log(e);
     }
   };
+
   const cancel = async () => {
     try {
       const response = await axios.get(
@@ -52,6 +53,7 @@ const ProfilePage = () => {
       console.log(e);
     }
   };
+
   const logout = async () => {
     try {
       const response = await axios.get(
@@ -59,7 +61,7 @@ const ProfilePage = () => {
         { withCredentials: true }
       );
       console.log(response);
-      navigate("/");
+      navigate("/login");
     } catch (e) {
       console.log(e);
     }
@@ -72,7 +74,6 @@ const ProfilePage = () => {
           process.env.REACT_APP_BACKEND_URL + "/me",
           { withCredentials: true }
         );
-        // console.log(response.data);
         if (response.data.data) {
           setData(response.data.data);
         } else {
@@ -98,13 +99,17 @@ const ProfilePage = () => {
                   <div className="col-md-4 mb-3">
                     <div className="card">
                       <div className="card-body">
-                        <div className="d-flex flex-column text-center">
+                        <div className="d-flex flex-column text-center ">
                           <label
-                            for="upload-photo"
+                            htmlFor="upload-photo"
                             style={isEditing ? { cursor: "pointer" } : {}}
                           >
                             <img
-                              src={!data ? "" : data.profilePic}
+                              src={
+                                !data.profilePic
+                                  ? "/img/blank-profile-picture.webp"
+                                  : data.profilePic
+                              }
                               alt="profile"
                               className="object-fit-cover rounded-5 border border-black"
                               style={{ width: "200px", height: "200px" }}
@@ -133,83 +138,107 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-8">
+                  <form
+                    className="col-md-8"
+                    onSubmit={(e) => {
+                      updateData(e);
+                      setEditing(false);
+                    }}
+                  >
                     <div className="card mb-3">
                       <div className="card-body">
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Full Name</h6>
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={
-                                !data
-                                  ? ""
-                                  : data.firstName + " " + data.lastName
-                              }
-                              onChange={(e) => {
-                                const names = e.target.value.split(" ", 2);
-                                console.log(names);
-                                const firstName = names[0];
-                                const lastName = names[1];
-                                setData({ ...data, firstName, lastName });
-                              }}
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.firstName} {data && data.lastName}
-                            </div>
-                          )}
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                className="form-control form-control-sm border border-black"
+                                pattern="[a-zA-Z\s]{5,30}"
+                                title="Enter your full name between 5 and 30 characters"
+                                minLength="5"
+                                maxLength="20"
+                                defaultValue={
+                                  !data
+                                    ? ""
+                                    : data.firstName + " " + data.lastName
+                                }
+                                onChange={(e) => {
+                                  const names = e.target.value.split(" ", 2);
+                                  console.log(names);
+                                  const firstName = names[0];
+                                  const lastName = names[1];
+                                  setData({ ...data, firstName, lastName });
+                                }}
+                              />
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.firstName} {data && data.lastName}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Email</h6>
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="email"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={!data ? "" : data.emailId}
-                              onChange={(e) => {
-                                setData({ ...data, email: e.target.value });
-                              }}
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.emailId}
-                            </div>
-                          )}
-                        </div>
-                        <hr />
-                        <div className="row">
-                          <div className="col-sm-3">
-                            <h6 className="mb-0">Phone</h6>
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="email"
+                                className="form-control form-control-sm border border-black"
+                                pattern="[a-zA-Z0-9_\._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                title="Please enter a valid email address"
+                                onChange={(e) => {
+                                  setData({ ...data, email: e.target.value });
+                                }}
+                                defaultValue={!data ? "" : data.emailId}
+                              />
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.emailId}
+                              </div>
+                            )}
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={!data ? "" : data.contactNo}
-                              onChange={(e) => {
-                                setData({ ...data, contactNo: e.target.value });
-                              }}
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.contactNo}
-                            </div>
-                          )}
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
+                          <div className="col-sm-3">
+                            <h6 className="mb-0">Contact No</h6>
+                          </div>
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                minLength="10"
+                                maxLength="10"
+                                title="Please enter a valid contact number"
+                                className="form-control form-control-sm border border-black"
+                                onChange={(e) => {
+                                  setData({
+                                    ...data,
+                                    contactNo: e.target.value,
+                                  });
+                                }}
+                                defaultValue={!data ? "" : data.contactNo}
+                              />
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.contactNo}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <hr />
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Gender</h6>
                           </div>
-                          {isEditing ? (
-                            <div className="col-sm-9">
+                          <div className="col-sm-9">
+                            {isEditing ? (
                               <select
                                 className="form-select form-select-sm border-1 border-black"
                                 defaultValue={!data ? "" : data.gender}
@@ -221,35 +250,37 @@ const ProfilePage = () => {
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                               </select>
-                            </div>
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.gender}
-                            </div>
-                          )}
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.gender}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Age</h6>
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="number"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={!data ? "" : data.age}
-                              onChange={(e) => {
-                                setData({ ...data, age: e.target.value });
-                              }}
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.age}
-                            </div>
-                          )}
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="number"
+                                className="form-control form-control-sm border border-black"
+                                min="18"
+                                max="100"
+                                title="Please entesr a valid age between 18 and 100"
+                                defaultValue={!data ? "" : data.age}
+                              />
+                            ) : (
+                              <div className="col-sm-9 text-secondary">
+                                {data && data.age}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Role</h6>
                           </div>
@@ -257,27 +288,38 @@ const ProfilePage = () => {
                             {data && data.role}
                           </div>
                         </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Shift</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">
-                          {data && data.shift}
-                        </div>
-                      </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
+                          <div className="col-sm-3">
+                            <h6 className="mb-0">Shift</h6>
+                          </div>
+                          <div className="col-sm-9 text-secondary">
+                            {data && data.shift}
+                          </div>
+                        </div>
+                        <hr />
+                        <div className="row align-items-center">
                           <div className="col-sm-12 d-flex justify-content-center">
-                            <button
-                              className="btn mx-2 btn-info"
-                              onClick={() => {
-                                if (isEditing) updateData();
-                                setEditing(!isEditing);
-                              }}
-                            >
-                              {isEditing ? "Save" : "Edit"}
-                            </button>
+                            {isEditing ? (
+                              <button
+                                className="btn mx-2 btn-info"
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            ) : (
+                              <button
+                                className="btn mx-2 btn-info"
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setEditing(true);
+                                }}
+                              >
+                                Edit
+                              </button>
+                            )}
+
                             <button
                               className="btn mx-2 btn-danger"
                               onClick={isEditing ? cancel : logout}
@@ -288,7 +330,7 @@ const ProfilePage = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>

@@ -47,12 +47,12 @@ const LoginPage = () => {
               </a>
             </div>
           </div>
-          <div className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
-            <div className="flex flex-col items-center justify-center pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-4xl font-medium text-center leading-snug font-serif justify-center">
+          <div style={{minWidth:"300px"}} className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+            <div  className="flex flex-col items-center justify-center pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
+              <h1  className="w-full text-4xl font-medium text-center leading-snug font-serif justify-center">
                 Welcome!
-              </p>
-              <p className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
+              </h1>
+              <p style={{width:"130px"}} className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
                 Login
               </p>
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
@@ -100,7 +100,7 @@ const LoginPage = () => {
                     </p>
                   </div>
                 </form>
-                <div className="text-center  mt-3 mb-0">{message}</div>
+                <div className="text-center mt-3 mb-0">{message}</div>
               </div>
             </div>
             <svg

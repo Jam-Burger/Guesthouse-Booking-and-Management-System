@@ -13,6 +13,8 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import no_profile_picture from "../static/no-profile-picture.png";
+
 
 const ProfilePage = () => {
   const [data, setData] = useState();
@@ -119,7 +121,7 @@ const ProfilePage = () => {
                   }}
                 />
                 <MDBCardImage
-                  src={!data ? "./img/maleprofile.png" : data.profilePic}
+                  src={(!data || !data.profilePic) ? no_profile_picture : data.profilePic}
                   alt="profile"
                   className={
                     isEditing

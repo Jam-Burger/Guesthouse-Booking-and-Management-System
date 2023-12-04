@@ -12,7 +12,6 @@ import {
 } from "@syncfusion/ej2-react-grids";
 import { registerLicense, validateLicense } from "@syncfusion/ej2-base";
 
-
 // const buttons = document.querySelectorAll(".e-toolbar-item");
 
 // // loop through each button and add a click event listener
@@ -25,10 +24,9 @@ import { registerLicense, validateLicense } from "@syncfusion/ej2-base";
 
 function DataGrid(props) {
   const actionComplete = (args) => {
-     if (args.requestType === "save" || args.requestType==="delete"){
+    if (args.requestType === "save" || args.requestType === "delete") {
       props.function(args);
     }
-  
   };
   registerLicense(process.env.REACT_APP_LICENSE_KEY);
   validateLicense(process.env.REACT_APP_LICENSE_KEY);
@@ -49,12 +47,12 @@ function DataGrid(props) {
         allowSorting="true"
         allowMultiSorting="true"
         editSettings={{
-          allowAdding: true,
+          allowAdding: !props.edit,
           allowEditing: true,
-          allowDeleting: true,
+          allowDeleting: !props.edit,
           mode: "Dialog",
         }}
-        toolbar= {["Add", "Delete", "Edit"]}
+        toolbar={props.edit ? ["Edit"] : ["Add", "Delete", "Edit"]}
         height={300}
         actionComplete={actionComplete}
         enableStickyHeader="true"
@@ -67,8 +65,11 @@ function DataGrid(props) {
                 field={item.field}
                 headerText={item.headerText}
                 width={item.width}
-                isPrimaryKey = {item.isPrimaryKey}
+                isPrimaryKey={item.isPrimaryKey}
                 editType={item.editType}
+                // editTemplate={item.editTemplate}
+                // startDate={item.startDate}
+                // endDate={item.endDate}
               />
             );
           })}

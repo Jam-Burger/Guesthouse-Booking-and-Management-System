@@ -4,60 +4,26 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
 
-const PaymentPage = () => {  
+const PaymentPage = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
-  
+
   const [msg, setMessage] = useState("");
   const navigate = useNavigate();
-  
+
   const { state } = useLocation();
   if (!state) return <PageNotFound />;
   const { checkInDate, checkOutDate, rooms, amount } = state;
 
-  const validate = (_cardNumber, _cardHolderName, _expiryDate, _cvv) => {
-    const cardNumberRegex = /^\d{16}$/;
-    const cvvRegex = /^\d{3}$/;
-    const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-    const cardHolderNameRegex = /^[a-zA-Z ]{5,30}$/;
-
-    if (!_cardNumber.match(cardNumberRegex)) {
-      setMessage("Invalid card number. Please enter a 16-digit number.");
-      return false;
-    }
-
-    if (
-      _cardHolderName.trim() === "" ||
-      !cardHolderName.match(cardHolderNameRegex)
-    ) {
-      setMessage(
-        "Invalid cardholder name. Please enter alphabetic name between 5-30 characters."
-      );
-      return false;
-    }
-
-    if (!_expiryDate.match(expiryDateRegex)) {
-      setMessage(
-        "Invalid expiry date. Please enter a valid date in MM/YY format."
-      );
-      return false;
-    }
-
-    if (!_cvv.match(cvvRegex)) {
-      setMessage("Invalid CVV. Please enter a 3-digit number.");
-      return false;
-    }
-
-    return true;
-  };
+  const cardNumberRegex = "[0-9]{16}";
+  const cvvRegex = "[0-9]{3}$";
+  const expiryDateRegex = "^(0[1-9]|1[0-2])/[0-9]{2}$";
+  const cardHolderNameRegex = "^[a-zA-Z ]{5,30}$";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate(cardNumber, cardHolderName, expiryDate, cvv)) {
-      return;
-    }
     try {
       const response = await axios.get(
         process.env.REACT_APP_BACKEND_URL + "/me",
@@ -85,7 +51,10 @@ const PaymentPage = () => {
           booking
         );
       });
-      navigate("/bookingConfirmation", { state: {...state, user}, replace: true });
+      navigate("/bookingConfirmation", {
+        state: { ...state, user },
+        replace: true,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -118,7 +87,9 @@ const PaymentPage = () => {
           type="text"
           id="cardNumber"
           name="cardNumber"
-          placeholder="XXXX-XXXX-XXXX-XXXX"
+          placeholder="XXXXXXXXXXXXXXXX"
+          pattern={cardNumberRegex}
+          title="Invalid card number. Please enter a 16-digit number."
           value={cardNumber}
           onChange={(e) => setCardNumber(e.target.value)}
           required
@@ -133,6 +104,8 @@ const PaymentPage = () => {
           name="cardholderName"
           placeholder="Cardholder Name"
           value={cardHolderName}
+          pattern={cardHolderNameRegex}
+          title="Invalid cardholder name. Please enter alphabetic name between 5-30 characters."
           onChange={(e) => setCardHolderName(e.target.value)}
           required
         />
@@ -144,6 +117,8 @@ const PaymentPage = () => {
           id="expiryDate"
           name="expiryDate"
           placeholder="MM/YY"
+          pattern={expiryDateRegex}
+          title="Invalid expiry date. Please enter a valid date in MM/YY format."
           value={expiryDate}
           onChange={(e) => setExpiryDate(e.target.value)}
           required
@@ -152,10 +127,12 @@ const PaymentPage = () => {
         <label htmlFor="cvv">CVV:</label>
         <input
           className="inpText"
-          type="number"
+          type="text"
           id="cvv"
           name="cvv"
           placeholder="***"
+          pattern={cvvRegex}
+          title="Invalid CVV. Please enter a 3-digit number."
           value={cvv}
           onChange={(e) => setCvv(e.target.value)}
           required

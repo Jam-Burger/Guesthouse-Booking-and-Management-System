@@ -98,7 +98,7 @@ const handleChange = async (args) => {
   if (args.action === "add") {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/staff/signup`,
+        `${process.env.REACT_APP_BACKEND_URL}/staff/recruit`,
         args.data
       );
       console.log(response);
@@ -154,10 +154,10 @@ const StaffManagementPage = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{backgroundImage:'url("/img/backgroundimg.jpeg")',backgroundRepeat:"no-repeat", height:"100vh", backgroundSize:"cover"}}>
       <Navbar2 />
       <Sidebar />
-      <div style={{ marginLeft: "80px" }}>
+      <div style={{ marginLeft: "80px", }}>
         {message === "" ? (
           <DataGrid
             page="EMPLOYEES"

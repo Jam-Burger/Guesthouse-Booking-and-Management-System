@@ -19,7 +19,10 @@ function SignUp() {
     };
 
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, user);
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
+        user
+      );
       navigate("/", { state: { isLoggedIn: true } });
     } catch (e) {
       console.log(e);
@@ -28,7 +31,7 @@ function SignUp() {
 
   return (
     <div className="imgSrcBack2 object-contain relative">
-      <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row">
+      <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row ">
         <div className="flex flex-col items-center w-full pt-5 pr-10 pb-20 pl-10 lg:pt-20 lg:flex-row">
           <div className="w-full bg-cover relative max-w-md lg:max-w-2xl lg:w-7/12">
             <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
@@ -41,12 +44,12 @@ function SignUp() {
               </a>
             </div>
           </div>
-          <div className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div style={{minWidth:"300px"}} className="w-full mt-4 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-center justify-center pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
               <p className="w-full text-4xl font-medium text-center leading-snug font-serif justify-center">
                 Welcome!
               </p>
-              <p className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
+              <p style={{width:"170px"}} className="w-1/2 text-center text-4xl mt-1 mb-2 font-medium rounded-lg bg-cyan-500 leading-snug font-serif text-white">
                 Sign Up
               </p>
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
@@ -60,6 +63,8 @@ function SignUp() {
                       id="emailId"
                       placeholder="Email"
                       type="email"
+                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                      title="Please enter a valid email address"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                       autoFocus
@@ -74,6 +79,9 @@ function SignUp() {
                       name="firstName"
                       id="firstName"
                       placeholder="First Name"
+                      pattern="[a-zA-Z]+"
+                      title="Please enter a valid name with alphabetic characters only"
+                      maxlength="20"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
@@ -87,6 +95,9 @@ function SignUp() {
                       id="lastName"
                       placeholder="Last Name"
                       type="text"
+                      pattern="[a-zA-Z]+"
+                      title="Please enter a valid name with alphabetic characters only"
+                      maxLength="20"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />
@@ -99,8 +110,9 @@ function SignUp() {
                       type="number"
                       name="age"
                       id="age"
-                      min="3"
-                      max="200"
+                      min="18"
+                      max="100"
+                      title="Please entesr a valid age between 18 and 100"
                       placeholder="Age"
                       className="border placeholder-gray-400 focus:border-blue w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
@@ -108,7 +120,7 @@ function SignUp() {
                   </div>
                   <div className="relative textBoxes">
                     <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                      Password
+                      New Password
                     </p>
                     <input
                       type="password"
@@ -116,6 +128,13 @@ function SignUp() {
                       id="password"
                       placeholder="Password"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
+                      pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*?[#!@$%^&*_+-=]).{8,32}$"
+                      title="Password must contain at least:
+                      one uppercase letter, 
+                      one lowercase letter, 
+                      one digit, 
+                      one special character from #!@$%^&*_+-=,
+                      and the length of the pasword should be between 8 to 32"
                       required
                     />
                   </div>
@@ -126,10 +145,11 @@ function SignUp() {
                     <input
                       name="contactNo"
                       id="contactNo"
-                      placeholder="Password"
+                      placeholder="Contact Number"
                       type="text"
                       minlength="10"
                       maxlength="10"
+                      title="Please enter a valid contact number"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required
                     />

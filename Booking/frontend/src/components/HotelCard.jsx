@@ -19,7 +19,7 @@ const HotelCard = ({ data }) => {
   return (
     <div className="p-2 col-md-4">
       <div
-        className="card"
+        className="card cursor-pointer"
         onClick={() => {
           navigate("/hotels/" + data._id);
         }
