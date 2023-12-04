@@ -127,7 +127,7 @@ const PaymentPage = () => {
         <label htmlFor="cvv">CVV:</label>
         <input
           className="inpText"
-          type="number"
+          type="text"
           id="cvv"
           name="cvv"
           placeholder="***"

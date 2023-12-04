@@ -80,7 +80,7 @@ function SignUp() {
                       id="firstName"
                       placeholder="First Name"
                       pattern="[a-zA-Z]+"
-                      title="Please enter a valid last name with alphabetic characters only"
+                      title="Please enter a valid name with alphabetic characters only"
                       maxlength="20"
                       className="border placeholder-gray-400 focus:border-black w-full pt-3 pr-4 pb-3 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
                       required

@@ -153,7 +153,11 @@ const ProfilePage = () => {
                             style={isEditing ? { cursor: "pointer" } : {}}
                           >
                             <img
-                              src={!data.profilePic ? "/img/blank-profile-picture.webp" : data.profilePic}
+                              src={
+                                !data.profilePic
+                                  ? "/img/blank-profile-picture.webp"
+                                  : data.profilePic
+                              }
                               alt="profile"
                               className="object-fit-cover rounded-5 border border-black"
                               style={{ width: "200px", height: "200px" }}
@@ -185,69 +189,81 @@ const ProfilePage = () => {
                   <div className="col-md-8">
                     <div className="card mb-3">
                       <div className="card-body">
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Full Name</h6>
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={
-                                !data
-                                  ? ""
-                                  : data.firstName + " " + data.lastName
-                              }
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.firstName} {data && data.lastName}
-                            </div>
-                          )}
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                className="form-control form-control-sm border border-black"
+                                pattern="[a-zA-Z ]"
+                                title="Please enter a valid name with alphabetic characters only"
+                                maxlength="20"
+                                defaultValue={
+                                  !data
+                                    ? ""
+                                    : data.firstName + " " + data.lastName
+                                }
+                              />
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.firstName} {data && data.lastName}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Email</h6>
                           </div>
-                          {isEditing ? (
-                            <>
+                          <div className="col-sm-9">
+                            {isEditing ? (
                               <input
                                 type="email"
-                                className="form-control-sm col-sm-9"
-                                defaultValue={!data ? "" : data.email}
+                                className="form-control form-control-sm border border-black"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                title="Please enter a valid email address"
+                                defaultValue={!data ? "" : data.emailId}
                               />
-                            </>
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.email}
-                            </div>
-                          )}
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.emailId}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Contact No</h6>
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              className="form-control-sm col-sm-9 border-1"
-                              defaultValue={!data ? "" : data.contactNo}
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.contactNo}
-                            </div>
-                          )}
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                minlength="10"
+                                maxlength="10"
+                                title="Please enter a valid contact number"
+                                className="form-control form-control-sm border border-black"
+                                defaultValue={!data ? "" : data.contactNo}
+                              />
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.contactNo}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Gender</h6>
                           </div>
-                          {isEditing ? (
-                            <div className="col-sm-9 px-0">
+                          <div className="col-sm-9">
+                            {isEditing ? (
                               <select
                                 className="form-select form-select-sm border-1 border-black"
                                 defaultValue={!data ? "" : data.gender}
@@ -259,32 +275,37 @@ const ProfilePage = () => {
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                               </select>
-                            </div>
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.gender}
-                            </div>
-                          )}
+                            ) : (
+                              <div className="text-secondary">
+                                {data && data.gender}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Age</h6>
                           </div>
-                          {isEditing ? (
-                            <input
-                              type="number"
-                              className="form-control-sm col-sm-9"
-                              defaultValue={!data ? "" : data.age}
-                            />
-                          ) : (
-                            <div className="col-sm-9 text-secondary">
-                              {data && data.age}
-                            </div>
-                          )}
+                          <div className="col-sm-9">
+                            {isEditing ? (
+                              <input
+                                type="number"
+                                className="form-control form-control-sm border border-black"
+                                min="18"
+                                max="100"
+                                title="Please entesr a valid age between 18 and 100"
+                                defaultValue={!data ? "" : data.age}
+                              />
+                            ) : (
+                              <div className="col-sm-9 text-secondary">
+                                {data && data.age}
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Role</h6>
                           </div>
@@ -293,7 +314,7 @@ const ProfilePage = () => {
                           </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-3">
                             <h6 className="mb-0">Shift</h6>
                           </div>
@@ -302,7 +323,7 @@ const ProfilePage = () => {
                           </div>
                         </div>
                         <hr />
-                        <div className="row">
+                        <div className="row align-items-center">
                           <div className="col-sm-12 d-flex justify-content-center">
                             <button
                               className="btn mx-2 btn-info"

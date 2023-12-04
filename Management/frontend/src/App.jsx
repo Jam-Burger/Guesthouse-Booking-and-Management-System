@@ -8,6 +8,7 @@ import BookingHistoryPage from "./pages/BookingHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import InventoryPage from "./pages/InventoryPage";
 import PageNotFound from "./pages/PageNotFound"
+
 const App = () => (
   <BrowserRouter>
     <Routes>
