@@ -64,7 +64,10 @@ const LoginPage = () => {
                 access the secure staff portal.
               </b>
             </p>
-            <form className="card-body d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+            <form
+              className="card-body d-flex flex-column align-items-center"
+              onSubmit={handleSubmit}
+            >
               <div style={{ width: "70%" }}>
                 <input
                   type="email"
@@ -88,14 +91,10 @@ const LoginPage = () => {
                 />
               </div>
               <br />
-              <div className="d-flex justify-content-center">
-                <button
-                  className="btn btn-primary btn-block"
-                >
-                  Login
-                </button>
+              <div className="d-flex flex-column justify-content-center">
+                <button className="btn btn-primary btn-block">Login</button>
                 <div
-                  style={{ color: "white" }}
+                  style={{ color: "black", fontWeight: "bold" }}
                   className="d-flex justify-content-center"
                 >
                   {message}

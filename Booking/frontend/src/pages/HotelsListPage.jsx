@@ -10,6 +10,7 @@ const HotelsListPage = () => {
     axios
       .get(process.env.REACT_APP_BACKEND_URL + "/hotels")
       .then((res) => {
+        if(res.data.data) res.data.data.reverse();
         setData(res.data);
       })
       .catch((e) => {

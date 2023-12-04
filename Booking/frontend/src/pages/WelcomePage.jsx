@@ -4,6 +4,7 @@ import AutoScroll from "../components/AutoScroll2";
 import "../styles/welcomePage.css";
 import { FaChevronDown } from "react-icons/fa";
 import Navbar from "../components/Navbar";
+
 const WelcomePage = () => {
   const navigate = useNavigate();
 

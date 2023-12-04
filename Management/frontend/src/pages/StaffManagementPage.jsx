@@ -98,7 +98,7 @@ const handleChange = async (args) => {
   if (args.action === "add") {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/staff/signup`,
+        `${process.env.REACT_APP_BACKEND_URL}/staff/recruit`,
         args.data
       );
       console.log(response);

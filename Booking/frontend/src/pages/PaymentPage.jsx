@@ -18,7 +18,7 @@ const PaymentPage = () => {
   const { checkInDate, checkOutDate, rooms, amount } = state;
 
   const cardNumberRegex = "[0-9]{16}";
-  const cvvRegex = "^[0-9]{3}$";
+  const cvvRegex = "[0-9]{3}$";
   const expiryDateRegex = "^(0[1-9]|1[0-2])/[0-9]{2}$";
   const cardHolderNameRegex = "^[a-zA-Z ]{5,30}$";
 

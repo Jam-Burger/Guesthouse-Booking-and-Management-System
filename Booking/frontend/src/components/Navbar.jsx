@@ -5,7 +5,6 @@ import no_profile_picture from "../static/no-profile-picture.png";
 const Navbar = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [profilePic, setProfilePic] = useState(no_profile_picture);
-
   useEffect(() => {
     async function fetchData() {
       try {

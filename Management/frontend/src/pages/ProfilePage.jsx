@@ -5,17 +5,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Unauthorized from "../components/Unauthorized";
 
-const validateName = (name) => /^[A-Za-z]+$/.test(name);
-const validateEmail = (email) =>
-  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-const validatePhone = (phone) => /^\d{0,10}$/.test(phone);
-const validateAge = (age) => !isNaN(age) && age >= 0 && age <= 150;
-
 const ProfilePage = () => {
   const [data, setData] = useState();
   const [isEditing, setEditing] = useState(false);
   const [pictureFile, setPictureFile] = useState();
-  const [tempEmail, setTempEmail] = useState(); // Temporary email storage
   const navigate = useNavigate();
 
   const changeProfilePic = async (file) => {
@@ -24,12 +17,10 @@ const ProfilePage = () => {
     console.log(file);
   };
 
-  const updateData = async () => {
-    validateAge();
-    validateEmail();
-    validateName();
-    validatePhone();
+  const updateData = async (e) => {
+    e.preventDefault();
 
+    console.log(e);
     try {
       const formData = new FormData();
       formData.append("profileData", JSON.stringify(data));
@@ -40,7 +31,6 @@ const ProfilePage = () => {
         formData,
         { withCredentials: true }
       );
-      navigate("/profile");
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -74,44 +64,6 @@ const ProfilePage = () => {
       navigate("/login");
     } catch (e) {
       console.log(e);
-    }
-  };
-
-  // Validation Functions
-
-  const handleInputChange = (e, field) => {
-    const value = e.target.value;
-    switch (field) {
-      case "fullName":
-        const names = value.split(" ", 2);
-        const firstName = names[0];
-        const lastName = names[1] || "";
-        if (!validateName(firstName)) {
-          alert("First name should be alphabetic and not empty.");
-          return;
-        }
-        setData({ ...data, firstName, lastName });
-        break;
-      case "email":
-        // Store the email temporarily and validate it only when saving
-        setTempEmail(value);
-        break;
-      case "phone":
-        if (!validatePhone(value)) {
-          alert("Phone number should be up to 10 digits.");
-          return;
-        }
-        setData({ ...data, contactNo: value });
-        break;
-      case "age":
-        if (!validateAge(value)) {
-          alert("Age should be a number between 0 and 150.");
-          return;
-        }
-        setData({ ...data, age: value });
-        break;
-      default:
-        break;
     }
   };
 
@@ -186,7 +138,13 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-8">
+                  <form
+                    className="col-md-8"
+                    onSubmit={(e) => {
+                      updateData(e);
+                      setEditing(false);
+                    }}
+                  >
                     <div className="card mb-3">
                       <div className="card-body">
                         <div className="row align-items-center">
@@ -198,14 +156,22 @@ const ProfilePage = () => {
                               <input
                                 type="text"
                                 className="form-control form-control-sm border border-black"
-                                pattern="[a-zA-Z ]"
-                                title="Please enter a valid name with alphabetic characters only"
-                                maxlength="20"
+                                pattern="[a-zA-Z\s]{5,30}"
+                                title="Enter your full name between 5 and 30 characters"
+                                minLength="5"
+                                maxLength="20"
                                 defaultValue={
                                   !data
                                     ? ""
                                     : data.firstName + " " + data.lastName
                                 }
+                                onChange={(e) => {
+                                  const names = e.target.value.split(" ", 2);
+                                  console.log(names);
+                                  const firstName = names[0];
+                                  const lastName = names[1];
+                                  setData({ ...data, firstName, lastName });
+                                }}
                               />
                             ) : (
                               <div className="text-secondary">
@@ -224,8 +190,11 @@ const ProfilePage = () => {
                               <input
                                 type="email"
                                 className="form-control form-control-sm border border-black"
-                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                pattern="[a-zA-Z0-9_\._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                                 title="Please enter a valid email address"
+                                onChange={(e) => {
+                                  setData({ ...data, email: e.target.value });
+                                }}
                                 defaultValue={!data ? "" : data.emailId}
                               />
                             ) : (
@@ -244,10 +213,16 @@ const ProfilePage = () => {
                             {isEditing ? (
                               <input
                                 type="text"
-                                minlength="10"
-                                maxlength="10"
+                                minLength="10"
+                                maxLength="10"
                                 title="Please enter a valid contact number"
                                 className="form-control form-control-sm border border-black"
+                                onChange={(e) => {
+                                  setData({
+                                    ...data,
+                                    contactNo: e.target.value,
+                                  });
+                                }}
                                 defaultValue={!data ? "" : data.contactNo}
                               />
                             ) : (
@@ -325,15 +300,26 @@ const ProfilePage = () => {
                         <hr />
                         <div className="row align-items-center">
                           <div className="col-sm-12 d-flex justify-content-center">
-                            <button
-                              className="btn mx-2 btn-info"
-                              onClick={() => {
-                                if (isEditing) updateData();
-                                setEditing(!isEditing);
-                              }}
-                            >
-                              {isEditing ? "Save" : "Edit"}
-                            </button>
+                            {isEditing ? (
+                              <button
+                                className="btn mx-2 btn-info"
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            ) : (
+                              <button
+                                className="btn mx-2 btn-info"
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setEditing(true);
+                                }}
+                              >
+                                Edit
+                              </button>
+                            )}
+
                             <button
                               className="btn mx-2 btn-danger"
                               onClick={isEditing ? cancel : logout}
@@ -344,7 +330,7 @@ const ProfilePage = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
