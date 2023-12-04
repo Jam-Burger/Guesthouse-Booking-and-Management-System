@@ -72,7 +72,7 @@ For Booking website:
 4. Complete the payment and Boo-yah! You are all set for a heavenly experience.
 
 
-also watch this demo-video for better understandings- https://www.youtube.com/watch?v=BDzzOX1NExM&ab_channel=AnimeFightsUHD
+also watch this demo-video for better understandings- https://www.youtube.com/watch?v=Lyb3EARNgK0
 
 
 # Contributing
