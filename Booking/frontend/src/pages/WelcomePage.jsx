@@ -1,10 +1,18 @@
-import React from "react";
+import React,{ useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AutoScroll from "../components/AutoScroll2";
 import "../styles/welcomePage.css";
+import { FaChevronDown } from "react-icons/fa";
 
 const WelcomePage = () => {
   const navigate = useNavigate();
+
+  const scrollEl = useRef(null);
+
+  const scrollBottom = () => {
+      scrollEl?.current?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   return (
     <div>
       <div className="relative bg-[#f8f2ed] overflow-x-hidden">
@@ -23,6 +31,7 @@ const WelcomePage = () => {
                 <h1 className="opacity-100 mb-4 text-6xl italic font-bold leading-none tracking-tight text-white md:text-4xl lg:text-6xl">
                   The sky is Not the Limit!
                 </h1>
+                <button type="button" onClick={scrollBottom} className="opacity-100 flex-col flex content-end items-end "><FaChevronDown className="dwnIcn" /></button>
               </div>
             </div>
           </div>
@@ -40,6 +49,7 @@ const WelcomePage = () => {
             <div className="scroll-smooth">
               <AutoScroll />
             </div>
+            <div ref={scrollEl}></div>
             <div className="masking w-full flex flex-col h-full justify-center items-center overflow-hidden bg-cover">
               <div
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
