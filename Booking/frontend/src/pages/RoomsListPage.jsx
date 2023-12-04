@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import RoomCard from "../components/RoomCard";
 import axios from "axios";
 import "../styles/roomsList.css";
-
+import RatingsComponent from "../components/RatingsComp";
+import Navbar from "../components/Navbar";
 const RoomsListPage = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -38,13 +39,16 @@ const RoomsListPage = () => {
   }, [id]);
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center">
+    <>
+    <Navbar />
+    <div className="d-flex flex-column justify-content-center align-items-center mt-3">
       <div className="rCards">
         {data.map((item, id) => {
           return <RoomCard data={item} key={id} />;
         })}
       </div>
   </div>
+  </>
   );
 };
 

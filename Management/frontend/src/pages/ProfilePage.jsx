@@ -247,7 +247,7 @@ const ProfilePage = () => {
                             <h6 className="mb-0">Gender</h6>
                           </div>
                           {isEditing ? (
-                            <div className="col-sm-9">
+                            <div className="col-sm-9 px-0">
                               <select
                                 className="form-select form-select-sm border-1 border-black"
                                 defaultValue={!data ? "" : data.gender}

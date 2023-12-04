@@ -5,7 +5,7 @@ import h2c from "html2canvas";
 import { jsPDF } from "jspdf";
 import PageNotFound from "./PageNotFound";
 import "../styles/bookingConfirm.css";
-
+import Navbar from "../components/Navbar";
 const BookingConfirmationPage = () => {
   const [isDownloading, setDownloading] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -58,6 +58,8 @@ const BookingConfirmationPage = () => {
     //       <div>rooms:{rooms.join(", ")}</div>
     //     </div>
     //   </div>
+    <>
+    <Navbar />
     <div className='relative overflow-hidden mb-5'>
       <div className="cheh d-flex flex-col justify-content-center items-center overflow-hidden bg-cover">
         <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }} className="absolute d-flex justify-content-center align-items-center h-100 w-100 overflow-hidden bg-fixed">
@@ -136,6 +138,7 @@ const BookingConfirmationPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
