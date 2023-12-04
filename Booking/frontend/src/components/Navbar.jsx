@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img
-            src="./img/logoJug_beyondSky-removebg.png"
+            src="/img/logoJug_beyondSky-removebg.png"
             alt="BeyondSky"
             width="150"
           ></img>

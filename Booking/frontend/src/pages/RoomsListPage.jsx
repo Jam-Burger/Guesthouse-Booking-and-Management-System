@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import RoomCard from "../components/RoomCard";
 import axios from "axios";
 import "../styles/roomsList.css";
-import RatingsComponent from "../components/RatingsComp";
 import Navbar from "../components/Navbar";
+
 const RoomsListPage = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
