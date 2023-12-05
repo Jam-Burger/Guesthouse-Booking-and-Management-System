@@ -67,6 +67,7 @@ router.get("/:id/available", async (req, res) => {
     });
   }
 });
+
 router.post("/", async (req, res) => {
   const data = req.body;
   const room = new Room(data);

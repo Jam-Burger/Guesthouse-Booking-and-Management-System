@@ -72,7 +72,6 @@ router.patch("/", upload.single('picture'), async (req, res) => {
     res.cookie("currentUserToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
-      httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
     res.json({ msg: "success", data: updatedData });
@@ -101,7 +100,6 @@ router.post("/signup", async (req, res) => {
     res.cookie("currentUserToken", token, {
       secure: process.env.NODE_ENV !== "development",
       sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
-      httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
     res.status(201).json({
@@ -136,7 +134,6 @@ router.post("/login", async (req, res) => {
           res.cookie("currentUserToken", token, {
             secure: process.env.NODE_ENV !== "development",
             sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
-            httpOnly: true,
             maxAge: 60 * 60 * 1000,
           });
           res.json({
