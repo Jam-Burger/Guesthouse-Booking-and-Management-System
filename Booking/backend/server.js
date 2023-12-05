@@ -33,8 +33,8 @@ server.get("/", (req, res) => {
 server.get("/logout", (req, res) => {
   try {
     res.clearCookie("currentUserToken", {
-      // secure: process.env.NODE_ENV !== "development",
-      // sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: process.env.NODE_ENV !== "development" ? 'none' : 'lax',
       // httpOnly: true,
     });
     res.json({
