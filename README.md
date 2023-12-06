@@ -1,5 +1,9 @@
 # Guesthouse-Booking-System
 
+## Deployment
+- Booking site: https://guesthouse-booking-system.vercel.app/
+- Management site: https://guesthouse-management-system.vercel.app/
+
 # Group Members
 | Sr. no. | Student Name | Student ID |
 | --- | --- | --- |
